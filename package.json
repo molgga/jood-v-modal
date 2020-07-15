@@ -1,0 +1,14 @@
+{
+  "name": "jood-v-modal",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "bootstrap:symlink": "cd ./packages/lib && yarn unlink && yarn link && cd ../../packages/dev && yarn unlink @jood/v-modal && yarn link @jood/v-modal && cd ../../",
+    "bootstrap": "yarn install --production=false",
+    "ci:build": "yarn workspace @jood/v-modal generate",
+    "ci:test": "yarn workspace @jood/v-modal test",
+    "ci:doc": "jsdoc -c jsdoc.json -r -d docs"
+  }
+}

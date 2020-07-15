@@ -1,0 +1,63 @@
+import { JdModalRef } from './JdModalRef';
+
+export interface ModalHashChangeEvent extends HashChangeEvent {
+  _preventModalClose?: boolean;
+}
+
+/**
+ * 모달 옵션
+ * @export
+ * @interface ModalData
+ * @template D 모달로 전달되는 데이터 타입
+ * @template C 컴포넌트 타입
+ * @property {C} component 모달로 열려고 하는 컴포넌트
+ * @property {ModalOpenStrategy} [openStrategy=ModalOpenStrategy.NORMAL] 오픈 방식(방향)
+ * @property {boolean} [openStrategy=false] 오버레이 영역 클릭시 닫기 처리 여부
+ * @property {number} [duration=240] 오픈 방식
+ * @property {D} [data] 모달에 전달하는 데이터
+ * @property {any} [panelStyle] 모달 패널 css 스타일
+ */
+export interface ModalData<D = any, C = any> {
+  component: C;
+  openStrategy?: ModalOpenStrategy;
+  overlayClose?: boolean;
+  floatingOpen?: boolean;
+  duration?: number;
+  data?: D;
+  panelStyle?: any;
+}
+
+/**
+ * 모달의 열림, 닫힘 처리 상태 이벤트 타입
+ * @export
+ * @enum {number}
+ */
+export enum ModalEventType {
+  OPEN,
+  OPENED,
+  CLOSE,
+  CLOSED
+}
+
+/**
+ * 모달에서 발생하는 이벤트
+ * @export
+ * @interface ModalEvent
+ */
+export interface ModalEvent {
+  type: ModalEventType;
+  modalRef: JdModalRef;
+}
+
+/**
+ * 모달의 오픈 방식
+ * @export
+ * @enum {number}
+ */
+export enum ModalOpenStrategy {
+  NORMAL,
+  TOP_STACK,
+  RIGHT_STACK,
+  BOTTOM_STACK,
+  LEFT_STACK
+}
