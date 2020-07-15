@@ -2,25 +2,25 @@ import { Observable, Subject } from 'rxjs';
 import { ModalOpenStrategy, ModalEvent, ModalEventType } from './types';
 
 /**
- * 하나의 모달 처리자(정보)
+ * 하나의 모달 (정보)
  * @export
- * @class ModalRef
+ * @class JdModalRef
  * @template R 모달의 결과 타입
  * @template D 모달로 전달되는 데이터 타입
  * @template C 모달로 열리는 컴포넌트 타입
  */
 export class JdModalRef<R = any, D = any, C = any> {
-  private _id: number = -1;
-  private _data: D | null = null;
-  private _result: R | undefined;
-  private _component: C | null = null;
-  private _panelStyle: any;
-  private _openStrategy: ModalOpenStrategy = ModalOpenStrategy.NORMAL;
-  private _duration = 240;
-  private _floatingOpen = false;
-  private _overlayClose = false;
-  private _openerSubject: Subject<ModalEvent> = new Subject();
-  private _closedSubject: Subject<R> = new Subject();
+  protected modalId: number = -1;
+  protected modalData: D | null = null;
+  protected modalResult: R | undefined;
+  protected modalComponent: C | null = null;
+  protected modalPanelStyle: any;
+  protected modalOpenStrategy: ModalOpenStrategy = ModalOpenStrategy.NORMAL;
+  protected modalTransitionDuration = 240;
+  protected modalFloatingOpenMode = false;
+  protected modalOverlayClose = false;
+  protected openerSubject: Subject<ModalEvent> = new Subject();
+  protected closedSubject: Subject<R> = new Subject();
 
   /**
    * 모달의 id
@@ -28,7 +28,7 @@ export class JdModalRef<R = any, D = any, C = any> {
    * @type {number}
    */
   get id(): number {
-    return this._id;
+    return this.modalId;
   }
 
   /**
@@ -36,13 +36,13 @@ export class JdModalRef<R = any, D = any, C = any> {
    * @type {(D | null)}
    */
   get data(): D | null {
-    return this._data;
+    return this.modalData;
   }
 
   /**
    */
   get panelStyle(): any {
-    return this._panelStyle;
+    return this.modalPanelStyle;
   }
 
   /**
@@ -51,7 +51,7 @@ export class JdModalRef<R = any, D = any, C = any> {
    * @type {(C | null)}
    */
   get component(): C | null {
-    return this._component;
+    return this.modalComponent;
   }
 
   /**
@@ -60,7 +60,7 @@ export class JdModalRef<R = any, D = any, C = any> {
    * @type {ModalOpenStrategy}
    */
   get openStrategy(): ModalOpenStrategy {
-    return this._openStrategy;
+    return this.modalOpenStrategy;
   }
 
   /**
@@ -69,7 +69,7 @@ export class JdModalRef<R = any, D = any, C = any> {
    * @type {number}
    */
   get duration(): number {
-    return this._duration;
+    return this.modalTransitionDuration;
   }
 
   /**
@@ -78,7 +78,7 @@ export class JdModalRef<R = any, D = any, C = any> {
    * @type {boolean}
    */
   get overlayClose(): boolean {
-    return this._overlayClose;
+    return this.modalOverlayClose;
   }
 
   /**
@@ -87,7 +87,7 @@ export class JdModalRef<R = any, D = any, C = any> {
    * @type {boolean}
    */
   get floatingOpen(): boolean {
-    return this._floatingOpen;
+    return this.modalFloatingOpenMode;
   }
 
   /**
@@ -96,39 +96,39 @@ export class JdModalRef<R = any, D = any, C = any> {
    * @type {Subject<ModalEvent>}
    */
   get opener(): Subject<ModalEvent> {
-    return this._openerSubject;
+    return this.openerSubject;
   }
 
   setId(id: number): void {
-    this._id = id;
+    this.modalId = id;
   }
 
   setData(data: any): void {
-    this._data = data;
+    this.modalData = data;
   }
 
   setPanelStyle(styles: any): void {
-    this._panelStyle = styles;
+    this.modalPanelStyle = styles;
   }
 
   setComponent(component: C): void {
-    this._component = component;
+    this.modalComponent = component;
   }
 
   setOpenStrategy(openStrategy: ModalOpenStrategy): void {
-    this._openStrategy = openStrategy;
+    this.modalOpenStrategy = openStrategy;
   }
 
   setDuration(duration: number): void {
-    this._duration = duration;
+    this.modalTransitionDuration = duration;
   }
 
   setFloatingOpen(is: boolean): void {
-    this._floatingOpen = !!is;
+    this.modalFloatingOpenMode = !!is;
   }
 
   setOverlayClose(is: boolean): void {
-    this._overlayClose = !!is;
+    this.modalOverlayClose = !!is;
   }
 
   /**
@@ -136,8 +136,8 @@ export class JdModalRef<R = any, D = any, C = any> {
    * @param {R} [result] 모달이 닫힐 때 외부(보통은 모달을 열은 곳, observeClosed 를 통해) 전달 할 결과값
    */
   close(result?: R): void {
-    this._result = result;
-    this._openerSubject.next({
+    this.modalResult = result;
+    this.openerSubject.next({
       type: ModalEventType.CLOSE,
       modalRef: this
     });
@@ -147,11 +147,11 @@ export class JdModalRef<R = any, D = any, C = any> {
    * 모달이 (애니메이션 등 처리 후) 완전히 닫힘.
    */
   closed(): void {
-    this._openerSubject.next({
+    this.openerSubject.next({
       type: ModalEventType.CLOSED,
       modalRef: this
     });
-    this._closedSubject.next(this._result);
+    this.closedSubject.next(this.modalResult);
   }
 
   /**
@@ -159,7 +159,7 @@ export class JdModalRef<R = any, D = any, C = any> {
    * @returns {Observable<ModalEvent>}
    */
   observeOpener(): Observable<ModalEvent> {
-    return this._openerSubject.asObservable();
+    return this.openerSubject.asObservable();
   }
 
   /**
@@ -168,7 +168,7 @@ export class JdModalRef<R = any, D = any, C = any> {
    * @returns {Observable<R>}
    */
   observeClosed(): Observable<R> {
-    return this._closedSubject.asObservable();
+    return this.closedSubject.asObservable();
   }
 
   /**

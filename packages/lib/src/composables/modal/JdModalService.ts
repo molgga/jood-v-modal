@@ -5,7 +5,7 @@ import { JdModalRef } from './JdModalRef';
 /**
  * 모달 서비스
  * @export
- * @class ModalService
+ * @class JdModalService
  */
 export class JdModalService {
   protected modalUid = 0;
@@ -54,16 +54,16 @@ export class JdModalService {
    * @param {number} id
    * @returns {(JdModalRef | undefined)}
    */
-  getJdModalRef(id: number): JdModalRef | undefined {
+  getModalRef(id: number): JdModalRef | undefined {
     return this.modalRefMap.get(id);
   }
 
   /**
    * id 기준 중첩되어 열린 모달이 있는지 여부 확인
    * @param {number} id
-   * @returns
+   * @returns {boolean}
    */
-  hasJdModalRefNext(id: number): boolean {
+  hasModalRefNext(id: number): boolean {
     let is = false;
     const mapList = Array.from(this.modalRefMap.keys());
     const len = mapList.length;
@@ -116,7 +116,7 @@ export class JdModalService {
    * @param {number} id open 시 전달되는 modalRef 의 id 값
    */
   close(id: number): void {
-    const modalRef = this.getJdModalRef(id);
+    const modalRef = this.getModalRef(id);
     if (modalRef) {
       modalRef.close();
     }
@@ -129,7 +129,7 @@ export class JdModalService {
    * @param {JdModalRef} modalRef 오픈시 전달되거나 inject 해서 꺼낼 수 있는 modalRef
    */
   closeByRef(modalRef: JdModalRef): void {
-    const ref = this.getJdModalRef(modalRef.id);
+    const ref = this.getModalRef(modalRef.id);
     if (ref) {
       ref.close();
       this.dispatchChangeModals();

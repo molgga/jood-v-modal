@@ -5,9 +5,10 @@
     "packages/*"
   ],
   "scripts": {
-    "bootstrap:symlink": "cd ./packages/lib && yarn unlink && yarn link && cd ../../packages/dev && yarn unlink @jood/v-modal && yarn link @jood/v-modal && cd ../../",
-    "bootstrap": "yarn install --production=false",
-    "ci:build": "yarn workspace @jood/v-modal generate",
+    "bootstrap": "yarn install --production=false && npm run generate && npm run symlink",
+    "symlink": "cd ./packages/lib && yarn link && cd ../../packages/dev && yarn link @jood/v-bucket && cd ../../",
+    "generate": "yarn workspace @jood/v-bucket generate",
+    "ci:build": "npm run generate",
     "ci:test": "yarn workspace @jood/v-modal test",
     "ci:doc": "jsdoc -c jsdoc.json -r -d docs"
   }
