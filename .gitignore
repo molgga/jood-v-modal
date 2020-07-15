@@ -1,0 +1,10 @@
+.DS_Store
+
+# compiled output
+/docs
+
+# dependencies
+/node_modules
+/**/node_modules
+
+/.idea
