@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import Home from '../views/Home.vue';
+const isBuild = !!process.env.VUE_APP_BUILD;
+const BASE_URL = isBuild ? '/jood-v-bucket' : '';
 
 Vue.use(VueRouter);
 
@@ -15,7 +16,7 @@ const routes: Array<RouteConfig> = [
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
+  base: BASE_URL,
   routes
 });
 
