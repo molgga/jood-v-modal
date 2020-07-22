@@ -1,0 +1,319 @@
+@charset "utf-8";
+
+.readme { font-size:16px; }
+.readme h1 {
+  margin: 1em 0;
+  font-size: 2em;
+}
+.readme h2 {
+  font-size: 1.6em;
+}
+.readme h3 {
+  font-size: 1.4em;
+}
+.readme h4 {
+  font-size: 1.3em;
+}
+.readme h5 {
+  margin: 1em 0 .2em;
+  padding:0;
+  font-size: 1.2em;
+}
+.readme h5:before { display:none; }
+.readme h6 {
+  margin: 1em 0 .2em;
+  font-size: 1.1em;
+  font-style: normal;
+}
+.readme ul,
+.readme ol {
+  padding-left: 25px;
+}
+.readme hr { margin:1.5em 0; border:0px solid #dddddd; border-top-width:1px; }
+.readme blockquote {
+  margin: 1em 0;
+  padding: 0 1em;
+  border-left: 3px solid #5e9fd6;
+}
+.readme a,
+.readme a:active { color:#5e9fd6; }
+.readme a:hover { text-decoration: underline; }
+.readme img { max-width:100%; }
+.readme table { 
+  min-width:100%;
+  border-collapse: collapse; border:1px solid #eeeeee;}
+.readme table thead th,
+.readme table thead td { padding:5px 10px; font-size:0.9em; border:1px solid #eeeeee; border-bottom:1px solid #e0e0e0; background-color:#f9f9f9; }
+.readme table tbody th,
+.readme table tbody td { padding:5px 10px; font-size:0.9em; border:1px solid #eeeeee; border-bottom:1px solid #e0e0e0; }
+
+h1.page-title {
+  margin: 0;
+  padding: 10px 30px;
+  font-size: 20px;
+  color: #ffffff;
+  background-color: #3786d8;
+}
+
+h2 {
+  font-size: 1.4em;
+}
+
+h3 {
+  font-size: 1.3em;
+}
+
+h3.subsection-title {
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 3px double #dddddd;
+}
+
+h4.name {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e9e9e9;
+}
+
+.name,
+.signature {
+  font-size: 0.9em;
+  color: #1d65c1;
+}
+
+h5,
+.container-overview .subsection-title {
+  position: relative;
+  font-size: 1em;
+  padding-left: 10px;
+}
+
+h5:before,
+.container-overview .subsection-title:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 2px;
+  height: 12px;
+  margin-top: -6px;
+  background-color: #ff9900;
+}
+
+h2 + h4.name,
+h3.subsection-title + h4.name {
+  margin-top: 20px;
+  padding-top: 0;
+  border-top-width: 0;
+}
+
+h5 + ul {
+  margin: 0.2em 0;
+}
+
+.class-description {
+  font-size: 1em;
+}
+
+.description {
+  margin: 0.5em;
+}
+
+.type-signature:first-child {
+  display: block;
+  font-size: 0.8em;
+}
+
+nav h2 {
+  background-color: inherit;
+}
+
+nav ul a {
+  line-height: 1.8;
+  font-size: 13px;
+}
+
+nav ul ul a {
+  color: rgba(255, 255, 255, 0.6);
+  border-left-width: 0;
+}
+
+nav > ul > li > a {
+  position: relative;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+nav > ul > li > a:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 3px;
+  height: 1px;
+  margin-top: -1px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.params,
+.props {
+  border-width: 0;
+  border-radius: 4px;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12),
+    0 -1px 1px 0 rgba(0, 0, 0, 0.075);
+}
+
+.params thead th,
+.props thead th {
+  background-color: #f9f9f9;
+}
+
+.params td,
+.params th,
+.props td,
+.props th {
+  padding: 4px 10px;
+}
+
+.param-desc,
+.param-type {
+  margin-left: 10px;
+}
+
+dl.param-type {
+  border-bottom-width: 0;
+  padding-bottom: 0;
+  margin-bottom: 0.3em;
+}
+
+.details {
+  font-size: 0.8em;
+}
+
+.prettyprint code {
+  margin: 0;
+  background-color: transparent;
+}
+
+@media only screen and (max-width: 680px) and (min-width: 320px) {
+  #main {
+    padding: 0 15px;
+    min-width: initial;
+  }
+
+  .readme h1 {
+    font-size: 1.6em;
+  }
+  .readme h2 {
+    font-size: 1.2em;
+  }
+  .readme h3 {
+    font-size: 1.1em;
+  }
+  .readme h4 {
+    font-size: 1em;
+  }
+  .readme h5 {
+    font-size: 0.9em;
+  }
+  .readme h6 {
+    font-size: 0.8em;
+  }
+
+  #main h1.page-title {
+    margin: 0 -25px;
+    padding: 10px 25px;
+    font-size: 0.8em;
+  }
+  h2 {
+    margin-top: 0.8em;
+    font-size: 1.1em;
+  }
+  h3.subsection-title {
+    margin-top: 10px;
+    padding-top: 20px;
+    font-size: 1.1em;
+  }
+  h5,
+  .container-overview .subsection-title {
+    font-size: 0.8em;
+  }
+  h5 + ul {
+    margin: 0;
+    padding-left: 25px;
+    font-size: 0.8em;
+  }
+  .description {
+    font-size: 0.9em;
+  }
+  .param-desc,
+  .param-type {
+    margin-left: 0;
+  }
+
+  .readme {
+    font-size: 14px;
+  }
+
+  .navicon-button {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 48px;
+    height: 45px;
+    padding: 0;
+    opacity: 1;
+    box-sizing: border-box;
+    border-radius: 2px;
+    background-color: rgba(55, 134, 216, 0.8);
+  }
+
+  .navicon {
+    width: 26px;
+    height: 2px;
+    margin-top: 22px;
+    margin-left: 12px;
+    border-radius: 0;
+    background-color: rgba(255, 255, 255, 1);
+  }
+
+  .navicon:before,
+  .navicon:after {
+    width: 100%;
+    height: 2px;
+    border-radius: 0;
+    background-color: rgba(255, 255, 255, 1);
+  }
+  .navicon:before,
+  .navicon-button:hover .navicon:before {
+    top: 8px;
+  }
+  .navicon:after,
+  .navicon-button:hover .navicon:after {
+    top: -8px;
+  }
+
+  .parameters-wrap {
+    margin: -5px -15px;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: auto;
+  }
+  .parameters-wrap:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+
+  .parameters-inner {
+    float: left;
+    padding: 5px 15px;
+    box-sizing: border-box;
+    min-width: 100%;
+  }
+
+  .params thead th,
+  .props thead th {
+    font-size: 0.8em;
+  }
+}

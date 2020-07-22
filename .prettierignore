@@ -1,7 +1,0 @@
-.nuxt/
-node_modules/
-dist/
-*.md
-*.yml
-*.sh
-*.spec.ts

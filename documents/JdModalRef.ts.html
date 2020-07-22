@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>JdModalRef.ts - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow-eighties.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="JdModalRef.html">JdModalRef</a><ul class='methods'><li data-type='method'><a href="JdModalRef.html#close">close</a></li><li data-type='method'><a href="JdModalRef.html#closed">closed</a></li><li data-type='method'><a href="JdModalRef.html#destroy">destroy</a></li><li data-type='method'><a href="JdModalRef.html#observeClosed">observeClosed</a></li><li data-type='method'><a href="JdModalRef.html#observeOpener">observeOpener</a></li></ul></li><li><a href="JdModalService.html">JdModalService</a><ul class='methods'><li data-type='method'><a href="JdModalService.html#close">close</a></li><li data-type='method'><a href="JdModalService.html#closeAll">closeAll</a></li><li data-type='method'><a href="JdModalService.html#closeByRef">closeByRef</a></li><li data-type='method'><a href="JdModalService.html#destroy">destroy</a></li><li data-type='method'><a href="JdModalService.html#dispatchChangeModals">dispatchChangeModals</a></li><li data-type='method'><a href="JdModalService.html#getModalRef">getModalRef</a></li><li data-type='method'><a href="JdModalService.html#hasModalRefNext">hasModalRefNext</a></li><li data-type='method'><a href="JdModalService.html#observeModals">observeModals</a></li><li data-type='method'><a href="JdModalService.html#open">open</a></li></ul></li></ul><h3>Interfaces</h3><ul><li><a href="ModalData.html">ModalData</a></li><li><a href="ModalEvent.html">ModalEvent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createHashId">createHashId</a></li><li><a href="global.html#createHashIdReg">createHashIdReg</a></li><li><a href="global.html#extractHashId">extractHashId</a></li><li><a href="global.html#isCloseTargetByHashId">isCloseTargetByHashId</a></li><li><a href="global.html#JD_MODAL_REF_TOKEN">JD_MODAL_REF_TOKEN</a></li><li><a href="global.html#JD_MODAL_SERVICE_TOKEN">JD_MODAL_SERVICE_TOKEN</a></li><li><a href="global.html#ModalEventType">ModalEventType</a></li><li><a href="global.html#ModalOpenStrategy">ModalOpenStrategy</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">JdModalRef.ts</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Observable, Subject } from 'rxjs';
+import { ModalOpenStrategy, ModalEvent, ModalEventType } from './types';
+
+/**
+ * 하나의 모달 (정보)
+ * @export
+ * @class JdModalRef
+ * @template R 모달의 결과 타입
+ * @template D 모달로 전달되는 데이터 타입
+ * @template C 모달로 열리는 컴포넌트 타입
+ */
+export class JdModalRef&lt;R = any, D = any, C = any> {
+  protected modalId: number = -1;
+  protected modalData: D | null = null;
+  protected modalResult: R | undefined;
+  protected modalComponent: C | null = null;
+  protected modalPanelStyle: any;
+  protected modalOpenStrategy: ModalOpenStrategy = ModalOpenStrategy.NORMAL;
+  protected modalTransitionDuration = 240;
+  protected modalFloatingOpenMode = false;
+  protected modalOverlayClose = false;
+  protected openerSubject: Subject&lt;ModalEvent> = new Subject();
+  protected closedSubject: Subject&lt;R> = new Subject();
+
+  /**
+   * 모달의 id
+   * @readonly
+   * @type {number}
+   */
+  get id(): number {
+    return this.modalId;
+  }
+
+  /**
+   * @readonly
+   * @type {(D | null)}
+   */
+  get data(): D | null {
+    return this.modalData;
+  }
+
+  /**
+   */
+  get panelStyle(): any {
+    return this.modalPanelStyle;
+  }
+
+  /**
+   * 모달로 열리는 컴포넌트
+   * @readonly
+   * @type {(C | null)}
+   */
+  get component(): C | null {
+    return this.modalComponent;
+  }
+
+  /**
+   * 모달 오픈 방식
+   * @readonly
+   * @type {ModalOpenStrategy}
+   */
+  get openStrategy(): ModalOpenStrategy {
+    return this.modalOpenStrategy;
+  }
+
+  /**
+   * 모달 오픈 속도
+   * @readonly
+   * @type {number}
+   */
+  get duration(): number {
+    return this.modalTransitionDuration;
+  }
+
+  /**
+   * 모달 오버레이 영역 닫기 처리 여부
+   * @readonly
+   * @type {boolean}
+   */
+  get overlayClose(): boolean {
+    return this.modalOverlayClose;
+  }
+
+  /**
+   * 모달 중첩 열기시 하위 모달의 UI 처리 여부
+   * @readonly
+   * @type {boolean}
+   */
+  get floatingOpen(): boolean {
+    return this.modalFloatingOpenMode;
+  }
+
+  /**
+   * 모달 오픈 상태 알리미
+   * @readonly
+   * @type {Subject&lt;ModalEvent>}
+   */
+  get opener(): Subject&lt;ModalEvent> {
+    return this.openerSubject;
+  }
+
+  setId(id: number): void {
+    this.modalId = id;
+  }
+
+  setData(data: any): void {
+    this.modalData = data;
+  }
+
+  setPanelStyle(styles: any): void {
+    this.modalPanelStyle = styles;
+  }
+
+  setComponent(component: C): void {
+    this.modalComponent = component;
+  }
+
+  setOpenStrategy(openStrategy: ModalOpenStrategy): void {
+    this.modalOpenStrategy = openStrategy;
+  }
+
+  setDuration(duration: number): void {
+    this.modalTransitionDuration = duration;
+  }
+
+  setFloatingOpen(is: boolean): void {
+    this.modalFloatingOpenMode = !!is;
+  }
+
+  setOverlayClose(is: boolean): void {
+    this.modalOverlayClose = !!is;
+  }
+
+  /**
+   * 모달 닫기.
+   * @param {R} [result] 모달이 닫힐 때 외부(보통은 모달을 열은 곳, observeClosed 를 통해) 전달 할 결과값
+   */
+  close(result?: R): void {
+    this.modalResult = result;
+    this.openerSubject.next({
+      type: ModalEventType.CLOSE,
+      modalRef: this
+    });
+  }
+
+  /**
+   * 모달이 (애니메이션 등 처리 후) 완전히 닫힘.
+   */
+  closed(): void {
+    this.openerSubject.next({
+      type: ModalEventType.CLOSED,
+      modalRef: this
+    });
+    this.closedSubject.next(this.modalResult);
+  }
+
+  /**
+   * 모달 열림 상태 옵저버
+   * @returns {Observable&lt;ModalEvent>}
+   */
+  observeOpener(): Observable&lt;ModalEvent> {
+    return this.openerSubject.asObservable();
+  }
+
+  /**
+   * 모달 완전하게 닫힘 옵저버.
+   * 보통은 모달에서 전달하는 값을 받아야 하는 경우 사용
+   * @returns {Observable&lt;R>}
+   */
+  observeClosed(): Observable&lt;R> {
+    return this.closedSubject.asObservable();
+  }
+
+  /**
+   * 파기
+   */
+  destroy() {
+    try {
+      this.closed();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated at Wed Jul 22 2020 01:26:48 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

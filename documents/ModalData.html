@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>ModalData - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow-eighties.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="JdModalRef.html">JdModalRef</a><ul class='methods'><li data-type='method'><a href="JdModalRef.html#close">close</a></li><li data-type='method'><a href="JdModalRef.html#closed">closed</a></li><li data-type='method'><a href="JdModalRef.html#destroy">destroy</a></li><li data-type='method'><a href="JdModalRef.html#observeClosed">observeClosed</a></li><li data-type='method'><a href="JdModalRef.html#observeOpener">observeOpener</a></li></ul></li><li><a href="JdModalService.html">JdModalService</a><ul class='methods'><li data-type='method'><a href="JdModalService.html#close">close</a></li><li data-type='method'><a href="JdModalService.html#closeAll">closeAll</a></li><li data-type='method'><a href="JdModalService.html#closeByRef">closeByRef</a></li><li data-type='method'><a href="JdModalService.html#destroy">destroy</a></li><li data-type='method'><a href="JdModalService.html#dispatchChangeModals">dispatchChangeModals</a></li><li data-type='method'><a href="JdModalService.html#getModalRef">getModalRef</a></li><li data-type='method'><a href="JdModalService.html#hasModalRefNext">hasModalRefNext</a></li><li data-type='method'><a href="JdModalService.html#observeModals">observeModals</a></li><li data-type='method'><a href="JdModalService.html#open">open</a></li></ul></li></ul><h3>Interfaces</h3><ul><li><a href="ModalData.html">ModalData</a></li><li><a href="ModalEvent.html">ModalEvent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createHashId">createHashId</a></li><li><a href="global.html#createHashIdReg">createHashIdReg</a></li><li><a href="global.html#extractHashId">extractHashId</a></li><li><a href="global.html#isCloseTargetByHashId">isCloseTargetByHashId</a></li><li><a href="global.html#JD_MODAL_REF_TOKEN">JD_MODAL_REF_TOKEN</a></li><li><a href="global.html#JD_MODAL_SERVICE_TOKEN">JD_MODAL_SERVICE_TOKEN</a></li><li><a href="global.html#ModalEventType">ModalEventType</a></li><li><a href="global.html#ModalOpenStrategy">ModalOpenStrategy</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">ModalData</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        ModalData
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">모달 옵션</div>
+        
+
+        
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<div class="parameters-wrap">
+  <div class="parameters-inner">
+    <table class="props">
+      <thead>
+      <tr>
+          
+          <th>Name</th>
+          
+
+          <th>Type</th>
+
+          
+          <th>Attributes</th>
+          
+
+          
+          <th>Default</th>
+          
+
+          <th class="last">Description</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      
+
+          <tr>
+              
+                  <td class="name"><code>component</code></td>
+              
+
+              <td class="type">
+              
+                  
+<span class="param-type">C</span>
+
+
+              
+              </td>
+
+              
+                  <td class="attributes">
+                  
+
+                  
+                  </td>
+              
+
+              
+                  <td class="default">
+                  
+                  </td>
+              
+
+              <td class="description last">모달로 열려고 하는 컴포넌트</td>
+          </tr>
+
+      
+
+          <tr>
+              
+                  <td class="name"><code>openStrategy</code></td>
+              
+
+              <td class="type">
+              
+                  
+<span class="param-type"><a href="global.html#ModalOpenStrategy">ModalOpenStrategy</a></span>
+
+
+              
+              </td>
+
+              
+                  <td class="attributes">
+                  
+                      &lt;optional><br>
+                  
+
+                  
+                  </td>
+              
+
+              
+                  <td class="default">
+                  
+                      ModalOpenStrategy.NORMAL
+                  
+                  </td>
+              
+
+              <td class="description last">오픈 방식(방향)</td>
+          </tr>
+
+      
+
+          <tr>
+              
+                  <td class="name"><code>openStrategy</code></td>
+              
+
+              <td class="type">
+              
+                  
+<span class="param-type">boolean</span>
+
+
+              
+              </td>
+
+              
+                  <td class="attributes">
+                  
+                      &lt;optional><br>
+                  
+
+                  
+                  </td>
+              
+
+              
+                  <td class="default">
+                  
+                      false
+                  
+                  </td>
+              
+
+              <td class="description last">오버레이 영역 클릭시 닫기 처리 여부</td>
+          </tr>
+
+      
+
+          <tr>
+              
+                  <td class="name"><code>duration</code></td>
+              
+
+              <td class="type">
+              
+                  
+<span class="param-type">number</span>
+
+
+              
+              </td>
+
+              
+                  <td class="attributes">
+                  
+                      &lt;optional><br>
+                  
+
+                  
+                  </td>
+              
+
+              
+                  <td class="default">
+                  
+                      240
+                  
+                  </td>
+              
+
+              <td class="description last">오픈 방식</td>
+          </tr>
+
+      
+
+          <tr>
+              
+                  <td class="name"><code>data</code></td>
+              
+
+              <td class="type">
+              
+                  
+<span class="param-type">D</span>
+
+
+              
+              </td>
+
+              
+                  <td class="attributes">
+                  
+                      &lt;optional><br>
+                  
+
+                  
+                  </td>
+              
+
+              
+                  <td class="default">
+                  
+                  </td>
+              
+
+              <td class="description last">모달에 전달하는 데이터</td>
+          </tr>
+
+      
+
+          <tr>
+              
+                  <td class="name"><code>panelStyle</code></td>
+              
+
+              <td class="type">
+              
+                  
+<span class="param-type">any</span>
+
+
+              
+              </td>
+
+              
+                  <td class="attributes">
+                  
+                      &lt;optional><br>
+                  
+
+                  
+                  </td>
+              
+
+              
+                  <td class="default">
+                  
+                  </td>
+              
+
+              <td class="description last">모달 패널 css 스타일</td>
+          </tr>
+
+      
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="types.ts.html">types.ts</a>, <a href="types.ts.html#line30">line 30</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated at Wed Jul 22 2020 01:26:48 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

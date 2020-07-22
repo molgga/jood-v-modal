@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>index.ts - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow-eighties.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="JdModalRef.html">JdModalRef</a><ul class='methods'><li data-type='method'><a href="JdModalRef.html#close">close</a></li><li data-type='method'><a href="JdModalRef.html#closed">closed</a></li><li data-type='method'><a href="JdModalRef.html#destroy">destroy</a></li><li data-type='method'><a href="JdModalRef.html#observeClosed">observeClosed</a></li><li data-type='method'><a href="JdModalRef.html#observeOpener">observeOpener</a></li></ul></li><li><a href="JdModalService.html">JdModalService</a><ul class='methods'><li data-type='method'><a href="JdModalService.html#close">close</a></li><li data-type='method'><a href="JdModalService.html#closeAll">closeAll</a></li><li data-type='method'><a href="JdModalService.html#closeByRef">closeByRef</a></li><li data-type='method'><a href="JdModalService.html#destroy">destroy</a></li><li data-type='method'><a href="JdModalService.html#dispatchChangeModals">dispatchChangeModals</a></li><li data-type='method'><a href="JdModalService.html#getModalRef">getModalRef</a></li><li data-type='method'><a href="JdModalService.html#hasModalRefNext">hasModalRefNext</a></li><li data-type='method'><a href="JdModalService.html#observeModals">observeModals</a></li><li data-type='method'><a href="JdModalService.html#open">open</a></li></ul></li></ul><h3>Interfaces</h3><ul><li><a href="ModalData.html">ModalData</a></li><li><a href="ModalEvent.html">ModalEvent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createHashId">createHashId</a></li><li><a href="global.html#createHashIdReg">createHashIdReg</a></li><li><a href="global.html#extractHashId">extractHashId</a></li><li><a href="global.html#isCloseTargetByHashId">isCloseTargetByHashId</a></li><li><a href="global.html#JD_MODAL_REF_TOKEN">JD_MODAL_REF_TOKEN</a></li><li><a href="global.html#JD_MODAL_SERVICE_TOKEN">JD_MODAL_SERVICE_TOKEN</a></li><li><a href="global.html#ModalEventType">ModalEventType</a></li><li><a href="global.html#ModalOpenStrategy">ModalOpenStrategy</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">index.ts</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { provide, inject } from '@vue/composition-api';
+import { JdModalService } from './JdModalService';
+import { JdModalRef } from './JdModalRef';
+
+/**
+ * 모달 서비스 provide, inject 토큰
+ */
+export const JD_MODAL_SERVICE_TOKEN = Symbol();
+
+/**
+ * 하나의 모달 처리자(정보) provide, inject 토큰
+ * ModalItem 에서 provide 되고,
+ * 모달로 열리게 되는 컴포넌트(와 하위)에서 해당 토큰으로
+ * 본인에게 주입된 ModalRef 를 꺼낼 수 있음.
+ */
+export const JD_MODAL_REF_TOKEN = Symbol();
+
+export const provideJdModalService = () => {
+  provide(JD_MODAL_SERVICE_TOKEN, new JdModalService());
+};
+
+export const useJdModalService = (): JdModalService => {
+  const service = inject&lt;JdModalService>(JD_MODAL_SERVICE_TOKEN) as JdModalService;
+  if (!service) {
+    throw new Error(`not provide modalService. 
+      append ModalProvider Component App root.
+      ex) &lt;div id="app"> &lt;!-- root app -->
+        &lt;modal-provider /> &lt;!-- hear!! provider -->
+        &lt;your-some-component /> &lt;!-- no wrapping!! provider -->
+      &lt;/div>`);
+  }
+  return service;
+};
+
+export const useJdModalRef = &lt;R, D = any, C = any>(): JdModalRef&lt;R, D, C> => {
+  const modalRef = inject(JD_MODAL_REF_TOKEN) as JdModalRef&lt;R, D, C>;
+  if (!modalRef) {
+    throw new Error(`has not provided modalRef`);
+  }
+  return modalRef;
+};
+
+export * from './types';
+export { JdModalService, JdModalRef };
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated at Wed Jul 22 2020 01:26:48 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
