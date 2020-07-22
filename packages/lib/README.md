@@ -2,6 +2,8 @@
 
 Vue modal 기능 UI
 
+***
+
 ## Get started
 
 ### npm install
@@ -17,12 +19,69 @@ import '@jood/v-modal/dist/v-modal.css';
 ```
 
 ### App.vue
+```html
+<template>
+  <div>
+    <jd-modal-provider /> <!-- nowrapping -->
+    <div>
+      <button @click="onOpen">onOpen</button>
+    </div>
+  </div>
+</template>
 
-```javascript
+<script lang="ts">
+import { defineComponent, onUnmounted } from "@vue/composition-api";
+import { provideJdModalService, useJdModalService, JdModalProvider } from "@jood/v-modal";
+import SampleModalView from "@/components/modal/SampleModalView.vue";
+export default defineComponent({
+  components: {
+    JdModalProvider
+  },
+  setup() {
+    provideJdModalService(); // provide service
+    const modalService = useJdModalService(); // use(inject) service
+    const onOpen = () => {
+      modalService.open({
+        overlayClose: true,
+        component: SampleModalView
+      });
+    };
+    onUnmounted(() => {
+      modalService.closeAll();
+    });
+    return {
+      onOpen
+    };
+  }
+});
+</script>
 ```
 
-### SomeView.vue
-```javascript
+### SampleModalView.vue
+```html
+<template>
+  <div class="sample-modal-view">hello</div>
+</template>
+<script lang="ts">
+import { defineComponent } from "@vue/composition-api";
+import { use0JdModalRef, useJdModalService } from "@jood/v-modal";
+export default defineComponent({
+  setup() {
+    // const modalService = useJdModalService(); // use(inject) modal service 
+    const modalRef = useJdModalRef(); // use(inject) modal ref class
+    console.log(modalRef);
+    return {};
+  }
+});
+</script>
+<style lang="scss" scoped>
+.sample-modal-view {
+  padding: 20px;
+  min-width: 420px;
+  min-height: 320px;
+  box-sizing: border-box;
+}
+</style>
 ```
 
 ***
@@ -34,4 +93,3 @@ import '@jood/v-modal/dist/v-modal.css';
 - [Github](https://github.com/molgga/jood-v-modal).
 - [NPM](https://www.npmjs.com/package/@jood/v-modal).
 - [Doc](https://molgga.github.io/jood-v-modal/documents).
-
