@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 const isBuild = !!process.env.VUE_APP_BUILD;
-const BASE_URL = isBuild ? '/jood-v-bucket' : '';
+const BASE_URL = isBuild ? '/jood-v-modal' : '';
 
 Vue.use(VueRouter);
 
