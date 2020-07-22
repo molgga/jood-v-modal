@@ -39,7 +39,9 @@ export default defineComponent({
     const modalService = useJdModalService();
 
     const modalOptions = reactive({
-      openStrategy: ModalOpenStrategy.NORMAL
+      openStrategy: ModalOpenStrategy.NORMAL,
+      floatingOpen: true,
+      overlayClose: true
     });
     const optionOpenStrategy = [
       { value: ModalOpenStrategy.NORMAL, label: 'NORMAL' },
@@ -51,8 +53,7 @@ export default defineComponent({
 
     const onOpen = () => {
       modalService.open({
-        floatingOpen: true,
-        openStrategy: modalOptions.openStrategy,
+        ...modalOptions,
         data: {
           modalOptions
         },
@@ -73,5 +74,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
