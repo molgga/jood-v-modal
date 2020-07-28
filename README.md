@@ -72,7 +72,7 @@ export default defineComponent({
 </template>
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import { use0JdModalRef, useJdModalService } from "@jood/v-modal";
+import { useJdModalRef, useJdModalService } from "@jood/v-modal";
 export default defineComponent({
   setup() {
     // const modalService = useJdModalService(); // use(inject) modal service 
