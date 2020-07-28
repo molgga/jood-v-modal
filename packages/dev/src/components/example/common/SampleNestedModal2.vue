@@ -4,8 +4,8 @@
       <h2 class="tit">modalId: {{ state.modalId }}</h2>
     </div>
     <div class="foot">
-      <v-btn color="primary" @click="onOpen">open</v-btn>|
-      <v-btn color="primary" @click="onClose">close</v-btn>
+      <v-btn color="secondary" @click="onOpen">open</v-btn>|
+      <v-btn color="secondary" @click="onClose">close</v-btn>
     </div>
   </div>
 </template>
