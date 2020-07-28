@@ -59,11 +59,12 @@ export default defineComponent({
     const openStrategy = modalRef.openStrategy;
     const overlayClose = modalRef.overlayClose || false;
     const duration = modalRef.duration;
-    const floatingOpen = modalRef.floatingOpen || false;
+    const floatingMode = modalRef.floatingMode || false;
     const panelStyle = modalRef.panelStyle;
     const safeTiming = isNaN(duration) || duration < 0 ? 240 : duration;
     const animateTimer: any = ref(null);
     const opening = ref(false);
+    const opened = ref(false);
     const closing = ref(false);
 
     const onOverlayClick = (evt: MouseEvent) => {
@@ -110,8 +111,9 @@ export default defineComponent({
         openType,
         {
           'is-opening': opening.value,
+          'is-opened': opened.value,
           'is-closing': closing.value,
-          'floating-open': floatingOpen
+          'floating-mode': floatingMode
         }
       ];
     });
@@ -182,6 +184,7 @@ export default defineComponent({
       animateTimer.value = setTimeout(() => {
         opening.value = true;
         animateTimer.value = setTimeout(() => {
+          opened.value = true;
           hashTouch();
           modalRef.opener.next({
             type: ModalEventType.OPENED,
@@ -220,6 +223,8 @@ export default defineComponent({
   align-items: center;
   background-color: rgba(0, 0, 0, 0);
   transition: background-color 240ms;
+  pointer-events: initial;
+
   > .panel {
     display: flex;
     max-height: 100%;
@@ -249,7 +254,10 @@ export default defineComponent({
     background-color: rgba(0, 0, 0, 0.2);
   }
   &.is-opening {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  &.is-opened {
+    transition: initial !important;
   }
   &.is-closing {
     background-color: rgba(0, 0, 0, 0);
@@ -265,12 +273,12 @@ export default defineComponent({
       transform: scale(1, 1) translateY(0);
       opacity: 1;
     }
-    &.floating-open {
+    &.floating-mode {
       &.is-opening:nth-child(1) > .panel .pivot {
-        transform: scale(0.9, 0.9) translateY(-4%);
+        transform: scale(0.9, 0.9) translateY(-10%);
       }
       &.is-opening:nth-child(2) > .panel .pivot {
-        transform: scale(0.95, 0.95) translateY(-2%);
+        transform: scale(0.95, 0.95) translateY(-5%);
       }
       &.is-opening:last-child > .panel .pivot {
         transform: scale(1, 1) translateY(0);
@@ -303,12 +311,12 @@ export default defineComponent({
     &.is-opening > .panel > .pivot {
       transform: translateX(0%);
     }
-    &.floating-open {
+    &.floating-mode {
       &.is-opening:nth-child(1) > .panel > .pivot {
-        transform: translateX(6%);
+        transform: translateX(8%);
       }
       &.is-opening:nth-child(2) > .panel > .pivot {
-        transform: translateX(3%);
+        transform: translateX(4%);
       }
       &.is-opening:last-child > .panel > .pivot {
         transform: translateX(0%);
@@ -337,12 +345,12 @@ export default defineComponent({
     &.is-opening > .panel > .pivot {
       transform: translateX(0%);
     }
-    &.floating-open {
+    &.floating-mode {
       &.is-opening:nth-child(1) > .panel > .pivot {
-        transform: translateX(-6%);
+        transform: translateX(-8%);
       }
       &.is-opening:nth-child(2) > .panel > .pivot {
-        transform: translateX(-3%);
+        transform: translateX(-4%);
       }
       &.is-opening:last-child > .panel > .pivot {
         transform: translateX(0%);
@@ -372,12 +380,12 @@ export default defineComponent({
     &.is-opening > .panel > .pivot {
       transform: translateY(0%);
     }
-    &.floating-open {
+    &.floating-mode {
       &.is-opening:nth-child(1) > .panel > .pivot {
-        transform: scale(0.94, 0.94) translateY(-6%);
+        transform: scale(0.94, 0.94) translateY(-8%);
       }
       &.is-opening:nth-child(2) > .panel > .pivot {
-        transform: scale(0.97, 0.97) translateY(-3%);
+        transform: scale(0.97, 0.97) translateY(-4%);
       }
       &.is-opening:last-child > .panel > .pivot {
         transform: translateY(0%);
@@ -409,7 +417,7 @@ export default defineComponent({
     &.is-opening > .panel > .pivot {
       transform: translateY(0%);
     }
-    &.floating-open {
+    &.floating-mode {
       &.is-opening:nth-child(1) > .panel > .pivot {
         transform: scale(0.94, 0.94) translateY(6%);
       }

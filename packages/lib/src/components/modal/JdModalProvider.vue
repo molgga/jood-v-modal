@@ -6,7 +6,7 @@
         :key="modalRef.id"
         :index="index"
         :modalRef="modalRef"
-      ></jd-modal-item>
+      />
     </div>
   </div>
 </template>
@@ -54,7 +54,7 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      const subscription = service.observeModals().subscribe(modalList => {
+      const subscription = service.observeModalState().subscribe(modalList => {
         modals.value = modalList;
       });
       listener.add(subscription);
@@ -80,6 +80,7 @@ export default defineComponent({
   left: 0;
   width: 100%;
   height: 100%;
+  pointer-events: none;
   z-index: 1100;
 
   &.is-emptied {
@@ -93,6 +94,7 @@ export default defineComponent({
     width: 100%;
     height: 100%;
     display: flex;
+    pointer-events: none;
   }
 }
 </style>

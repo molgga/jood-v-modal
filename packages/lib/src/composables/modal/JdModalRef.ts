@@ -86,7 +86,7 @@ export class JdModalRef<R = any, D = any, C = any> {
    * @readonly
    * @type {boolean}
    */
-  get floatingOpen(): boolean {
+  get floatingMode(): boolean {
     return this.modalFloatingOpenMode;
   }
 
@@ -123,7 +123,7 @@ export class JdModalRef<R = any, D = any, C = any> {
     this.modalTransitionDuration = duration;
   }
 
-  setFloatingOpen(is: boolean): void {
+  setFloatingModel(is: boolean): void {
     this.modalFloatingOpenMode = !!is;
   }
 
