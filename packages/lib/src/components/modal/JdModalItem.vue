@@ -80,6 +80,7 @@ export default defineComponent({
         }
       } else if (evt.type === ModalEventType.CLOSE) {
         opening.value = false;
+        opened.value = false;
         closing.value = true;
         animateTimer.value = setTimeout(() => {
           modalRef.closed();
