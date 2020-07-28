@@ -21,7 +21,7 @@ export interface ModalData<D = any, C = any> {
   component: C;
   openStrategy?: ModalOpenStrategy;
   overlayClose?: boolean;
-  floatingOpen?: boolean;
+  floatingMode?: boolean;
   duration?: number;
   data?: D;
   panelStyle?: any;

@@ -2,6 +2,96 @@
 
 Vue modal 기능 UI
 
+*** 
+
+![TRAVIS](https://travis-ci.org/molgga/jood-v-modal.svg?branch=master)
+![NPM version](https://img.shields.io/npm/v/@jood/v-modal.svg)
+![NPM license](https://img.shields.io/npm/l/@jood/v-modal)
+![NPM download](https://img.shields.io/npm/dt/@jood/v-modal)
+![NPM bundle size](https://img.shields.io/bundlephobia/min/@jood/v-modal)
+
+***
+
+## Get started
+
+### npm install
+
+```javascript
+$ npm install @jood/v-modal
+```
+
+### main.ts
+
+```javascript
+import '@jood/v-modal/dist/v-modal.css';
+```
+
+### App.vue
+```html
+<template>
+  <div>
+    <jd-modal-provider /> <!-- nowrapping -->
+    <div>
+      <button @click="onOpen">onOpen</button>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, onUnmounted } from "@vue/composition-api";
+import { provideJdModalService, useJdModalService, JdModalProvider } from "@jood/v-modal";
+import SampleModalView from "@/components/modal/SampleModalView.vue";
+export default defineComponent({
+  components: {
+    JdModalProvider
+  },
+  setup() {
+    provideJdModalService(); // provide service
+    const modalService = useJdModalService(); // use(inject) service
+    const onOpen = () => {
+      modalService.open({
+        overlayClose: true,
+        component: SampleModalView
+      });
+    };
+    onUnmounted(() => {
+      modalService.closeAll();
+    });
+    return {
+      onOpen
+    };
+  }
+});
+</script>
+```
+
+### SampleModalView.vue
+```html
+<template>
+  <div class="sample-modal-view">hello</div>
+</template>
+<script lang="ts">
+import { defineComponent } from "@vue/composition-api";
+import { use0JdModalRef, useJdModalService } from "@jood/v-modal";
+export default defineComponent({
+  setup() {
+    // const modalService = useJdModalService(); // use(inject) modal service 
+    const modalRef = useJdModalRef(); // use(inject) modal ref class
+    console.log(modalRef);
+    return {};
+  }
+});
+</script>
+<style lang="scss" scoped>
+.sample-modal-view {
+  padding: 20px;
+  min-width: 420px;
+  min-height: 320px;
+  box-sizing: border-box;
+}
+</style>
+```
+
 ***
 
 ### See

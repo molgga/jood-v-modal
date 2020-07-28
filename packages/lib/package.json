@@ -1,6 +1,6 @@
 {
   "name": "@jood/v-modal",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "dist/v-modal.common.js",
   "types": "dist/types/index.d.ts",
   "module": "src/index.ts",
@@ -11,6 +11,7 @@
   "files": [
     "dist"
   ],
+  "license": "MIT",
   "scripts": {
     "test": "jest --config ./jest.config.js",
     "lint": "vue-cli-service lint",

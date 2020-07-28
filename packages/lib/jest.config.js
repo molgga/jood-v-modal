@@ -14,12 +14,12 @@ module.exports = {
   },
   transformIgnorePatterns: ['/node_modules/', '__snapshots__'],
   testMatch: ['**/__tests__/**/(*.)+(spec|test).+(js|jsx|ts|tsx)'],
-  testPathIgnorePatterns: ['/node_modules/', '/__snapshots__/'],
+  testPathIgnorePatterns: ['/node_modules/', '/__snapshots__/', '/dist/', '/dist-tsc/'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   moduleNameMapper: {
     '@/(.*)$': '<rootDir>/src/$1'
-  }
-  // collectCoverage: true,
-  // coveragePathIgnorePatterns: ['/tests/'],
-  // coverageReporters: ['html']
+  },
+  collectCoverage: true,
+  coveragePathIgnorePatterns: ['/tests/', '/utils/'],
+  coverageReporters: ['text']
 };
