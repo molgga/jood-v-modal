@@ -108,13 +108,7 @@ export class JdModalService {
     const id = this.modalUid++;
     const modalRef = new JdModalRef<R, D, C>();
     modalRef.setId(id);
-    modalRef.setComponent(data.component);
-    modalRef.setOpenStrategy(data.openStrategy || ModalOpenStrategy.NORMAL);
-    modalRef.setOverlayClose(data.overlayClose || false);
-    modalRef.setFloatingModel(data.floatingMode || false);
-    modalRef.setDuration(data.duration || 240);
-    modalRef.setData(data.data);
-    modalRef.setPanelStyle(data.panelStyle);
+    modalRef.assignModalData(data);
     const subscription = modalRef.observeOpener().subscribe((evt: ModalEvent) => {
       if (evt.type === ModalEventType.CLOSED) {
         subscription.unsubscribe();

@@ -1,5 +1,5 @@
 import { Observable, Subject } from 'rxjs';
-import { ModalOpenStrategy, ModalEvent, ModalEventType } from './types';
+import { ModalOpenStrategy, ModalEvent, ModalEventType, ModalData } from './types';
 
 /**
  * 하나의 모달 (정보)
@@ -19,6 +19,7 @@ export class JdModalRef<R = any, D = any, C = any> {
   protected modalTransitionDuration = 240;
   protected modalFloatingOpenMode = false;
   protected modalOverlayClose = false;
+  protected modalDisableShadow = false;
   protected openerSubject: Subject<ModalEvent> = new Subject();
   protected closedSubject: Subject<R> = new Subject();
 
@@ -91,12 +92,32 @@ export class JdModalRef<R = any, D = any, C = any> {
   }
 
   /**
+   * 모달 box-shadow 사용 여부
+   * @readonly
+   * @type {boolean}
+   */
+  get disableShadow(): boolean {
+    return this.modalDisableShadow;
+  }
+
+  /**
    * 모달 오픈 상태 알리미
    * @readonly
    * @type {Subject<ModalEvent>}
    */
   get opener(): Subject<ModalEvent> {
     return this.openerSubject;
+  }
+
+  assignModalData(data: ModalData<D>) {
+    this.setComponent(data.component);
+    this.setOpenStrategy(data.openStrategy || ModalOpenStrategy.NORMAL);
+    this.setOverlayClose(data.overlayClose || false);
+    this.setFloatingModel(data.floatingMode || false);
+    this.setDisableShadow(!!data.disableShadow);
+    this.setDuration(data.duration || 240);
+    this.setData(data.data);
+    this.setPanelStyle(data.panelStyle);
   }
 
   setId(id: number): void {
@@ -129,6 +150,10 @@ export class JdModalRef<R = any, D = any, C = any> {
 
   setOverlayClose(is: boolean): void {
     this.modalOverlayClose = !!is;
+  }
+
+  setDisableShadow(is: boolean): void {
+    this.modalDisableShadow = !!is;
   }
 
   /**

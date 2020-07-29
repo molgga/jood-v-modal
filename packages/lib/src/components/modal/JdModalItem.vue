@@ -62,6 +62,7 @@ export default defineComponent({
     const duration = modalRef.duration;
     const floatingMode = modalRef.floatingMode || false;
     const panelStyle = modalRef.panelStyle;
+    const modalShadow = !modalRef.disableShadow;
     const safeTiming = isNaN(duration) || duration < 0 ? 240 : duration;
     const animateTimer: any = ref(null);
     const opening = ref(false);
@@ -116,7 +117,8 @@ export default defineComponent({
           'is-opening': opening.value,
           'is-opened': opened.value,
           'is-closing': closing.value,
-          'floating-mode': floatingMode
+          'floating-mode': floatingMode,
+          shadow: modalShadow
         }
       ];
     });
@@ -273,6 +275,14 @@ export default defineComponent({
   &.is-closing {
     background-color: rgba(0, 0, 0, 0);
   }
+  &.shadow {
+    > .panel > .pivot {
+      // box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.1), 0 24px 38px 3px rgba(0, 0, 0, 0.08),
+      //   0 9px 46px 8px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.02), 0 3px 10px 1px rgba(0, 0, 0, 0.04),
+        0 6px 6px rgba(0, 0, 0, 0.06);
+    }
+  }
 
   // 모달 오픈 방식(NORMAL) 애니메이션
   &.ops-normal {
@@ -307,7 +317,6 @@ export default defineComponent({
     align-items: initial;
     > .panel > .pivot {
       border-radius: 0;
-      // box-shadow: 10px 0 10px 2px rgba(0, 0, 0, 0.1), 3px 0 3px rgba(0, 0, 0, 0.1);
       transform: translateX(-102%);
       &:before {
         content: '';
@@ -317,6 +326,11 @@ export default defineComponent({
         left: -99px;
         width: 100px;
         background-color: #ffffff;
+      }
+    }
+    &.shadow {
+      > .panel > .pivot {
+        box-shadow: 10px 0 10px 2px rgba(0, 0, 0, 0.04), 3px 0 3px rgba(0, 0, 0, 0.02);
       }
     }
     &.is-opening > .panel > .pivot {
@@ -341,7 +355,6 @@ export default defineComponent({
     align-items: initial;
     > .panel > .pivot {
       border-radius: 0;
-      // box-shadow: -10px 0 10px 2px rgba(0, 0, 0, 0.1), -3px 0 3px rgba(0, 0, 0, 0.1);
       transform: translateX(102%);
       &:before {
         content: '';
@@ -351,6 +364,11 @@ export default defineComponent({
         right: -99px;
         width: 100px;
         background-color: #ffffff;
+      }
+    }
+    &.shadow {
+      > .panel > .pivot {
+        box-shadow: -10px 0 10px 2px rgba(0, 0, 0, 0.04), -3px 0 3px rgba(0, 0, 0, 0.02);
       }
     }
     &.is-opening > .panel > .pivot {
@@ -375,7 +393,6 @@ export default defineComponent({
     align-items: flex-end;
     > .panel > .pivot {
       border-radius: 10px 10px 0 0;
-      // box-shadow: 0 0 5px rgba(0, 0, 0, 0.05), 0 -10px 10px 1px rgba(0, 0, 0, 0.08), 0 -3px 3px rgba(0, 0, 0, 0.1);
       transform: translateY(102%);
       &:before {
         content: '';
@@ -387,7 +404,12 @@ export default defineComponent({
         background-color: #ffffff;
       }
     }
-
+    &.shadow {
+      > .panel > .pivot {
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.02), 0 -10px 10px 1px rgba(0, 0, 0, 0.04),
+          0 -3px 3px rgba(0, 0, 0, 0.06);
+      }
+    }
     &.is-opening > .panel > .pivot {
       transform: translateY(0%);
     }
@@ -413,7 +435,6 @@ export default defineComponent({
     }
     > .panel > .pivot {
       border-radius: 0 0 10px 10px;
-      // box-shadow: 0 10px 10px 2px rgba(0, 0, 0, 0.1), 0 3px 3px rgba(0, 0, 0, 0.1);
       transform: translateY(-102%);
       &:before {
         content: '';
@@ -423,6 +444,13 @@ export default defineComponent({
         top: -99px;
         height: 100px;
         background-color: #ffffff;
+      }
+    }
+    &.shadow {
+      > .panel > .pivot {
+        // box-shadow: 0 10px 10px 2px rgba(0, 0, 0, 0.08), 0 3px 3px rgba(0, 0, 0, 0.04);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.02), 0 10px 10px 1px rgba(0, 0, 0, 0.04),
+          0 3px 3px rgba(0, 0, 0, 0.06);
       }
     }
     &.is-opening > .panel > .pivot {
