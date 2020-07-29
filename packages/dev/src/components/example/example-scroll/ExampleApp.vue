@@ -37,7 +37,7 @@ export default defineComponent({
     };
 
     onUnmounted(() => {
-      // modalService.closeAll();
+      modalService.closeAll();
     });
 
     return {

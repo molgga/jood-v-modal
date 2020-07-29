@@ -139,7 +139,6 @@ export class JdModalService {
       modalRef.close();
     }
     this.dispatchChangeState();
-    // setEnableBodyScroll();
   }
 
   /**

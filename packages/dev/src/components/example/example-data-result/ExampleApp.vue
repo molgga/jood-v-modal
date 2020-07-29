@@ -33,6 +33,7 @@
 </template>
 
 <script lang="ts">
+import { Subscription } from 'rxjs';
 import { defineComponent, reactive, onMounted, onUnmounted } from '@vue/composition-api';
 import { useJdModalService, JdModalRef } from '@/lib-package';
 import ModalOptions, { createTestOptions } from '../common/ModalOptions.vue';
@@ -44,8 +45,7 @@ export default defineComponent({
   },
   setup() {
     const modalService = useJdModalService();
-    let someModalRef: JdModalRef<SampleModalResult, SampleModalData>;
-
+    const listener = new Subscription();
     const state = reactive({
       modalOptions: createTestOptions(),
       passText: 'foo',
@@ -53,23 +53,23 @@ export default defineComponent({
     });
 
     const onOpen = () => {
-      someModalRef = modalService.open({
+      const modalRef = modalService.open<SampleModalResult, SampleModalData>({
         ...state.modalOptions,
         data: {
           passText: state.passText
         },
         component: SampleModal1
       });
-      someModalRef.observeClosed().subscribe(result => {
-        console.log('close result:', result && result.resultText);
-        state.resultText = (result && result.resultText) || '';
+      const observeResult = modalRef.observeClosed().subscribe(result => {
+        const { resultText = '' } = result || {};
+        state.resultText = resultText;
+        console.log('close result:', resultText);
       });
     };
 
     onUnmounted(() => {
-      if (someModalRef) {
-        someModalRef.close();
-      }
+      listener.unsubscribe();
+      modalService.closeAll();
     });
 
     return {

@@ -10,10 +10,11 @@
               close
               close-icon="delete"
               text-color="white"
-              :color="isModalTopIndex(modalRef.id) ? '#009688' : '#77bbb5'"
+              color="indigo"
+              :class="{'is-active': isModalTopIndex(modalRef.id)}"
               @click="onOrderToTop(modalRef.id)"
               @click:close="onCloseByModalId(modalRef.id)"
-            >modalId: {{ modalRef.id }}</v-chip>
+            >{{ modalRef.id }}</v-chip>
           </div>
         </div>
       </div>
@@ -85,7 +86,7 @@ export default defineComponent({
 
     onUnmounted(() => {
       listener.unsubscribe();
-      // modalService.closeAll();
+      modalService.closeAll();
     });
 
     return {
@@ -127,7 +128,7 @@ export default defineComponent({
     display: flex;
     flex-wrap: nowrap;
     float: left;
-    padding: 9px 10px;
+    padding: 8px 10px 1px 10px;
     box-sizing: border-box;
   }
   .stack-item {
@@ -135,6 +136,13 @@ export default defineComponent({
   }
   .stack-chip {
     width: 100%;
+    opacity: 0.4;
+    border-radius: 0;
+    &.is-active {
+      margin-top: -8px;
+      height: 40px;
+      opacity: 1;
+    }
   }
 }
 </style>

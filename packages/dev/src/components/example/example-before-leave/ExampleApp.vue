@@ -28,14 +28,12 @@ export default defineComponent({
     const state = reactive({
       modalOptions: createTestOptions()
     });
-
     const onOpen = () => {
       modalService.open({
         ...state.modalOptions,
         component: SampleBeforeLeaveModal
       });
     };
-
     return {
       state,
       onOpen
