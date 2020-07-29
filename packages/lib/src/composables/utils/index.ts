@@ -5,7 +5,7 @@
  * @returns {string}
  */
 export const createHashId = (id: number): string => {
-  return `modal=${id}`;
+  return `jd-modal=${id}`;
 };
 
 /**
@@ -27,7 +27,7 @@ export const createHashIdReg = (hashId: string): RegExp => {
  * @returns {number | null}
  */
 export const extractHashId = (str: string): number | null => {
-  const replaced: string = str.replace(/(.*(:?#modal=(\d+)))$/, '$3');
+  const replaced: string = str.replace(/(.*(:?#jd-modal=(\d+)))$/, '$3');
   const ver = parseInt(replaced);
   if (isNaN(ver)) return null;
   return ver;
