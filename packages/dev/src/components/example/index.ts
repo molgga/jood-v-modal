@@ -20,6 +20,11 @@ export const ExampleList = [
     component: () => import('@/components/example/example-nested/ExampleApp.vue')
   },
   {
+    key: 'before-leave',
+    label: 'before leave',
+    component: () => import('@/components/example/example-before-leave/ExampleApp.vue')
+  },
+  {
     key: 'usecase-window',
     label: 'usecase window',
     component: () => import('@/components/example/example-usecase-window/ExampleApp.vue')
@@ -28,6 +33,7 @@ export const ExampleList = [
    * before-leave
    * full-screen
    * custom-stack
+   * usecase-action-sheet
    */
 ];
 export const ExampleApps = (() => {

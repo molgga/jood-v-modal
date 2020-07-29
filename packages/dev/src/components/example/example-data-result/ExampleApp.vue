@@ -1,14 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>modal options</v-card-title>
-      <v-card-text><modal-options v-model="state.modalOptions"/></v-card-text>
-    </v-card>
-
-    <hr class="partition" />
-
-    <v-card>
-      <v-card-title>modal sample</v-card-title>
+      <v-card-title>modal pass data &amp; result</v-card-title>
       <v-card-text>
         <v-text-field
           v-model="state.passText"
@@ -28,8 +21,14 @@
           prefix="result data - "
         />
       </v-card-text>
-      <v-card-text><v-btn color="success" @click="onOpen">open</v-btn></v-card-text>
+      <v-card-text>
+        <v-btn color="success" @click="onOpen">open</v-btn>
+      </v-card-text>
     </v-card>
+
+    <hr class="partition" />
+
+    <modal-options v-model="state.modalOptions" />
   </v-container>
 </template>
 
