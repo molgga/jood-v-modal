@@ -12,6 +12,7 @@ export class JdModalService {
   protected modalRefMap: Map<number, JdModalRef> = new Map();
   protected modalsSubject: Subject<JdModalRef[]> = new Subject();
   protected listener: Subscription = new Subscription();
+  protected useLocationHash: boolean = true;
 
   /**
    * 현재 열려있는 모달의 수
@@ -29,6 +30,23 @@ export class JdModalService {
    */
   get hasModal(): boolean {
     return !!this.modalRefMap.size;
+  }
+
+  /**
+   * 로케이션 hash 사용여부
+   * @readonly
+   * @type {boolean}
+   */
+  get usedLocationHash(): boolean {
+    return this.useLocationHash;
+  }
+
+  /**
+   * 로케이션 hash 사용 여부 지정
+   * @param {boolean} is
+   */
+  setUseLocationHash(is: boolean): void {
+    this.useLocationHash = is;
   }
 
   /**
