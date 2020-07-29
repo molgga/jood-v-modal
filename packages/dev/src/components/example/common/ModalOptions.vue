@@ -6,19 +6,8 @@
       </v-expansion-panel-header>
       <v-expansion-panel-content>
         <v-row>
-          <v-col cols="12" sm="6">
-            <div class="sub-desc">overlay click = close</div>
-            <v-switch v-model="value.overlayClose" label="overlayClose" />
-          </v-col>
-          <v-col cols="12" sm="6">
-            <div class="sub-desc">nested modal = some motion</div>
-            <v-switch v-model="value.floatingMode" label="floatingMode" />
-          </v-col>
-        </v-row>
-
-        <v-row>
           <v-col cols="12" sm="12">
-            <div class="sub-desc">nested modal = some animate</div>
+            <div class="sub-desc">openStrategy = open direction</div>
             <v-radio-group v-model="value.openStrategy" row>
               <v-radio
                 v-for="opt in optionOpenStrategy"
@@ -32,26 +21,23 @@
 
         <v-row>
           <v-col cols="12" sm="6">
+            <div class="sub-desc">overlay click = close</div>
+            <v-switch v-model="value.overlayClose" label="overlayClose" />
+          </v-col>
+          <v-col cols="12" sm="6">
+            <div class="sub-desc">nested modal = some motion</div>
+            <v-switch v-model="value.floatingMode" label="floatingMode" />
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="12" sm="6">
+            <div class="sub-desc">disableShadow = box-shadow: none</div>
+            <v-switch v-model="value.disableShadow" label="disableShadow" />
+          </v-col>
+          <v-col cols="12" sm="6">
             <div class="sub-desc">duration = open&amp;close animate speed</div>
-            <v-slider
-              v-model="value.duration"
-              class="align-center"
-              :min="0"
-              :max="1000"
-              :step="10"
-              hide-details
-            >
-              <template v-slot:append>
-                <v-text-field
-                  v-model="value.duration"
-                  readonly
-                  hide-details
-                  single-line
-                  type="number"
-                  style="width: 60px"
-                ></v-text-field>
-              </template>
-            </v-slider>
+            <v-text-field v-model="value.duration" hide-details single-line type="number"></v-text-field>
           </v-col>
         </v-row>
       </v-expansion-panel-content>
@@ -67,6 +53,7 @@ export const createTestOptions = (overwirte: any = {}) => {
   return {
     overlayClose: true,
     floatingMode: true,
+    disableShadow: false,
     duration: 240,
     openStrategy: ModalOpenStrategy.NORMAL,
     ...overwirte

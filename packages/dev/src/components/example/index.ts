@@ -6,12 +6,12 @@ export const ExampleList = [
   },
   {
     key: 'scroll',
-    label: 'scroll',
+    label: 'content scroll',
     component: () => import('@/components/example/example-scroll/ExampleApp.vue')
   },
   {
     key: 'panelStyle',
-    label: 'modal panel style',
+    label: 'modal panelStyle',
     component: () => import('@/components/example/example-panel-style/ExampleApp.vue')
   },
   {
@@ -38,7 +38,6 @@ export const ExampleList = [
    * before-leave
    * full-screen
    * custom-stack
-   * usecase-action-sheet
    */
 ];
 export const ExampleApps = (() => {
