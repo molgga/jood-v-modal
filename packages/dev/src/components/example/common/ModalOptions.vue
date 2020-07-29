@@ -1,5 +1,5 @@
 <template>
-  <v-expansion-panels class="modal-options">
+  <v-expansion-panels v-model="state.panel" class="modal-options">
     <v-expansion-panel>
       <v-expansion-panel-header>
         <div class="tit">modal test options</div>
@@ -60,7 +60,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
+import { defineComponent, reactive } from '@vue/composition-api';
 import { ModalOpenStrategy } from '@/lib-package';
 
 export const createTestOptions = (overwirte: any = {}) => {
@@ -92,9 +92,13 @@ export default defineComponent({
       { value: ModalOpenStrategy.RIGHT_STACK, label: 'RIGHT_STACK' },
       { value: ModalOpenStrategy.BOTTOM_STACK, label: 'BOTTOM_STACK' }
     ];
+    const state = reactive({
+      panel: 0
+    });
 
     return {
-      optionOpenStrategy
+      optionOpenStrategy,
+      state
     };
   }
 });

@@ -20,7 +20,7 @@
     </template>
 
     <v-card>
-      <v-card-title>usecase window</v-card-title>
+      <v-card-title>usecase Window</v-card-title>
       <v-card-text>
         <v-btn color="success" @click="onOpen">open</v-btn>
       </v-card-text>

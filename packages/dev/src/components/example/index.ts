@@ -26,8 +26,13 @@ export const ExampleList = [
   },
   {
     key: 'usecase-window',
-    label: 'usecase window',
+    label: 'usecase Window',
     component: () => import('@/components/example/example-usecase-window/ExampleApp.vue')
+  },
+  {
+    key: 'usecase-action-sheet',
+    label: 'usecase ActionSheet',
+    component: () => import('@/components/example/example-action-sheet/ExampleApp.vue')
   }
   /**
    * before-leave
