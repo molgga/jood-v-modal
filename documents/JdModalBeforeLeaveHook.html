@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>ModalEvent - Documentation</title>
+    <title>JdModalBeforeLeaveHook - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -30,7 +30,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">ModalEvent</h1>
+    <h1 class="page-title">JdModalBeforeLeaveHook</h1>
     
 
     
@@ -43,7 +43,7 @@
 <header>
     
         <h2>
-        ModalEvent
+        JdModalBeforeLeaveHook
         </h2>
         
     
@@ -53,10 +53,132 @@
     <div class="container-overview">
     
         
-            <div class="description">모달에서 발생하는 이벤트</div>
-        
 
         
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<div class="parameters-wrap">
+  <div class="parameters-inner">
+    <table class="props">
+      <thead>
+      <tr>
+          
+          <th>Name</th>
+          
+
+          <th>Type</th>
+
+          
+
+          
+
+          <th class="last">Description</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      
+
+          <tr>
+              
+                  <td class="name"><code>setBeforeLeaveConfirm</code></td>
+              
+
+              <td class="type">
+              
+                  
+<span class="param-type">function</span>
+
+
+              
+              </td>
+
+              
+
+              
+
+              <td class="description last">컨펌이 호출 되어야 할 때 호출될 콜백 등록</td>
+          </tr>
+
+      
+
+          <tr>
+              
+                  <td class="name"><code>setBeforeLeaveValidate</code></td>
+              
+
+              <td class="type">
+              
+                  
+<span class="param-type">function</span>
+
+
+              
+              </td>
+
+              
+
+              
+
+              <td class="description last">컨펌창 호출 여부를 결정하기 위한 콜백 등록</td>
+          </tr>
+
+      
+
+          <tr>
+              
+                  <td class="name"><code>attachBeforeLeave</code></td>
+              
+
+              <td class="type">
+              
+                  
+<span class="param-type">function</span>
+
+
+              
+              </td>
+
+              
+
+              
+
+              <td class="description last">window 의 hash change 이벤트 감지 시작</td>
+          </tr>
+
+      
+
+          <tr>
+              
+                  <td class="name"><code>detachBeforeLeave</code></td>
+              
+
+              <td class="type">
+              
+                  
+<span class="param-type">function</span>
+
+
+              
+              </td>
+
+              
+
+              
+
+              <td class="description last">window 의 hash change 이벤트 감지 해제</td>
+          </tr>
+
+      
+      </tbody>
+    </table>
+  </div>
+</div>
+
 
 
 <dl class="details">
@@ -88,7 +210,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="modal_types.ts.html">modal/types.ts</a>, <a href="modal_types.ts.html#line47">line 47</a>
+        <a href="hook_useJdModalBeforeLeave.ts.html">hook/useJdModalBeforeLeave.ts</a>, <a href="hook_useJdModalBeforeLeave.ts.html#line63">line 63</a>
     </li></ul></dd>
     
 

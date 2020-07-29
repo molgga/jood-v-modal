@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>ModalEvent - Documentation</title>
+    <title>hook/useJdModalBeforeLeave.ts - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -30,100 +30,95 @@
 
 <div id="main">
     
-    <h1 class="page-title">ModalEvent</h1>
+    <h1 class="page-title">hook/useJdModalBeforeLeave.ts</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-        ModalEvent
-        </h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useJdModalRef, useJdModalService, ModalHashChangeEvent } from '../modal';
+import { isCloseTargetByHashId } from '../utils';
 
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">모달에서 발생하는 이벤트</div>
-        
+type CastFunction&lt;T> = () => T | Promise&lt;T>;
 
-        
+/**
+ * @interface
+ * @property setBeforeLeaveConfirm {Function} 컨펌이 호출 되어야 할 때 호출될 콜백 등록
+ * @property setBeforeLeaveValidate {Function} 컨펌창 호출 여부를 결정하기 위한 콜백 등록
+ * @property attachBeforeLeave {Function} window 의 hash change 이벤트 감지 시작
+ * @property detachBeforeLeave {Function} window 의 hash change 이벤트 감지 해제
+ */
+interface JdModalBeforeLeaveHook {
+  setBeforeLeaveConfirm: (fn: CastFunction&lt;boolean>) => void;
+  setBeforeLeaveValidate: (fn: CastFunction&lt;boolean>) => void;
+  attachBeforeLeave: Function;
+  detachBeforeLeave: Function;
+}
 
+/**
+ * 모달의 beforeLeave 기능 훅.
+ * @returns {JdModalBeforeLeaveHook}
+ */
+export const useJdModalBeforeLeave = (): JdModalBeforeLeaveHook => {
+  const modalService = useJdModalService();
+  const modalRef = useJdModalRef();
+  const usedLocationHash = modalService.usedLocationHash;
+  let holdBeforeLeave = false;
+  let fnConfirm: CastFunction&lt;boolean> = async () => Promise.resolve(true);
+  let fnValidate: CastFunction&lt;boolean> = async () => Promise.resolve(true);
 
-<dl class="details">
+  const attachBeforeLeave = () => {
+    window.addEventListener('hashchange', beforeLeaveHandle);
+  };
 
-    
+  const detachBeforeLeave = () => {
+    window.removeEventListener('hashchange', beforeLeaveHandle);
+  };
 
-    
+  const setBeforeLeaveConfirm = (fn: CastFunction&lt;boolean>) => {
+    fnConfirm = fn;
+  };
 
-    
+  const setBeforeLeaveValidate = (fn: CastFunction&lt;boolean>) => {
+    fnValidate = fn;
+  };
 
-    
+  const beforeLeaveHandle = async (evt: ModalHashChangeEvent) => {
+    // 로케이션 hash 사용하지 않음
+    if (!usedLocationHash) return;
+    // 내 모달 보다 위에 열린 모달이 있다면 닫힘 대상 아님
+    if (modalService.hasModalRefNext(modalRef.id)) return;
+    // 모달 id(버전)으로 닫힘 대상인지 확인
+    if (!isCloseTargetByHashId(modalRef.id, evt.oldURL, evt.newURL)) return;
+    // 컨펌창 때문에 hold 체크, 에디터 변경사항 체크
+    if (!holdBeforeLeave &amp;&amp; !fnValidate()) {
+      holdBeforeLeave = true;
+      evt._preventModalClose = true;
+      history.forward(); // 브라우저는 이미 뒤로가기가 되어서 다시 forwad 시킴.
+      const confirm = await fnConfirm();
+      if (!confirm) {
+        holdBeforeLeave = false;
+      } else {
+        modalRef.close();
+        history.back();
+      }
+    }
+  };
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="modal_types.ts.html">modal/types.ts</a>, <a href="modal_types.ts.html#line47">line 47</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+  return {
+    setBeforeLeaveConfirm,
+    setBeforeLeaveValidate,
+    attachBeforeLeave,
+    detachBeforeLeave
+  };
+};
+</code></pre>
+        </article>
+    </section>
 
 
 
