@@ -103,8 +103,8 @@ export class JdModalRef<R = any, D = any, C = any> {
     this.modalId = id;
   }
 
-  setData(data: any): void {
-    this.modalData = data;
+  setData(data: D | undefined): void {
+    this.modalData = data || null;
   }
 
   setPanelStyle(styles: any): void {
