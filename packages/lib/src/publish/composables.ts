@@ -1,1 +1,1 @@
-export * from '../composables/modal';
+export * from '../composables';

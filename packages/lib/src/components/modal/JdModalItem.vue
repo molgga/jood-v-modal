@@ -32,9 +32,10 @@ import {
   JdModalRef,
   ModalEventType,
   ModalOpenStrategy,
-  ModalHashChangeEvent
+  ModalHashChangeEvent,
+  useJdModalService
 } from '../../composables/modal';
-import { createHashId, createHashIdReg, extractHashId } from '../../composables/modal/utils';
+import { createHashId, createHashIdReg, extractHashId } from '../../composables/utils';
 
 interface IProps {
   index: number;
@@ -53,7 +54,7 @@ export default defineComponent({
   },
   setup(props: IProps) {
     provide(JD_MODAL_REF_TOKEN, props.modalRef);
-
+    const modalService = useJdModalService();
     const modalContainer: Ref<HTMLElement | null> = ref(null);
     const modalRef = props.modalRef;
     const openStrategy = modalRef.openStrategy;
@@ -61,11 +62,13 @@ export default defineComponent({
     const duration = modalRef.duration;
     const floatingMode = modalRef.floatingMode || false;
     const panelStyle = modalRef.panelStyle;
+    const modalShadow = !modalRef.disableShadow;
     const safeTiming = isNaN(duration) || duration < 0 ? 240 : duration;
     const animateTimer: any = ref(null);
     const opening = ref(false);
     const opened = ref(false);
     const closing = ref(false);
+    const usedLocationHash = modalService.usedLocationHash;
 
     const onOverlayClick = (evt: MouseEvent) => {
       if (overlayClose && evt.target === modalContainer.value) {
@@ -73,7 +76,7 @@ export default defineComponent({
       }
     };
 
-    const listener = modalRef.observeOpener().subscribe(evt => {
+    const observeOpener = modalRef.observeOpener().subscribe(evt => {
       if (evt.type === ModalEventType.OPENED) {
         if (modalContainer && modalContainer.value) {
           modalContainer.value.focus();
@@ -84,7 +87,7 @@ export default defineComponent({
         closing.value = true;
         animateTimer.value = setTimeout(() => {
           modalRef.closed();
-          listener.unsubscribe();
+          observeOpener.unsubscribe();
         }, safeTiming);
       }
     });
@@ -114,7 +117,8 @@ export default defineComponent({
           'is-opening': opening.value,
           'is-opened': opened.value,
           'is-closing': closing.value,
-          'floating-mode': floatingMode
+          'floating-mode': floatingMode,
+          shadow: modalShadow
         }
       ];
     });
@@ -144,13 +148,13 @@ export default defineComponent({
     let hashTouched = false;
     const historyHashId = createHashId(modalRef.id);
     const historyHashIdReg = createHashIdReg(historyHashId);
-    const hashTouch = () => {
+    const touchLocationHash = () => {
       location.hash = historyHashId;
       hashTouched = true;
-      window.addEventListener('hashchange', hashChange);
+      window.addEventListener('hashchange', handleLocationHash);
     };
 
-    const hashChange = (evt: ModalHashChangeEvent) => {
+    const handleLocationHash = (evt: ModalHashChangeEvent) => {
       if (evt._preventModalClose) return;
       if (!hashTouched) return;
       if (!historyHashIdReg.test(evt.oldURL)) return;
@@ -169,12 +173,28 @@ export default defineComponent({
       }
     };
 
-    const hashTouchPop = () => {
-      window.removeEventListener('hashchange', hashChange);
+    const popLocationHash = () => {
+      window.removeEventListener('hashchange', handleLocationHash);
       if (!hashTouched) return;
       if (historyHashIdReg.test(location.hash)) {
         history.back();
       }
+    };
+
+    const mountedOpening = () => {
+      opening.value = true;
+      animateTimer.value = setTimeout(mountedOpened, safeTiming);
+    };
+
+    const mountedOpened = () => {
+      if (usedLocationHash) {
+        touchLocationHash();
+      }
+      opened.value = true;
+      modalRef.opener.next({
+        type: ModalEventType.OPENED,
+        modalRef
+      });
     };
 
     onMounted(() => {
@@ -182,23 +202,15 @@ export default defineComponent({
         type: ModalEventType.OPEN,
         modalRef
       });
-      animateTimer.value = setTimeout(() => {
-        opening.value = true;
-        animateTimer.value = setTimeout(() => {
-          opened.value = true;
-          hashTouch();
-          modalRef.opener.next({
-            type: ModalEventType.OPENED,
-            modalRef
-          });
-        }, safeTiming);
-      }, 15);
+      animateTimer.value = setTimeout(mountedOpening, 15);
     });
 
     onUnmounted(() => {
-      hashTouchPop();
+      if (usedLocationHash) {
+        popLocationHash();
+      }
       clearTimeout(animateTimer.value);
-      listener.unsubscribe();
+      observeOpener.unsubscribe();
     });
 
     return {
@@ -263,6 +275,14 @@ export default defineComponent({
   &.is-closing {
     background-color: rgba(0, 0, 0, 0);
   }
+  &.shadow {
+    > .panel > .pivot {
+      // box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.1), 0 24px 38px 3px rgba(0, 0, 0, 0.08),
+      //   0 9px 46px 8px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.02), 0 3px 10px 1px rgba(0, 0, 0, 0.04),
+        0 6px 6px rgba(0, 0, 0, 0.06);
+    }
+  }
 
   // 모달 오픈 방식(NORMAL) 애니메이션
   &.ops-normal {
@@ -297,7 +317,6 @@ export default defineComponent({
     align-items: initial;
     > .panel > .pivot {
       border-radius: 0;
-      // box-shadow: 10px 0 10px 2px rgba(0, 0, 0, 0.1), 3px 0 3px rgba(0, 0, 0, 0.1);
       transform: translateX(-102%);
       &:before {
         content: '';
@@ -307,6 +326,11 @@ export default defineComponent({
         left: -99px;
         width: 100px;
         background-color: #ffffff;
+      }
+    }
+    &.shadow {
+      > .panel > .pivot {
+        box-shadow: 10px 0 10px 2px rgba(0, 0, 0, 0.04), 3px 0 3px rgba(0, 0, 0, 0.02);
       }
     }
     &.is-opening > .panel > .pivot {
@@ -331,7 +355,6 @@ export default defineComponent({
     align-items: initial;
     > .panel > .pivot {
       border-radius: 0;
-      // box-shadow: -10px 0 10px 2px rgba(0, 0, 0, 0.1), -3px 0 3px rgba(0, 0, 0, 0.1);
       transform: translateX(102%);
       &:before {
         content: '';
@@ -341,6 +364,11 @@ export default defineComponent({
         right: -99px;
         width: 100px;
         background-color: #ffffff;
+      }
+    }
+    &.shadow {
+      > .panel > .pivot {
+        box-shadow: -10px 0 10px 2px rgba(0, 0, 0, 0.04), -3px 0 3px rgba(0, 0, 0, 0.02);
       }
     }
     &.is-opening > .panel > .pivot {
@@ -365,7 +393,6 @@ export default defineComponent({
     align-items: flex-end;
     > .panel > .pivot {
       border-radius: 10px 10px 0 0;
-      // box-shadow: 0 0 5px rgba(0, 0, 0, 0.05), 0 -10px 10px 1px rgba(0, 0, 0, 0.08), 0 -3px 3px rgba(0, 0, 0, 0.1);
       transform: translateY(102%);
       &:before {
         content: '';
@@ -377,7 +404,12 @@ export default defineComponent({
         background-color: #ffffff;
       }
     }
-
+    &.shadow {
+      > .panel > .pivot {
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.02), 0 -10px 10px 1px rgba(0, 0, 0, 0.04),
+          0 -3px 3px rgba(0, 0, 0, 0.06);
+      }
+    }
     &.is-opening > .panel > .pivot {
       transform: translateY(0%);
     }
@@ -403,7 +435,6 @@ export default defineComponent({
     }
     > .panel > .pivot {
       border-radius: 0 0 10px 10px;
-      // box-shadow: 0 10px 10px 2px rgba(0, 0, 0, 0.1), 0 3px 3px rgba(0, 0, 0, 0.1);
       transform: translateY(-102%);
       &:before {
         content: '';
@@ -413,6 +444,13 @@ export default defineComponent({
         top: -99px;
         height: 100px;
         background-color: #ffffff;
+      }
+    }
+    &.shadow {
+      > .panel > .pivot {
+        // box-shadow: 0 10px 10px 2px rgba(0, 0, 0, 0.08), 0 3px 3px rgba(0, 0, 0, 0.04);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.02), 0 10px 10px 1px rgba(0, 0, 0, 0.04),
+          0 3px 3px rgba(0, 0, 0, 0.06);
       }
     }
     &.is-opening > .panel > .pivot {

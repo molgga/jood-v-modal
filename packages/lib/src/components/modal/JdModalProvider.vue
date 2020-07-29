@@ -54,10 +54,10 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      const subscription = service.observeModalState().subscribe(modalList => {
+      const observeModalState = service.observeModalState().subscribe(modalList => {
         modals.value = modalList;
       });
-      listener.add(subscription);
+      listener.add(observeModalState);
     });
 
     onUnmounted(() => {

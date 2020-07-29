@@ -6,12 +6,12 @@ export const ExampleList = [
   },
   {
     key: 'scroll',
-    label: 'scroll',
+    label: 'content scroll',
     component: () => import('@/components/example/example-scroll/ExampleApp.vue')
   },
   {
     key: 'panelStyle',
-    label: 'modal panel style',
+    label: 'modal panelStyle',
     component: () => import('@/components/example/example-panel-style/ExampleApp.vue')
   },
   {
@@ -20,9 +20,19 @@ export const ExampleList = [
     component: () => import('@/components/example/example-nested/ExampleApp.vue')
   },
   {
+    key: 'before-leave',
+    label: 'before leave',
+    component: () => import('@/components/example/example-before-leave/ExampleApp.vue')
+  },
+  {
     key: 'usecase-window',
-    label: 'usecase window',
+    label: 'usecase Window',
     component: () => import('@/components/example/example-usecase-window/ExampleApp.vue')
+  },
+  {
+    key: 'usecase-action-sheet',
+    label: 'usecase ActionSheet',
+    component: () => import('@/components/example/example-action-sheet/ExampleApp.vue')
   }
   /**
    * before-leave

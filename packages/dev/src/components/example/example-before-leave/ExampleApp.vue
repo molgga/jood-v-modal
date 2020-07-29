@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>modal content scroll</v-card-title>
+      <v-card-title>Example before leave</v-card-title>
       <v-card-text>
         <v-btn color="success" @click="onOpen">open</v-btn>
       </v-card-text>
@@ -15,9 +15,9 @@
 
 <script lang="ts">
 import { defineComponent, reactive, onMounted, onUnmounted } from '@vue/composition-api';
-import { useJdModalService, JdModalRef } from '@/lib-package';
+import { useJdModalService, JdModalRef, ModalHashChangeEvent } from '@/lib-package';
 import ModalOptions, { createTestOptions } from '../common/ModalOptions.vue';
-import SampleModal2 from '../common/SampleModal2.vue';
+import SampleBeforeLeaveModal from './SampleBeforeLeaveModal.vue';
 
 export default defineComponent({
   components: {
@@ -28,18 +28,12 @@ export default defineComponent({
     const state = reactive({
       modalOptions: createTestOptions()
     });
-
     const onOpen = () => {
       modalService.open({
         ...state.modalOptions,
-        component: SampleModal2
+        component: SampleBeforeLeaveModal
       });
     };
-
-    onUnmounted(() => {
-      modalService.closeAll();
-    });
-
     return {
       state,
       onOpen

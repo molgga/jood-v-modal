@@ -1,19 +1,16 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>modal options</v-card-title>
-      <v-card-text><modal-options v-model="state.modalOptions"/></v-card-text>
+      <v-card-title>modal panelStyle</v-card-title>
+      <v-card-text>
+        <v-btn color="success" @click="onOpen(1)">open1</v-btn>|
+        <v-btn color="success" @click="onOpen(2)">open2</v-btn>
+      </v-card-text>
     </v-card>
 
     <hr class="partition" />
 
-    <v-card>
-      <v-card-title>modal sample</v-card-title>
-      <v-card-text
-        ><v-btn color="success" @click="onOpen(1)">open1</v-btn> |
-        <v-btn color="success" @click="onOpen(2)">open2</v-btn></v-card-text
-      >
-    </v-card>
+    <modal-options v-model="state.modalOptions" />
   </v-container>
 </template>
 

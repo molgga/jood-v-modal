@@ -11,9 +11,11 @@
           <v-list-item v-for="(example, index) in exampleLinks" :key="index" link :to="example.to">
             <v-list-item-content>
               <v-list-item-title>{{ example.label }}</v-list-item-title>
-              <v-list-item-subtitle v-if="example.description">{{
+              <v-list-item-subtitle v-if="example.description">
+                {{
                 example.description
-              }}</v-list-item-subtitle>
+                }}
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -64,7 +66,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api';
 import { exampleLinks } from '@/components/example';
-import { provideJdModalService, JdModalProvider } from '@/lib-package';
+import { provideJdModalService, useJdModalService, JdModalProvider } from '@/lib-package';
 
 export default defineComponent({
   components: {
@@ -72,6 +74,8 @@ export default defineComponent({
   },
   setup() {
     provideJdModalService();
+    const modalService = useJdModalService();
+    modalService.setUseLocationHash(true);
 
     const drawer: any = null;
 

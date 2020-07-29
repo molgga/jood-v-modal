@@ -11,9 +11,11 @@ export interface ModalHashChangeEvent extends HashChangeEvent {
  * @template D 모달로 전달되는 데이터 타입
  * @template C 컴포넌트 타입
  * @property {C} component 모달로 열려고 하는 컴포넌트
- * @property {ModalOpenStrategy} [openStrategy=ModalOpenStrategy.NORMAL] 오픈 방식(방향)
- * @property {boolean} [openStrategy=false] 오버레이 영역 클릭시 닫기 처리 여부
- * @property {number} [duration=240] 오픈 방식
+ * @property {ModalOpenStrategy} [openStrategy] 오픈 방식(방향)
+ * @property {boolean} [overlayClose] 오버레이 영역 클릭시 닫기 처리 여부
+ * @property {boolean} [floatingMode] 중첩 열기시 애니메이트 처리 여부
+ * @property {boolean} [disableShadow] 그림자 처리 여부
+ * @property {number} [duration] 열기, 닫기 애니메이션 시간
  * @property {D} [data] 모달에 전달하는 데이터
  * @property {any} [panelStyle] 모달 패널 css 스타일
  */
@@ -22,6 +24,7 @@ export interface ModalData<D = any, C = any> {
   openStrategy?: ModalOpenStrategy;
   overlayClose?: boolean;
   floatingMode?: boolean;
+  disableShadow?: boolean;
   duration?: number;
   data?: D;
   panelStyle?: any;
