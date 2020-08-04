@@ -61,21 +61,26 @@ branches:
 after_success:
   # - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && npm run ci:doc && npm run ci:doc-example
   - echo "Running after_success"
-  - test $TRAVIS_BRANCH = "master" && npm run ci:after-success
+  # - test $TRAVIS_BRANCH = "master" && npm run ci:after-success
 
 jobs:
   include:
     - stage: test
-      script: echo "Running jobs ci:test"
-      script: npm run ci:test
-    - stage: build
-      if: branch = master
-      script: echo "Running jobs ci:build"
-      script: npm run ci:build
+      script:
+        - echo "Running jobs ci:test"
+        - npm run ci:test
+
+    - stage: deploy
+      if: branch = master AND $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$
+      script:
+        - echo "Running jobs ci:build"
+        - npm run ci:build
+        - npm run ci:after-success
       deploy:
         # 배포 설정 - npm module
         - provider: npm
-          script: echo "Running jobs deploy npm"
+          script: 
+            - echo "Running jobs deploy npm"
           edge: true
           skip_cleanup: true
           email: $NPM_PUBLISH_EMAIL
@@ -85,11 +90,12 @@ jobs:
           on:
             repo: molgga/jood-v-modal
             all_branches: true
-            condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$ # tag - v0.0.0 이 있는 경우만 publish
+            # condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$ # tag - v0.0.0 이 있는 경우만 publish
 
         # 배포 설정 - github page
         - provider: pages
-          script: echo "Running jobs deploy pages"
+          script: 
+            - echo "Running jobs deploy pages"
           edge: true
           skip_cleanup: true
           local_dir: docs
