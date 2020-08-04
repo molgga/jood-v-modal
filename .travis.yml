@@ -56,12 +56,12 @@ script:
 branches:
   only:
     - master
-    - /^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$/
+    - /^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$/
 
 # condition https://stackoverflow.com/questions/34591587/travis-conditional-on-branch-after-success
 after_success:
   # - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && npm run ci:doc && npm run ci:doc-example
-  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && npm run ci:ci:deploy-before
+  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && npm run ci:deploy-before
 
 deploy:
 
@@ -76,7 +76,7 @@ deploy:
     on:
       repo: molgga/jood-v-modal
       all_branches: true
-      condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$ # tag - v0.0.0 이 있는 경우만 publish
+      condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$ # tag - v0.0.0 이 있는 경우만 publish
 
   # 배포 설정 - github page
   - provider: pages
@@ -86,4 +86,4 @@ deploy:
     github_token: $GITHUB_PAGES_TOKEN
     on:
       all_branches: true
-      condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$ # tag - v0.0.0 이 있는 경우만 publish
+      condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$ # tag - v0.0.0 이 있는 경우만 publish
