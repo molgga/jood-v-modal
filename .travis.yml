@@ -51,6 +51,14 @@ script:
   - echo $TRAVIS_BUILD_NUMBER
   - echo $TRAVIS_REPO_SLUG
   - npm run ci:test
+  - if: "m" =~ "m"
+    - echo "############################# if 1"
+  - if: $TRAVIS_BRANCH =~ "master"
+    - echo "############################# if 2"
+  - if: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$
+    - echo "############################# if 3"
+  - if: "m" =~ "m" AND "a" =~ "a"
+    - echo "############################# if 4"
 
 branches:
   only:
@@ -60,9 +68,6 @@ branches:
 # condition https://stackoverflow.com/questions/34591587/travis-conditional-on-branch-after-success
 after_success:
   # - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && npm run ci:doc && npm run ci:doc-example
-  - test "v0.1.1" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ && echo "############################ accpet 1"
-  - test "v0.1.1-1" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$ && echo "############################ accpet 2"
-  - test "v0.1.1-1" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[a-z0-9]+)?$ && echo "############################ accpet 3"
   - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && npm run ci:deploy-before
 
 deploy:
