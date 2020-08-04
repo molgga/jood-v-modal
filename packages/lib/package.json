@@ -1,6 +1,6 @@
 {
   "name": "@jood/v-modal",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "dist/v-modal.common.js",
   "types": "dist/types/index.d.ts",
   "module": "src/index.ts",
@@ -66,5 +66,13 @@
     "url": "https://github.com/molgga/jood-v-modal/issues",
     "email": "molgga84@gmail.com"
   },
-  "homepage": "https://molgga.github.io/jood-v-modal"
+  "homepage": "https://molgga.github.io/jood-v-modal",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "vue",
+    "modal",
+    "confirm",
+    "actionsheet"
+  ]
 }
