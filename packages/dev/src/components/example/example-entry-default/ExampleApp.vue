@@ -1,10 +1,9 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>modal panelStyle</v-card-title>
+      <v-card-title>custom modal entry(by modalRef)</v-card-title>
       <v-card-text>
-        <v-btn color="success" @click="onOpen(1)">open1</v-btn>|
-        <v-btn color="success" @click="onOpen(2)">open2</v-btn>
+        <v-btn color="success" @click="onOpen">open</v-btn>
       </v-card-text>
     </v-card>
 
@@ -15,37 +14,41 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onMounted, onUnmounted } from '@vue/composition-api';
+import {
+  defineComponent,
+  reactive,
+  onMounted,
+  onUnmounted,
+  onBeforeUnmount
+} from '@vue/composition-api';
 import { useJdModalService, JdModalRef } from '@/lib-package';
 import ModalOptions, { createTestOptions } from '../common/ModalOptions.vue';
-import SampleModal1 from '../common/SampleModal1.vue';
-import SampleModal2 from '../common/SampleModal2.vue';
+import CustomModalEntry from '../common/CustomModalEntry.vue';
+import SampleNestedModal1 from '../common/SampleNestedModal1.vue';
 
 export default defineComponent({
   components: {
     ModalOptions
   },
   setup() {
+    // provideJdModalService({ defaultEntryComponent: CustomModalEntry });
     const modalService = useJdModalService();
+    modalService.setDefaultEntryComponent(CustomModalEntry);
+
     const state = reactive({
       modalOptions: createTestOptions()
     });
-
-    const onOpen = (idx: number) => {
-      const component = idx === 2 ? SampleModal2 : SampleModal1;
+    const onOpen = () => {
       modalService.open({
         ...state.modalOptions,
-        panelStyle: {
-          borderRadius: '0',
-          border: '4px solid #000000',
-          backgroundColor: '#f0fff7',
-          margin: '20px 0',
-          overflow: 'hidden'
-        },
-        component
+        data: { myTitle: 'Foo', modalOptions: state.modalOptions },
+        entryComponent: CustomModalEntry,
+        component: SampleNestedModal1
       });
     };
-
+    onBeforeUnmount(() => {
+      modalService.resetDefaultEntryComponent();
+    });
     onUnmounted(() => {
       modalService.closeAll();
     });

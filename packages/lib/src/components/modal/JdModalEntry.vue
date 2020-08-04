@@ -1,7 +1,7 @@
 <template>
   <div
-    ref="modalContainer"
-    class="jd-modal-item"
+    ref="refModalContainer"
+    class="jd-modal-entry"
     :class="classes"
     :style="styles.modal"
     @click="onOverlayClick"
@@ -18,24 +18,8 @@
 </template>
 
 <script lang="ts">
-import {
-  provide,
-  defineComponent,
-  onMounted,
-  onUnmounted,
-  computed,
-  ref,
-  Ref
-} from '@vue/composition-api';
-import {
-  JD_MODAL_REF_TOKEN,
-  JdModalRef,
-  ModalEventType,
-  ModalOpenStrategy,
-  ModalHashChangeEvent,
-  useJdModalService
-} from '../../composables/modal';
-import { createHashId, createHashIdReg, extractHashId } from '../../composables/utils';
+import { defineComponent, onMounted, onUnmounted } from '@vue/composition-api';
+import { JdModalRef, useJdModalItemSetup } from '../../composables';
 
 interface IProps {
   index: number;
@@ -43,7 +27,7 @@ interface IProps {
 }
 
 export default defineComponent({
-  name: 'JdModalItem',
+  name: 'JdModalEntry',
   props: {
     index: {
       type: Number
@@ -53,168 +37,27 @@ export default defineComponent({
     }
   },
   setup(props: IProps) {
-    provide(JD_MODAL_REF_TOKEN, props.modalRef);
-    const modalService = useJdModalService();
-    const modalContainer: Ref<HTMLElement | null> = ref(null);
-    const modalRef = props.modalRef;
-    const openStrategy = modalRef.openStrategy;
-    const overlayClose = modalRef.overlayClose || false;
-    const duration = modalRef.duration;
-    const floatingMode = modalRef.floatingMode || false;
-    const panelStyle = modalRef.panelStyle;
-    const modalShadow = !modalRef.disableShadow;
-    const safeTiming = isNaN(duration) || duration < 0 ? 240 : duration;
-    const animateTimer: any = ref(null);
-    const opening = ref(false);
-    const opened = ref(false);
-    const closing = ref(false);
-    const usedLocationHash = modalService.usedLocationHash;
-
-    const onOverlayClick = (evt: MouseEvent) => {
-      if (overlayClose && evt.target === modalContainer.value) {
-        modalRef.close();
-      }
-    };
-
-    const observeOpener = modalRef.observeOpener().subscribe(evt => {
-      if (evt.type === ModalEventType.OPENED) {
-        if (modalContainer && modalContainer.value) {
-          modalContainer.value.focus();
-        }
-      } else if (evt.type === ModalEventType.CLOSE) {
-        opening.value = false;
-        opened.value = false;
-        closing.value = true;
-        animateTimer.value = setTimeout(() => {
-          modalRef.closed();
-          observeOpener.unsubscribe();
-        }, safeTiming);
-      }
+    const {
+      mounted,
+      unmounted,
+      onOverlayClick,
+      refModalContainer,
+      classes,
+      styles
+    } = useJdModalItemSetup({
+      modalRef: props.modalRef
     });
-
-    const classes = computed(() => {
-      let openType;
-      switch (openStrategy) {
-        case ModalOpenStrategy.TOP_STACK:
-          openType = 'ops-topstack';
-          break;
-        case ModalOpenStrategy.LEFT_STACK:
-          openType = 'ops-leftstack';
-          break;
-        case ModalOpenStrategy.RIGHT_STACK:
-          openType = 'ops-rightstack';
-          break;
-        case ModalOpenStrategy.BOTTOM_STACK:
-          openType = 'ops-bottomstack';
-          break;
-        default:
-          openType = 'ops-normal';
-          break;
-      }
-      return [
-        openType,
-        {
-          'is-opening': opening.value,
-          'is-opened': opened.value,
-          'is-closing': closing.value,
-          'floating-mode': floatingMode,
-          shadow: modalShadow
-        }
-      ];
-    });
-
-    const styles = computed(() => {
-      const timingOpacity = safeTiming * 0.85;
-      const modalStyle = {
-        transition: `background-color ${safeTiming}ms`
-      };
-      const panelPivotStyle = {
-        ...(() => {
-          if (openStrategy === ModalOpenStrategy.BOTTOM_STACK) {
-            return {
-              marginTop: '12px'
-            };
-          }
-        })(),
-        ...panelStyle,
-        transition: `transform ${safeTiming}ms cubic-bezier(0.4, 0, 0.2, 1), opacity ${timingOpacity}ms`
-      };
-      return {
-        modal: modalStyle,
-        pivot: panelPivotStyle
-      };
-    });
-
-    let hashTouched = false;
-    const historyHashId = createHashId(modalRef.id);
-    const historyHashIdReg = createHashIdReg(historyHashId);
-    const touchLocationHash = () => {
-      location.hash = historyHashId;
-      hashTouched = true;
-      window.addEventListener('hashchange', handleLocationHash);
-    };
-
-    const handleLocationHash = (evt: ModalHashChangeEvent) => {
-      if (evt._preventModalClose) return;
-      if (!hashTouched) return;
-      if (!historyHashIdReg.test(evt.oldURL)) return;
-      const oldVer = extractHashId(evt.oldURL);
-      const newVer = extractHashId(evt.newURL);
-      let useClose = false;
-      if (newVer === null) {
-        useClose = true;
-      } else if (oldVer === null) {
-        useClose = false;
-      } else if (newVer < oldVer) {
-        useClose = true;
-      }
-      if (useClose) {
-        modalRef.close();
-      }
-    };
-
-    const popLocationHash = () => {
-      window.removeEventListener('hashchange', handleLocationHash);
-      if (!hashTouched) return;
-      if (historyHashIdReg.test(location.hash)) {
-        history.back();
-      }
-    };
-
-    const mountedOpening = () => {
-      opening.value = true;
-      animateTimer.value = setTimeout(mountedOpened, safeTiming);
-    };
-
-    const mountedOpened = () => {
-      if (usedLocationHash) {
-        touchLocationHash();
-      }
-      opened.value = true;
-      modalRef.opener.next({
-        type: ModalEventType.OPENED,
-        modalRef
-      });
-    };
 
     onMounted(() => {
-      modalRef.opener.next({
-        type: ModalEventType.OPEN,
-        modalRef
-      });
-      animateTimer.value = setTimeout(mountedOpening, 15);
+      mounted();
     });
 
     onUnmounted(() => {
-      if (usedLocationHash) {
-        popLocationHash();
-      }
-      clearTimeout(animateTimer.value);
-      observeOpener.unsubscribe();
+      unmounted();
     });
 
     return {
-      modalContainer,
+      refModalContainer,
       onOverlayClick,
       classes,
       styles
@@ -224,7 +67,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.jd-modal-item {
+.jd-modal-entry {
   position: absolute;
   top: 0;
   left: 0;

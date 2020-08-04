@@ -1,5 +1,23 @@
+import { VueConstructor, AsyncComponent, Component } from 'vue';
 import { JdModalRef } from './JdModalRef';
 
+export type EntryComponentType = VueConstructor | Component | AsyncComponent | any;
+
+/**
+ * 모달 서비스 config
+ * @export
+ * @interface ModalConfig
+ */
+export interface ModalConfig {
+  defaultEntryComponent?: EntryComponentType;
+}
+
+/**
+ * 모달 window hash change 이벤트
+ * @export
+ * @interface ModalHashChangeEvent
+ * @extends {HashChangeEvent}
+ */
 export interface ModalHashChangeEvent extends HashChangeEvent {
   _preventModalClose?: boolean;
 }
@@ -11,6 +29,7 @@ export interface ModalHashChangeEvent extends HashChangeEvent {
  * @template D 모달로 전달되는 데이터 타입
  * @template C 컴포넌트 타입
  * @property {C} component 모달로 열려고 하는 컴포넌트
+ * @property {EntryComponentType} [entryComponent] 모달을 감싸는(모달 기능 주입, 모션 처리 등을 하는) 컴포넌트.
  * @property {ModalOpenStrategy} [openStrategy] 오픈 방식(방향)
  * @property {boolean} [overlayClose] 오버레이 영역 클릭시 닫기 처리 여부
  * @property {boolean} [floatingMode] 중첩 열기시 애니메이트 처리 여부
@@ -21,6 +40,7 @@ export interface ModalHashChangeEvent extends HashChangeEvent {
  */
 export interface ModalData<D = any, C = any> {
   component: C;
+  entryComponent?: EntryComponentType;
   openStrategy?: ModalOpenStrategy;
   overlayClose?: boolean;
   floatingMode?: boolean;

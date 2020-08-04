@@ -1,6 +1,7 @@
 import { Subject, Observable, Subscription } from 'rxjs';
-import { ModalEvent, ModalEventType, ModalData, ModalOpenStrategy } from './types';
+import { ModalEvent, ModalEventType, ModalData, ModalConfig, EntryComponentType } from './types';
 import { JdModalRef } from './JdModalRef';
+import { JdModalEntry } from '../../components';
 
 /**
  * 모달 서비스
@@ -8,11 +9,17 @@ import { JdModalRef } from './JdModalRef';
  * @class JdModalService
  */
 export class JdModalService {
+  constructor(config?: ModalConfig) {
+    if (config && config.defaultEntryComponent) {
+      this.setDefaultEntryComponent(config.defaultEntryComponent);
+    }
+  }
   protected modalUid = 0;
   protected modalRefMap: Map<number, JdModalRef> = new Map();
   protected modalsSubject: Subject<JdModalRef[]> = new Subject();
   protected listener: Subscription = new Subscription();
   protected useLocationHash: boolean = true;
+  protected defaultEntryComponent: EntryComponentType = JdModalEntry;
 
   /**
    * 현재 열려있는 모달의 수
@@ -47,6 +54,23 @@ export class JdModalService {
    */
   setUseLocationHash(is: boolean): void {
     this.useLocationHash = is;
+  }
+
+  /**
+   * 모달을 감싸는(모달 기능, 모션 처리) 컴포넌트
+   * @param {EntryComponentType} entryComponent
+   * @returns {void}
+   */
+  setDefaultEntryComponent(entryComponent: EntryComponentType): void {
+    this.defaultEntryComponent = entryComponent;
+  }
+
+  /**
+   * 모달을 감싸는 컴포넌트 리셋
+   * @returns {void}
+   */
+  resetDefaultEntryComponent(): void {
+    this.defaultEntryComponent = JdModalEntry;
   }
 
   /**
@@ -108,6 +132,7 @@ export class JdModalService {
     const id = this.modalUid++;
     const modalRef = new JdModalRef<R, D, C>();
     modalRef.setId(id);
+    modalRef.setEntryComponent(data.entryComponent || this.defaultEntryComponent);
     modalRef.assignModalData(data);
     const subscription = modalRef.observeOpener().subscribe((evt: ModalEvent) => {
       if (evt.type === ModalEventType.CLOSED) {
@@ -126,6 +151,7 @@ export class JdModalService {
   /**
    * 모달 닫기. (modalRef 의 id 로)
    * @param {number} id open 시 전달되는 modalRef 의 id 값
+   * @returns {void}
    */
   close(id: number): void {
     const modalRef = this.getModalRef(id);
@@ -138,6 +164,7 @@ export class JdModalService {
   /**
    * 모달 닫기. (modalRef 로)
    * @param {JdModalRef} modalRef 오픈시 전달되거나 inject 해서 꺼낼 수 있는 modalRef
+   * @returns {void}
    */
   closeByRef(modalRef: JdModalRef): void {
     const ref = this.getModalRef(modalRef.id);
@@ -149,6 +176,7 @@ export class JdModalService {
   /**
    * 모달 닫기. (modalId 로)
    * @param {JdModalRef} modalRef 오픈시 전달되거나 inject 해서 꺼낼 수 있는 modalRef 의 id 값
+   * @returns {void}
    */
   closeById(modalId: number): void {
     const ref = this.getModalRef(modalId);
@@ -162,9 +190,9 @@ export class JdModalService {
    * index 로 위치 스왑 하기
    * @param {number} from
    * @param {number} to
-   * @returns
+   * @returns {void}
    */
-  swapOrder(from: number, to: number) {
+  swapOrder(from: number, to: number): void {
     const size = this.modalRefMap.size;
     if (!(0 <= from && from < size && 0 <= to && to < size)) return;
     if (from === to) return;
@@ -179,6 +207,7 @@ export class JdModalService {
   /**
    * modalRef 기준으로 가장 앞에 있는 모달과 위치 스왑하기
    * @param {JdModalRef} modalRef
+   * @returns {void}
    */
   swapOrderTopByRef(modalRef: JdModalRef): void {
     let from = -1;
@@ -208,6 +237,7 @@ export class JdModalService {
   /**
    * modalRef 기준 가장 앞으로 넣고 나머지 뒤로 밀어내기
    * @param {JdModalRef} modalRef
+   * @returns {void}
    */
   pushOrder(modalRef: JdModalRef): void {
     const from = this.modalRefMap.get(modalRef.id);
@@ -233,6 +263,7 @@ export class JdModalService {
   /**
    * modalId 기준 가장 앞으로 넣고 나머지 뒤로 밀어내기
    * @param {number} modalId
+   * @returns {void}
    */
   pushOrderById(modalId: number): void {
     const modalRef = this.modalRefMap.get(modalId);
@@ -243,6 +274,7 @@ export class JdModalService {
   /**
    * 해당 서비스를 통해 열린 모달을 모두 닫기
    * @param {boolean} [useClosing=true]
+   * @returns {void}
    */
   closeAll(useClosing: boolean = true): void {
     const modals = this.modals || [];
@@ -258,8 +290,9 @@ export class JdModalService {
 
   /**
    * 파기
+   * @returns {void}
    */
-  destroy() {
+  destroy(): void {
     try {
       this.listener.unsubscribe();
       const modals = this.modals || [];

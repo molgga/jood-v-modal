@@ -25,20 +25,30 @@ export const ExampleList = [
     component: () => import('@/components/example/example-before-leave/ExampleApp.vue')
   },
   {
+    key: 'custom-entry-modal',
+    label: 'custom entry component',
+    component: () => import('@/components/example/example-entry-modal/ExampleApp.vue')
+  },
+  {
+    key: 'custom-entry-default',
+    label: 'custom default entry component',
+    component: () => import('@/components/example/example-entry-default/ExampleApp.vue')
+  },
+  {
     key: 'usecase-window',
     label: 'usecase Window',
     component: () => import('@/components/example/example-usecase-window/ExampleApp.vue')
   },
   {
-    key: 'usecase-action-sheet',
+    key: 'usecase-actionsheet',
     label: 'usecase ActionSheet',
-    component: () => import('@/components/example/example-action-sheet/ExampleApp.vue')
+    component: () => import('@/components/example/example-usecase-actionsheet/ExampleApp.vue')
+  },
+  {
+    key: 'usecase-confirm',
+    label: 'usecase Confirm',
+    component: () => import('@/components/example/example-usecase-confirm/ExampleApp.vue')
   }
-  /**
-   * before-leave
-   * full-screen
-   * custom-stack
-   */
 ];
 export const ExampleApps = (() => {
   const hash: any = {};

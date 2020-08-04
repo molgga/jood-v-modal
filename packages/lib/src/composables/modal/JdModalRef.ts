@@ -1,5 +1,11 @@
 import { Observable, Subject } from 'rxjs';
-import { ModalOpenStrategy, ModalEvent, ModalEventType, ModalData } from './types';
+import {
+  ModalOpenStrategy,
+  ModalEvent,
+  ModalEventType,
+  ModalData,
+  EntryComponentType
+} from './types';
 
 /**
  * 하나의 모달 (정보)
@@ -11,6 +17,7 @@ import { ModalOpenStrategy, ModalEvent, ModalEventType, ModalData } from './type
  */
 export class JdModalRef<R = any, D = any, C = any> {
   protected modalId: number = -1;
+  protected modalEntryComponent: EntryComponentType;
   protected modalData: D | null = null;
   protected modalResult: R | undefined;
   protected modalComponent: C | null = null;
@@ -53,6 +60,14 @@ export class JdModalRef<R = any, D = any, C = any> {
    */
   get component(): C | null {
     return this.modalComponent;
+  }
+
+  /**
+   * 모달을 감싸는(모달 기능, 모션 처리) 컴포넌트
+   * @readonly
+   */
+  get entryComponent() {
+    return this.modalEntryComponent;
   }
 
   /**
@@ -134,6 +149,10 @@ export class JdModalRef<R = any, D = any, C = any> {
 
   setComponent(component: C): void {
     this.modalComponent = component;
+  }
+
+  setEntryComponent(entryComponent: EntryComponentType) {
+    this.modalEntryComponent = entryComponent;
   }
 
   setOpenStrategy(openStrategy: ModalOpenStrategy): void {

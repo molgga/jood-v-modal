@@ -1,8 +1,9 @@
 <template>
   <div class="jd-modal-provider" :class="classes">
     <div class="appender">
-      <jd-modal-item
+      <component
         v-for="(modalRef, index) in modals"
+        :is="modalRef.entryComponent"
         :key="modalRef.id"
         :index="index"
         :modalRef="modalRef"
@@ -15,56 +16,20 @@
 import { Subscription } from 'rxjs';
 import { ref, computed, onUnmounted, onMounted, defineComponent } from '@vue/composition-api';
 import { useJdModalService, JdModalRef } from '../../composables/modal';
-import JdModalItem from './JdModalItem.vue';
+import { useJdModalProviderSetup } from '../../composables';
 
 export default defineComponent({
   name: 'JdModalProvider',
-  components: {
-    JdModalItem
-  },
 
   setup() {
-    const service = useJdModalService();
-    const listener = new Subscription();
-    const modals = ref(service.modals);
-    const emptied = ref(true);
-    const animateTimer: any = ref(null);
-    const modalOpenState = computed(() => {
-      clearTimeout(animateTimer.value);
-      const hasModal = !!modals.value.length;
-      if (hasModal) {
-        emptied.value = false;
-      } else {
-        animateTimer.value = setTimeout(() => {
-          emptied.value = true;
-        }, 140);
-      }
-      return {
-        hasModal,
-        emptied
-      };
-    });
-
-    const classes = computed(() => {
-      const state = modalOpenState.value;
-      return {
-        'has-modal': state.hasModal,
-        'is-emptied': state.emptied.value
-      };
-    });
-
+    const { mounted, unmounted, classes, modals } = useJdModalProviderSetup();
     onMounted(() => {
-      const observeModalState = service.observeModalState().subscribe(modalList => {
-        modals.value = modalList;
-      });
-      listener.add(observeModalState);
+      mounted();
     });
 
     onUnmounted(() => {
-      listener.unsubscribe();
-      service.destroy();
+      unmounted();
     });
-
     return {
       classes,
       modals

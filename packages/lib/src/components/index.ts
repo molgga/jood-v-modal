@@ -1,4 +1,4 @@
 import JdModalProvider from './modal/JdModalProvider.vue';
-import JdModalItem from './modal/JdModalItem.vue';
+import JdModalEntry from './modal/JdModalEntry.vue';
 
-export { JdModalProvider, JdModalItem };
+export { JdModalProvider, JdModalEntry };
