@@ -60,7 +60,7 @@ branches:
 # condition https://stackoverflow.com/questions/34591587/travis-conditional-on-branch-after-success
 after_success:
   # - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && npm run ci:doc && npm run ci:doc-example
-  - echo "Running after_success"
+  # - echo "Running after_success"
   # - test $TRAVIS_BRANCH = "master" && npm run ci:after-success
 
 jobs:
@@ -71,7 +71,7 @@ jobs:
         - npm run ci:test
 
     - stage: deploy
-      if: branch = master
+      if: branch = master AND tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$
       - script:
         - echo "Running jobs ci:build"
         - npm run ci:build
@@ -88,7 +88,7 @@ jobs:
           on:
             repo: molgga/jood-v-modal
             all_branches: true
-            condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$ # tag - v0.0.0 이 있는 경우만 publish
+            # condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$ # tag - v0.0.0 이 있는 경우만 publish
 
         # 배포 설정 - github page
         - provider: pages
