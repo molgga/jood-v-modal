@@ -25,6 +25,16 @@ export const ExampleList = [
     component: () => import('@/components/example/example-before-leave/ExampleApp.vue')
   },
   {
+    key: 'custom-entry-modal',
+    label: 'custom entry component',
+    component: () => import('@/components/example/example-entry-modal/ExampleApp.vue')
+  },
+  {
+    key: 'custom-entry-default',
+    label: 'custom default entry component',
+    component: () => import('@/components/example/example-entry-default/ExampleApp.vue')
+  },
+  {
     key: 'usecase-window',
     label: 'usecase Window',
     component: () => import('@/components/example/example-usecase-window/ExampleApp.vue')
