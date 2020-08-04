@@ -38,7 +38,7 @@ notifications:
 # see: https://docs.travis-ci.com/user/job-lifecycle/#the-job-lifecycle
 
 install:
-  - npm run install
+  - npm run ci:bootstrap
 
 services:
   - xvfb
@@ -50,7 +50,8 @@ script:
   - echo $TRAVIS_PULL_REQUEST
   - echo $TRAVIS_BUILD_NUMBER
   - echo $TRAVIS_REPO_SLUG
-#  - npm run ci:test # lib 테스트
+#  - npm run ci:build # lib 빌드
+  - npm run ci:test # lib 테스트
 
 branches:
   only:
@@ -59,43 +60,30 @@ branches:
 
 # condition https://stackoverflow.com/questions/34591587/travis-conditional-on-branch-after-success
 after_success:
-  # - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && npm run ci:doc && npm run ci:doc-example
-  # - echo "Running after_success"
-  # - test $TRAVIS_BRANCH = "master" && npm run ci:after-success
+  if: $TRAVIS_BRANCH = "master" && $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$
+    - script:
+      - npm run ci:build
+      - npm run ci:after-success
 
-jobs:
-  include:
-    - stage: test
-      script:
-        - echo "Running jobs ci:test"
-        - npm run ci:test
+deploy:
+  # 배포 설정 - npm module
+  - provider: npm
+    edge: true
+    cleanup: false
+    email: $NPM_PUBLISH_EMAIL
+    api_key: $NPM_PUBLISH_TOKEN
+    src: ./packages/lib
+    access: public
+    on:
+      repo: molgga/jood-v-modal
+      all_branches: true
+      condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ # tag - v0.0.0 이 있는 경우만 publish
 
-    - stage: deploy
-      if: branch = master AND tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$
-      script:
-        - echo "Running jobs ci:build"
-        - npm run ci:build
-        - npm run ci:after-success
-      deploy:
-        # 배포 설정 - npm module
-        - provider: npm
-          edge: true
-          cleanup: false
-          email: $NPM_PUBLISH_EMAIL
-          api_key: $NPM_PUBLISH_TOKEN
-          src: ./packages/lib
-          access: public
-          on:
-            repo: molgga/jood-v-modal
-            all_branches: true
-            # condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$ # tag - v0.0.0 이 있는 경우만 publish
-
-        # 배포 설정 - github page
-        - provider: pages
-          edge: true
-          cleanup: false
-          local_dir: docs
-          github_token: $GITHUB_PAGES_TOKEN
-          on:
-            branch: master
-
+  # 배포 설정 - github page
+  - provider: pages
+    edge: true
+    cleanup: false
+    local_dir: docs
+    github_token: $GITHUB_PAGES_TOKEN
+    on:
+      branch: master
