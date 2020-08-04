@@ -51,14 +51,18 @@ script:
   - echo $TRAVIS_BUILD_NUMBER
   - echo $TRAVIS_REPO_SLUG
   - npm run ci:test
-  - if: "m" =~ "m"
-    - echo "############################# if 1"
-  - if: $TRAVIS_BRANCH =~ "master"
-    - echo "############################# if 2"
-  - if: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$
-    - echo "############################# if 3"
-  - if: "m" =~ "m" AND "a" =~ "a"
-    - echo "############################# if 4"
+  - if [ "a" == "a" ]; then
+      echo "###################### 1"
+    fi
+  - if [ "a" =~ "a" ]; then
+      echo "###################### 2"
+    fi
+  - if [ "a" == "a" && "b" == "b" ]; then
+      echo "###################### 3"
+    fi
+  - if [ $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$ ]; then
+      echo "###################### 4"
+    fi
 
 branches:
   only:
