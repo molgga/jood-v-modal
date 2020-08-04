@@ -16,6 +16,6 @@
     "ci:bootstrap": "yarn install --production=false",
     "ci:build": "npm run generate",
     "ci:test": "yarn workspace @jood/v-modal test",
-    "ci:after-success": "npm run page:clear && npm run page:expose"
+    "ci:deploy-before": "npm run ci:build && npm run page:clear && npm run page:expose"
   }
 }
