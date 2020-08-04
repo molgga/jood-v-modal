@@ -1,6 +1,7 @@
 import { provide, inject } from '@vue/composition-api';
 import { JdModalService } from './JdModalService';
 import { JdModalRef } from './JdModalRef';
+import { ModalConfig } from './types';
 
 /**
  * 모달 서비스 provide, inject 토큰
@@ -15,8 +16,8 @@ export const JD_MODAL_SERVICE_TOKEN = Symbol();
  */
 export const JD_MODAL_REF_TOKEN = Symbol();
 
-export const provideJdModalService = () => {
-  provide(JD_MODAL_SERVICE_TOKEN, new JdModalService());
+export const provideJdModalService = (config?: ModalConfig) => {
+  provide(JD_MODAL_SERVICE_TOKEN, new JdModalService(config));
 };
 
 export const useJdModalService = (): JdModalService => {

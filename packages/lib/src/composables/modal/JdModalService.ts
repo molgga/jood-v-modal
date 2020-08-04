@@ -1,6 +1,7 @@
 import { Subject, Observable, Subscription } from 'rxjs';
-import { ModalEvent, ModalEventType, ModalData, ModalOpenStrategy } from './types';
+import { ModalEvent, ModalEventType, ModalData, ModalConfig, EntryComponentType } from './types';
 import { JdModalRef } from './JdModalRef';
+import { JdModalEntry } from '../../components';
 
 /**
  * 모달 서비스
@@ -8,11 +9,17 @@ import { JdModalRef } from './JdModalRef';
  * @class JdModalService
  */
 export class JdModalService {
+  constructor(config?: ModalConfig) {
+    if (config && config.defaultEntryComponent) {
+      this.setDefaultEntryComponent(config.defaultEntryComponent);
+    }
+  }
   protected modalUid = 0;
   protected modalRefMap: Map<number, JdModalRef> = new Map();
   protected modalsSubject: Subject<JdModalRef[]> = new Subject();
   protected listener: Subscription = new Subscription();
   protected useLocationHash: boolean = true;
+  protected defaultEntryComponent: EntryComponentType = JdModalEntry;
 
   /**
    * 현재 열려있는 모달의 수
@@ -47,6 +54,21 @@ export class JdModalService {
    */
   setUseLocationHash(is: boolean): void {
     this.useLocationHash = is;
+  }
+
+  /**
+   * 모달을 감싸는(모달 기능, 모션 처리) 컴포넌트
+   * @param {EntryComponentType} entryComponent
+   */
+  setDefaultEntryComponent(entryComponent: EntryComponentType) {
+    this.defaultEntryComponent = entryComponent;
+  }
+
+  /**
+   * 모달을 감싸는 컴포넌트 리셋
+   */
+  resetDefaultEntryComponent() {
+    this.defaultEntryComponent = JdModalEntry;
   }
 
   /**
@@ -108,6 +130,7 @@ export class JdModalService {
     const id = this.modalUid++;
     const modalRef = new JdModalRef<R, D, C>();
     modalRef.setId(id);
+    modalRef.setEntryComponent(data.entryComponent || this.defaultEntryComponent);
     modalRef.assignModalData(data);
     const subscription = modalRef.observeOpener().subscribe((evt: ModalEvent) => {
       if (evt.type === ModalEventType.CLOSED) {
