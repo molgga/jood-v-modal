@@ -62,7 +62,7 @@ after_success:
   # - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && npm run ci:doc && npm run ci:doc-example
   - test $TRAVIS_BRANCH = "master" && \
     test $TRAVIS_PULL_REQUEST = "false" && \
-    test $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$ &&
+    test $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$ && \
     npm run ci:deploy-before
 
 deploy:
