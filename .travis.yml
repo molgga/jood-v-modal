@@ -23,18 +23,6 @@ notifications:
     on_failure: always
 
 # Job Lifecycle
-# 1.  OPTIONAL Install apt addons
-# 2.  OPTIONAL Install cache components
-# 3.  before_install
-# 4.  install
-# 5.  before_script
-# 6.  script
-# 7.  OPTIONAL before_cache (for cleaning up cache)
-# 8.  after_success or after_failure
-# 9.  OPTIONAL before_deploy
-# 10. OPTIONAL deploy
-# 11. OPTIONAL after_deploy
-# 12. after_script
 # see: https://docs.travis-ci.com/user/job-lifecycle/#the-job-lifecycle
 
 install:
@@ -59,14 +47,12 @@ branches:
 
 # condition https://stackoverflow.com/questions/34591587/travis-conditional-on-branch-after-success
 after_success:
-  # - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && npm run ci:doc && npm run ci:doc-example
   - test $TRAVIS_BRANCH = "master" && \
     test $TRAVIS_PULL_REQUEST = "false" && \
     test $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$ && \
     npm run ci:deploy-before
 
 deploy:
-
   # 배포 설정 - npm module
   - provider: npm
     edge: true
