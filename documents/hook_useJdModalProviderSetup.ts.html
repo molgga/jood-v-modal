@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>utils/index.ts - Documentation</title>
+    <title>hook/useJdModalProviderSetup.ts - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -30,7 +30,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">utils/index.ts</h1>
+    <h1 class="page-title">hook/useJdModalProviderSetup.ts</h1>
     
 
     
@@ -40,56 +40,77 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * 모달 location hash 용 id
- * @export
- * @param {number} id
- * @returns {string}
- */
-export const createHashId = (id: number): string => {
-  return `jd-modal=${id}`;
-};
+            <pre class="prettyprint source linenums"><code>import { Subscription } from 'rxjs';
+import { ref, computed, Ref } from '@vue/composition-api';
+import { useJdModalService, JdModalRef } from '../modal';
 
 /**
- * 모달 location hash 체크용 reg
- * @export
- * @param {string} hashId
- * @returns {RegExp}
+ * @interface
+ * @property mounted {Function} 마운트시 호출되어야 할 함수
+ * @property unmounted {Function} 언마운트시 호출되어야 할 함수
+ * @property modals {Ref&lt;JdModalRef[]>} 현재 열려있는 전체 모달
+ * @property classes {any} 모달 컨테이너에 필요한 html class 세트
  */
-export const createHashIdReg = (hashId: string): RegExp => {
-  return new RegExp(`#${hashId}$`);
-};
+interface JdModalProviderSetupHook {
+  mounted: Function;
+  unmounted: Function;
+  modals: Ref&lt;JdModalRef[]>;
+  classes: any;
+}
 
 /**
- * location hash 에 남기는 정보(oldURL, newURL)로 모달 id 추출하기 위한 용도
- * - https://...#modal=1001 = 1001
- * - https://...#modal=1002 = 1002
+ * 모달의 Provider 컴포넌트 기능 훅.
  * @export
- * @param {string} str
- * @returns {number | null}
+ * @returns {JdModalProviderSetupHook}
  */
-export const extractHashId = (str: string): number | null => {
-  const replaced: string = str.replace(/(.*(:?#jd-modal=(\d+)))$/, '$3');
-  const ver = parseInt(replaced);
-  if (isNaN(ver)) return null;
-  return ver;
-};
+export const useJdModalProviderSetup = (): JdModalProviderSetupHook => {
+  const service = useJdModalService();
+  const listener = new Subscription();
+  const modals = ref(service.modals);
+  const emptied = ref(true);
+  const animateTimer: any = ref(null);
+  const modalOpenState = computed(() => {
+    clearTimeout(animateTimer.value);
+    const hasModal = !!modals.value.length;
+    if (hasModal) {
+      emptied.value = false;
+    } else {
+      animateTimer.value = setTimeout(() => {
+        emptied.value = true;
+      }, 140);
+    }
+    return {
+      hasModal,
+      emptied
+    };
+  });
 
-/**
- * hashChange 이벤트 시
- * modalRef 의 id, hash 정보의 oldURL, newURL 정보로 닫힘 대상이 되는 모달인지 판단하기 위한 용도
- * @export
- * @param {number} id
- * @param {string} oldURL
- * @param {string} newURL
- * @returns {boolean}
- */
-export const isCloseTargetByHashId = (id: number, oldURL: string, newURL: string): boolean => {
-  let is = true;
-  const oldVer = extractHashId(oldURL);
-  const newVer = extractHashId(newURL);
-  if (oldVer === null || newVer === id) is = false;
-  return is;
+  const classes = computed(() => {
+    const state = modalOpenState.value;
+    return {
+      'has-modal': state.hasModal,
+      'is-emptied': state.emptied.value
+    };
+  });
+
+  const mounted = () => {
+    const observeModalState = service.observeModalState().subscribe(modalList => {
+      modals.value = modalList;
+    });
+    listener.add(observeModalState);
+  };
+
+  const unmounted = () => {
+    listener.unsubscribe();
+    service.destroy();
+  };
+
+  return {
+    mounted,
+    unmounted,
+    classes,
+    modals
+  };
 };
 </code></pre>
         </article>
