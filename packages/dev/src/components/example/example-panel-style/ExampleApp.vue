@@ -36,10 +36,10 @@ export default defineComponent({
       modalService.open({
         ...state.modalOptions,
         panelStyle: {
-          backgroundColor: '#f0fff7',
           borderRadius: '0',
+          border: '4px solid #000000',
+          backgroundColor: '#f0fff7',
           margin: '20px 0',
-          padding: '20px 20px',
           overflow: 'hidden'
         },
         component

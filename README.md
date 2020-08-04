@@ -75,8 +75,8 @@ import { defineComponent } from "@vue/composition-api";
 import { useJdModalRef, useJdModalService } from "@jood/v-modal";
 export default defineComponent({
   setup() {
-    // const modalService = useJdModalService(); // use(inject) modal service 
-    const modalRef = useJdModalRef(); // use(inject) modal ref class
+    const modalService = useJdModalService(); // use(inject) JdModalService 
+    const modalRef = useJdModalRef(); // use(inject) JdModalRef
     console.log(modalRef);
     return {};
   }
