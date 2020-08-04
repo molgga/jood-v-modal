@@ -50,8 +50,7 @@ script:
   - echo $TRAVIS_PULL_REQUEST
   - echo $TRAVIS_BUILD_NUMBER
   - echo $TRAVIS_REPO_SLUG
-#  - npm run ci:build # lib 빌드
-  - npm run ci:test # lib 테스트
+  - npm run ci:test
 
 branches:
   only:
@@ -61,6 +60,9 @@ branches:
 # condition https://stackoverflow.com/questions/34591587/travis-conditional-on-branch-after-success
 after_success:
   # - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && npm run ci:doc && npm run ci:doc-example
+  - test "v0.1.1" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ && echo "############################ accpet 1"
+  - test "v0.1.1-1" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$ && echo "############################ accpet 2"
+  - test "v0.1.1-1" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[a-z0-9]+)?$ && echo "############################ accpet 3"
   - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && npm run ci:deploy-before
 
 deploy:
