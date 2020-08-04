@@ -51,6 +51,7 @@ script:
   - echo $TRAVIS_BUILD_NUMBER
   - echo $TRAVIS_REPO_SLUG
 #  - npm run ci:build # lib 빌드
+  - echo "start"
   - npm run ci:test # lib 테스트
 
 branches:
