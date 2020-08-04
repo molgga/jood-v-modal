@@ -50,40 +50,56 @@ script:
   - echo $TRAVIS_PULL_REQUEST
   - echo $TRAVIS_BUILD_NUMBER
   - echo $TRAVIS_REPO_SLUG
-  - npm run ci:build # lib 빌드
-  - npm run ci:test # lib 테스트
+#  - npm run ci:test # lib 테스트
 
 branches:
-  except:
-    - /^release\/\S+/
   only:
     - master
-    - /^v[0-9]+\.[0-9]+\.[0-9]+$/
+#    - /^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$/
 
 # condition https://stackoverflow.com/questions/34591587/travis-conditional-on-branch-after-success
 after_success:
   # - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && npm run ci:doc && npm run ci:doc-example
-  - test $TRAVIS_BRANCH = "master" && npm run ci:after-success
+  - echo "Running after_success"
+  # - test $TRAVIS_BRANCH = "master" && npm run ci:after-success
 
-deploy:
-  # 배포 설정 - npm module
-  - provider: npm
-    edge: true
-    skip_cleanup: true
-    email: $NPM_PUBLISH_EMAIL
-    api_key: $NPM_PUBLISH_TOKEN
-    src: ./packages/lib
-    access: public
-    on:
-      repo: molgga/jood-v-modal
-      all_branches: true
-      condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ # tag - v0.0.0 이 있는 경우만 publish
+jobs:
+  include:
+    - stage: test
+      script:
+        - echo "Running jobs ci:test"
+        - npm run ci:test
 
-  # 배포 설정 - github page
-  - provider: pages
-    edge: true
-    skip_cleanup: true
-    local_dir: docs
-    github_token: $GITHUB_PAGES_TOKEN
-    on:
-      branch: master
+    - stage: deploy
+      if: branch = master AND $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$
+      script:
+        - echo "Running jobs ci:build"
+        - npm run ci:build
+        - npm run ci:after-success
+      deploy:
+        # 배포 설정 - npm module
+        - provider: npm
+          script: 
+            - echo "Running jobs deploy npm"
+          edge: true
+          skip_cleanup: true
+          email: $NPM_PUBLISH_EMAIL
+          api_key: $NPM_PUBLISH_TOKEN
+          src: ./packages/lib
+          access: public
+          on:
+            repo: molgga/jood-v-modal
+            all_branches: true
+            # condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$ # tag - v0.0.0 이 있는 경우만 publish
+
+        # 배포 설정 - github page
+        - provider: pages
+          script: 
+            - echo "Running jobs deploy pages"
+          edge: true
+          skip_cleanup: true
+          local_dir: docs
+          github_token: $GITHUB_PAGES_TOKEN
+          on:
+            branch: master
+
