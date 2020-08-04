@@ -14,8 +14,8 @@
     "page:clear": "rm -rf docs",
     "page:expose": "npm run page:example-dist && npm run page:example-make && npm run page:document-dist",
     "ci:bootstrap": "yarn install --production=false",
-    "ci:build": "npm run generate",
     "ci:test": "yarn workspace @jood/v-modal test",
-    "ci:deploy-before": "npm run ci:build && npm run page:clear && npm run page:expose"
+    "ci:build": "npm run generate",
+    "ci:deploy-before": "npm run ci:build && npm run symlink && npm run page:clear && npm run page:expose"
   }
 }
