@@ -56,12 +56,12 @@ script:
 branches:
   only:
     - master
-#    - /^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$/
+    - /^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$/
 
 # condition https://stackoverflow.com/questions/34591587/travis-conditional-on-branch-after-success
 after_success:
   # - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && npm run ci:doc && npm run ci:doc-example
-  - test $TRAVIS_BRANCH = "master" && npm run ci:ci:deploy-before
+  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && npm run ci:ci:deploy-before
 
 deploy:
 
