@@ -3,10 +3,21 @@ import { JdModalRef } from './JdModalRef';
 
 export type EntryComponentType = VueConstructor | Component | AsyncComponent | any;
 
+/**
+ * 모달 서비스 config
+ * @export
+ * @interface ModalConfig
+ */
 export interface ModalConfig {
   defaultEntryComponent?: EntryComponentType;
 }
 
+/**
+ * 모달 window hash change 이벤트
+ * @export
+ * @interface ModalHashChangeEvent
+ * @extends {HashChangeEvent}
+ */
 export interface ModalHashChangeEvent extends HashChangeEvent {
   _preventModalClose?: boolean;
 }

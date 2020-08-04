@@ -19,6 +19,7 @@ interface JdModalBeforeLeaveHook {
 
 /**
  * 모달의 beforeLeave 기능 훅.
+ * @export
  * @returns {JdModalBeforeLeaveHook}
  */
 export const useJdModalBeforeLeave = (): JdModalBeforeLeaveHook => {

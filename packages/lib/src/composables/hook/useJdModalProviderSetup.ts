@@ -1,8 +1,27 @@
 import { Subscription } from 'rxjs';
-import { ref, computed } from '@vue/composition-api';
-import { useJdModalService } from '../modal';
+import { ref, computed, Ref } from '@vue/composition-api';
+import { useJdModalService, JdModalRef } from '../modal';
 
-export const useJdModalProviderSetup = () => {
+/**
+ * @interface
+ * @property mounted {Function} 마운트시 호출되어야 할 함수
+ * @property unmounted {Function} 언마운트시 호출되어야 할 함수
+ * @property modals {Ref<JdModalRef[]>} 현재 열려있는 전체 모달
+ * @property classes {any} 모달 컨테이너에 필요한 html class 세트
+ */
+interface JdModalProviderSetupHook {
+  mounted: Function;
+  unmounted: Function;
+  modals: Ref<JdModalRef[]>;
+  classes: any;
+}
+
+/**
+ * 모달의 Provider 컴포넌트 기능 훅.
+ * @export
+ * @returns {JdModalProviderSetupHook}
+ */
+export const useJdModalProviderSetup = (): JdModalProviderSetupHook => {
   const service = useJdModalService();
   const listener = new Subscription();
   const modals = ref(service.modals);

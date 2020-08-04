@@ -9,11 +9,38 @@ import {
 } from '../modal';
 import { createHashId, createHashIdReg, extractHashId } from '../utils';
 
-interface ISetup {
+/**
+ * @interface
+ * @property modalRef {JdModalRef} 훅 사용시 전달되어야할 JdModalRef
+ */
+interface JdModalItemSetupConfig {
   modalRef: JdModalRef;
 }
 
-export const useJdModalItemSetup = (setup: ISetup) => {
+/**
+ * @interface
+ * @property mounted {Function} 마운트시 호출되어야 할 함수
+ * @property unmounted {Function} 언마운트시 호출되어야 할 함수
+ * @property onOverlayClick {Function} overlay 영역 클릭시 호출되어야 할 함수
+ * @property refModalContainer {Ref<HTMLElement | null>} 모달 컨테이너 html element
+ * @property classes {any} 모달 컨테이너에 필요한 html class 세트
+ * @property styles {any} 모달에 필요한 html style 세트
+ */
+interface JdModalItemSetupHook {
+  mounted: Function;
+  unmounted: Function;
+  onOverlayClick: Function;
+  refModalContainer: Ref<HTMLElement | null>;
+  classes: any;
+  styles: any;
+}
+
+/**
+ * 모달의 Entry 컴포넌트 기능 훅.
+ * @export
+ * @returns {JdModalItemSetupHook}
+ */
+export const useJdModalItemSetup = (setup: JdModalItemSetupConfig): JdModalItemSetupHook => {
   const { modalRef } = setup;
   provide(JD_MODAL_REF_TOKEN, modalRef);
   const modalService = useJdModalService();
