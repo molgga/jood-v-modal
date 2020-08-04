@@ -38,7 +38,7 @@ notifications:
 # see: https://docs.travis-ci.com/user/job-lifecycle/#the-job-lifecycle
 
 install:
-  - npm run bootstrap
+  - npm run install
 
 services:
   - xvfb
@@ -66,23 +66,21 @@ after_success:
 jobs:
   include:
     - stage: test
-      script:
+      - script:
         - echo "Running jobs ci:test"
         - npm run ci:test
 
     - stage: deploy
-      if: branch = master AND $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$
-      script:
+      if: branch = master
+      - script:
         - echo "Running jobs ci:build"
         - npm run ci:build
         - npm run ci:after-success
       deploy:
         # 배포 설정 - npm module
         - provider: npm
-          script: 
-            - echo "Running jobs deploy npm"
           edge: true
-          skip_cleanup: true
+          cleanup: false
           email: $NPM_PUBLISH_EMAIL
           api_key: $NPM_PUBLISH_TOKEN
           src: ./packages/lib
@@ -90,14 +88,12 @@ jobs:
           on:
             repo: molgga/jood-v-modal
             all_branches: true
-            # condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$ # tag - v0.0.0 이 있는 경우만 publish
+            condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-\S+)?$ # tag - v0.0.0 이 있는 경우만 publish
 
         # 배포 설정 - github page
         - provider: pages
-          script: 
-            - echo "Running jobs deploy pages"
           edge: true
-          skip_cleanup: true
+          cleanup: false
           local_dir: docs
           github_token: $GITHUB_PAGES_TOKEN
           on:

@@ -5,7 +5,8 @@
     "packages/*"
   ],
   "scripts": {
-    "bootstrap": "yarn install --production=false && npm run generate && npm run symlink",
+    "install": "yarn install --production=false",
+    "bootstrap": "npm run install && npm run generate && npm run symlink",
     "symlink": "cd ./packages/lib && yarn link && cd ../../packages/dev && yarn link @jood/v-modal && cd ../../",
     "generate": "yarn workspace @jood/v-modal generate",
     "page:example-dist": "yarn workspace dev build",
