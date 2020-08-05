@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>modal pass data &amp; result</v-card-title>
+      <v-card-title>Pass data&amp;result</v-card-title>
       <v-card-text>
         <v-text-field
           v-model="state.passText"

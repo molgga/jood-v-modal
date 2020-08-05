@@ -1,52 +1,57 @@
 export const ExampleList = [
   {
     key: 'data-result',
-    label: 'pass data & result',
+    label: 'Pass data&result',
     component: () => import('@/components/example/example-data-result/ExampleApp.vue')
   },
   {
     key: 'scroll',
-    label: 'content scroll',
+    label: 'Scroll content',
     component: () => import('@/components/example/example-scroll/ExampleApp.vue')
   },
   {
-    key: 'panelStyle',
-    label: 'modal panelStyle',
-    component: () => import('@/components/example/example-panel-style/ExampleApp.vue')
-  },
-  {
     key: 'nested',
-    label: 'modal nested',
+    label: 'Nested modal',
     component: () => import('@/components/example/example-nested/ExampleApp.vue')
   },
   {
+    key: 'location-hash',
+    label: 'Location hash',
+    component: () => import('@/components/example/example-location-hash/ExampleApp.vue')
+  },
+  {
     key: 'before-leave',
-    label: 'before leave',
+    label: 'Hook beforeLeave',
     component: () => import('@/components/example/example-before-leave/ExampleApp.vue')
   },
   {
+    key: 'custom-panelStyle',
+    label: 'Custom panelStyle',
+    component: () => import('@/components/example/example-panel-style/ExampleApp.vue')
+  },
+  {
     key: 'custom-entry-modal',
-    label: 'custom entry component',
+    label: 'Custom entryComponent',
     component: () => import('@/components/example/example-entry-modal/ExampleApp.vue')
   },
   {
     key: 'custom-entry-default',
-    label: 'custom default entry component',
+    label: 'Custom defaultEntryComponent',
     component: () => import('@/components/example/example-entry-default/ExampleApp.vue')
   },
   {
     key: 'usecase-window',
-    label: 'usecase Window',
+    label: 'Usecase Window',
     component: () => import('@/components/example/example-usecase-window/ExampleApp.vue')
   },
   {
     key: 'usecase-actionsheet',
-    label: 'usecase ActionSheet',
+    label: 'Usecase ActionSheet',
     component: () => import('@/components/example/example-usecase-actionsheet/ExampleApp.vue')
   },
   {
     key: 'usecase-confirm',
-    label: 'usecase Confirm',
+    label: 'Usecase Confirm',
     component: () => import('@/components/example/example-usecase-confirm/ExampleApp.vue')
   }
 ];

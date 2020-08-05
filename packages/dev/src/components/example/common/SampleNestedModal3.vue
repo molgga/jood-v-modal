@@ -4,8 +4,9 @@
       <h2 class="tit">modalId: {{ state.modalId }}</h2>
     </div>
     <div class="foot">
-      <v-btn color="success" @click="onOpen">open</v-btn>|
-      <v-btn color="success" @click="onClose">close</v-btn>
+      <v-btn text color="#ff0000" @click="onBack">histor back</v-btn>|
+      <v-btn text color="success" @click="onOpen">open</v-btn>|
+      <v-btn text color="success" @click="onClose">close</v-btn>
     </div>
   </div>
 </template>
@@ -42,13 +43,17 @@ export default defineComponent({
         result: Date.now()
       });
     };
+    const onBack = () => {
+      history.back();
+    };
     onUnmounted(() => {
       listener.unsubscribe();
     });
     return {
       state,
       onOpen,
-      onClose
+      onClose,
+      onBack
     };
   }
 });
@@ -57,7 +62,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .sample-modal {
   padding: 20px;
-  width: 320px;
+  width: 380px;
   min-height: 320px;
   max-width: 100vw;
   box-sizing: border-box;

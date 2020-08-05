@@ -1,7 +1,7 @@
 <template>
   <div class="sample-modal">
     <div class="head">
-      <h2 class="tit">sample-modal1</h2>
+      <h2 class="tit">SampleBeforeLeave</h2>
     </div>
     <div class="body">
       <v-text-field
@@ -15,6 +15,9 @@
     </div>
     <div class="foot">
       <p class="desc">...text change &amp; browser back = confirm</p>
+      <div>
+        <v-btn text color="#ff0000" @click="onBack">history back</v-btn>
+      </div>
     </div>
   </div>
 </template>
@@ -54,6 +57,10 @@ export default defineComponent({
       });
     });
 
+    const onBack = () => {
+      history.back();
+    };
+
     onMounted(() => {
       attachBeforeLeave();
     });
@@ -64,7 +71,8 @@ export default defineComponent({
 
     return {
       state,
-      isChanged
+      isChanged,
+      onBack
     };
   }
 });
