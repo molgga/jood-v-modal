@@ -51,7 +51,7 @@ after_success:
 #    test $TRAVIS_PULL_REQUEST = "false" && \
 #    test $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$ && \
 #    npm run ci:deploy-before
-  - test $TRAVIS_BRANCH = "master" && \
+  - test $TRAVIS_BRANCH = "master" &&
     npm run ci:deploy-before
 
 deploy:
