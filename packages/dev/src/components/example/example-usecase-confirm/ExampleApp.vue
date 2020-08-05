@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>usecase Confirm</v-card-title>
+      <v-card-title>Usecase Confirm</v-card-title>
       <v-card-text>
         <v-btn color="success" @click="onOpen">open</v-btn>
       </v-card-text>

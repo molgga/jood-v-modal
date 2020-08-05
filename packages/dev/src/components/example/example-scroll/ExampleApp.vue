@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>modal content scroll</v-card-title>
+      <v-card-title>Scroll content</v-card-title>
       <v-card-text>
         <v-btn color="success" @click="onOpen">open</v-btn>
       </v-card-text>

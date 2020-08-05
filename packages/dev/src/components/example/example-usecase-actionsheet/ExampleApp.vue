@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>usecase ActionSheet</v-card-title>
+      <v-card-title>Usecase ActionSheet</v-card-title>
       <v-card-text>
         <v-btn color="success" @click="onOpen">open</v-btn>|
         <v-btn color="success" @click="onOpen2">open2</v-btn>

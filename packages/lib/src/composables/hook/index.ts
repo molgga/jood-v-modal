@@ -1,3 +1,3 @@
 export * from './useJdModalProviderSetup';
-export * from './useJdModalItemSetup';
+export * from './useJdModalEntrySetup';
 export * from './useJdModalBeforeLeave';

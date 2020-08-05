@@ -40,7 +40,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, onUnmounted, reactive } from '@vue/composition-api';
-import { JdModalRef, useJdModalItemSetup } from '@/lib-package';
+import { JdModalRef, useJdModalEntrySetup } from '@/lib-package';
 
 interface IProps {
   index: number;
@@ -66,7 +66,7 @@ export default defineComponent({
       refModalContainer,
       classes,
       styles
-    } = useJdModalItemSetup({ modalRef });
+    } = useJdModalEntrySetup({ modalRef });
 
     const myState = reactive({
       myTitle: modalRef.data.myTitle,

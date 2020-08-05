@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>Example before leave</v-card-title>
+      <v-card-title>Hook beforeLeave</v-card-title>
       <v-card-text>
         <v-btn color="success" @click="onOpen">open</v-btn>
       </v-card-text>

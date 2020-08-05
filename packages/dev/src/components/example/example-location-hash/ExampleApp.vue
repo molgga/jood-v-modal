@@ -1,29 +1,31 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>Custom entryComponent</v-card-title>
+      <v-card-title>Location hash</v-card-title>
       <v-card-text>
         <v-btn color="success" @click="onOpen">open</v-btn>
       </v-card-text>
       <v-card-text>
-        <strong>entryComponent</strong>
-        <ul>
-          <li>wrapping modal component, inject JdModalRef, animate...</li>
-          <li>
-            @see:
-            <a
-              href="https://github.com/molgga/jood-v-modal/blob/master/packages/lib/src/components/modal/JdModalEntry.vue"
-              target="_blank"
-            >JdModalEntry</a>
-          </li>
-          <li>
-            @see:
-            <a
-              href="https://github.com/molgga/jood-v-modal/blob/master/packages/lib/src/composables/hook/useJdModalEntrySetup.ts"
-              target="_blank"
-            >useJdModalEntrySetup</a>
-          </li>
-        </ul>
+        <v-checkbox
+          v-model="state.useLocationHash"
+          label="use location hash"
+          @change="onChangeUseLocationHash"
+        />
+        <div>
+          <template v-if="state.useLocationHash">
+            <ul>
+              <li>location.hash change = https://...#jd-modal={modal-id} (add history stack)</li>
+              <li>history.back = modal close (can use beforeLeave)</li>
+              <li>warning: router mode hash = router conplict</li>
+              <li>warning: opened modal + browser refresh = url garbage</li>
+            </ul>
+          </template>
+          <template v-if="!state.useLocationHash">
+            <ul>
+              <li>none</li>
+            </ul>
+          </template>
+        </div>
       </v-card-text>
     </v-card>
 
@@ -37,7 +39,6 @@
 import { defineComponent, reactive, onMounted, onUnmounted } from '@vue/composition-api';
 import { useJdModalService, JdModalRef } from '@/lib-package';
 import ModalOptions, { createTestOptions } from '../common/ModalOptions.vue';
-import CustomModalEntry from '../common/CustomModalEntry.vue';
 import SampleNestedModal1 from '../common/SampleNestedModal1.vue';
 
 export default defineComponent({
@@ -47,22 +48,30 @@ export default defineComponent({
   setup() {
     const modalService = useJdModalService();
     const state = reactive({
+      useLocationHash: true,
       modalOptions: createTestOptions()
     });
+
+    const onChangeUseLocationHash = () => {
+      modalService.setUseLocationHash(state.useLocationHash);
+    };
+
     const onOpen = () => {
       modalService.open({
         ...state.modalOptions,
-        data: { myTitle: 'Foo', modalOptions: state.modalOptions },
-        entryComponent: CustomModalEntry,
+        data: { modalOptions: state.modalOptions },
         component: SampleNestedModal1
       });
     };
+
     onUnmounted(() => {
       modalService.closeAll();
+      modalService.setUseLocationHash(true);
     });
 
     return {
       state,
+      onChangeUseLocationHash,
       onOpen
     };
   }

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>custom modal entry(by modalRef)</v-card-title>
+      <v-card-title>Custom defaultEntryComponent</v-card-title>
       <v-card-text>
         <v-btn color="success" @click="onOpen">open</v-btn>
       </v-card-text>

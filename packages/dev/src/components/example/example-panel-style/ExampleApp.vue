@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>modal panelStyle</v-card-title>
+      <v-card-title>Custom panelStyle</v-card-title>
       <v-card-text>
         <v-btn color="success" @click="onOpen(1)">open1</v-btn>|
         <v-btn color="success" @click="onOpen(2)">open2</v-btn>
