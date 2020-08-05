@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, onUnmounted } from '@vue/composition-api';
-import { JdModalRef, useJdModalItemSetup } from '../../composables';
+import { JdModalRef, useJdModalEntrySetup } from '../../composables';
 
 interface IProps {
   index: number;
@@ -44,7 +44,7 @@ export default defineComponent({
       refModalContainer,
       classes,
       styles
-    } = useJdModalItemSetup({
+    } = useJdModalEntrySetup({
       modalRef: props.modalRef
     });
 
