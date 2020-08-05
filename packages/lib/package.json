@@ -1,6 +1,6 @@
 {
   "name": "@jood/v-modal",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "main": "dist/v-modal.common.js",
   "types": "dist/types/index.d.ts",
   "module": "src/index.ts",
