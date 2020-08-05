@@ -39,7 +39,6 @@ script:
   - echo $TRAVIS_PULL_REQUEST_BRANCH
   - echo $TRAVIS_BUILD_NUMBER
   - echo $TRAVIS_REPO_SLUG
-  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then echo "is master branch"; fi
   - npm run ci:test
 
 branches:
@@ -50,7 +49,8 @@ branches:
 # condition https://stackoverflow.com/questions/34591587/travis-conditional-on-branch-after-success
 after_success:
   - if [[ "$TRAVIS_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$ ]]; 
-    then npm run ci:deploy-before;
+    then echo "Running build" && npm run ci:deploy-before;
+    else echo "Ignore build";
     fi
 
 deploy:
