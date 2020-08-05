@@ -39,9 +39,7 @@ script:
   - echo $TRAVIS_PULL_REQUEST_BRANCH
   - echo $TRAVIS_BUILD_NUMBER
   - echo $TRAVIS_REPO_SLUG
-  - if [[ "$TRAVIS_BRANCH" == "master" ]];
-    echo "is master branch"
-    fi
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then echo "is master branch"; fi
   - npm run ci:test
 
 branches:
