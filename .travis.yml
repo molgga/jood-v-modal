@@ -39,6 +39,7 @@ script:
   - echo $TRAVIS_PULL_REQUEST_BRANCH
   - echo $TRAVIS_BUILD_NUMBER
   - echo $TRAVIS_REPO_SLUG
+  - npm run ci:test
 
 branches:
   only:
@@ -47,11 +48,9 @@ branches:
 
 # condition https://stackoverflow.com/questions/34591587/travis-conditional-on-branch-after-success
 after_success:
-#  - test $TRAVIS_BRANCH = "master" && \
-#    test $TRAVIS_PULL_REQUEST = "false" && \
-#    test $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$ && \
-#    npm run ci:deploy-before
   - test $TRAVIS_BRANCH = "master" &&
+    test $TRAVIS_PULL_REQUEST = "false" &&
+    test $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$ &&
     npm run ci:deploy-before
 
 deploy:
@@ -63,7 +62,7 @@ deploy:
     github_token: $GITHUB_PAGES_TOKEN
     on:
       all_branches: true
-      # condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$ # tag - v0.0.0 이 있는 경우만 publish
+      condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$ # tag - v0.0.0 이 있는 경우만 publish
 
   # 배포 설정 - npm module
   - provider: npm
