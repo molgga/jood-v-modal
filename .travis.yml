@@ -48,9 +48,10 @@ branches:
 
 # condition https://stackoverflow.com/questions/34591587/travis-conditional-on-branch-after-success
 after_success:
-  - test $TRAVIS_BRANCH = "master" &&
-    test $TRAVIS_PULL_REQUEST = "false" &&
-    npm run ci:deploy-before
+  - if [[ "$TRAVIS_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$ ]]; 
+    then echo "Running build" && npm run ci:deploy-before;
+    else echo "Ignore build";
+    fi
 
 deploy:
   # 배포 설정 - github page
