@@ -41,6 +41,8 @@ script:
   - npm run ci:test
 
 branches:
+  except:
+    - /^release\/.*$/
   only:
     - master
     - /^v[0-9]+\.[0-9]+\.[0-9]+(\-[0-9]+)?$/
