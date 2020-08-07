@@ -16,7 +16,7 @@
             <ul>
               <li>location.hash change = https://...#jd-modal={modal-id} (add history stack)</li>
               <li>history.back = modal close (can use beforeLeave)</li>
-              <li>warning: router mode hash = router conplict</li>
+              <li>warning: router mode hash = router conflict</li>
               <li>warning: opened modal + browser refresh = url garbage</li>
             </ul>
           </template>
