@@ -58,77 +58,6 @@
 <img src="https://img.shields.io/npm/dt/@jood/v-modal" alt="NPM download">
 <img src="https://img.shields.io/bundlephobia/min/@jood/v-modal" alt="NPM bundle size"></p>
 <hr>
-<h2>Get started</h2>
-<h3>npm install</h3>
-<pre class="prettyprint source lang-javascript"><code>$ npm install @jood/v-modal
-</code></pre>
-<h3>main.ts</h3>
-<pre class="prettyprint source lang-javascript"><code>import '@jood/v-modal/dist/v-modal.css';
-</code></pre>
-<h3>App.vue</h3>
-<pre class="prettyprint source lang-html"><code>&lt;template>
-  &lt;div>
-    &lt;jd-modal-provider /> &lt;!-- nowrapping -->
-    &lt;div>
-      &lt;button @click=&quot;onOpen&quot;>onOpen&lt;/button>
-    &lt;/div>
-  &lt;/div>
-&lt;/template>
-
-&lt;script lang=&quot;ts&quot;>
-import { defineComponent, onUnmounted } from &quot;@vue/composition-api&quot;;
-import { provideJdModalService, useJdModalService, JdModalProvider } from &quot;@jood/v-modal&quot;;
-import SampleModalView from &quot;@/components/modal/SampleModalView.vue&quot;;
-export default defineComponent({
-  components: {
-    JdModalProvider
-  },
-  setup() {
-    provideJdModalService(); // provide service
-    const modalService = useJdModalService(); // use(inject) service
-    const onOpen = () => {
-      modalService.open({
-        overlayClose: true,
-        component: SampleModalView
-      });
-    };
-    onUnmounted(() => {
-      modalService.closeAll();
-    });
-    return {
-      onOpen
-    };
-  }
-});
-&lt;/script>
-</code></pre>
-<h3>SampleModalView.vue</h3>
-<pre class="prettyprint source lang-html"><code>&lt;template>
-  &lt;div class=&quot;sample-modal-view&quot;>hello&lt;/div>
-&lt;/template>
-&lt;script lang=&quot;ts&quot;>
-import { defineComponent } from &quot;@vue/composition-api&quot;;
-import { useJdModalRef, useJdModalService } from &quot;@jood/v-modal&quot;;
-export default defineComponent({
-  setup() {
-    const modalService = useJdModalService(); // use(inject) JdModalService 
-    const modalRef = useJdModalRef(); // use(inject) JdModalRef
-    console.log(modalRef);
-    return {};
-  }
-});
-&lt;/script>
-&lt;style lang=&quot;scss&quot; scoped>
-.sample-modal-view {
-  padding: 20px;
-  min-width: 420px;
-  min-height: 320px;
-  box-sizing: border-box;
-}
-&lt;/style>
-</code></pre>
-<hr>
-<h3>See</h3>
 <ul>
 <li><a href="https://molgga.github.io/jood-v-modal">Example(web)</a>.</li>
 <li><a href="https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/example">Example(source)</a>.</li>
@@ -148,7 +77,7 @@ export default defineComponent({
 <br class="clear">
 
 <footer>
-    Documentation generated at Wed Aug 05 2020 08:00:20 GMT+0000 (Coordinated Universal Time)
+    Documentation generated at Tue Aug 11 2020 03:17:28 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script>prettyPrint();</script>
