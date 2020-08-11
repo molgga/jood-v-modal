@@ -70,6 +70,9 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
         refModalContainer.value.focus();
       }
     } else if (evt.type === ModalEventType.CLOSE) {
+      if (usedLocationHash) {
+        popLocationHash();
+      }
       opening.value = false;
       opened.value = false;
       closing.value = true;
@@ -194,9 +197,6 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   };
 
   const unmounted = () => {
-    if (usedLocationHash) {
-      popLocationHash();
-    }
     clearTimeout(animateTimer.value);
     observeOpener.unsubscribe();
   };
