@@ -45,6 +45,7 @@ export interface ModalData<D = any, C = any> {
   overlayClose?: boolean;
   floatingMode?: boolean;
   disableShadow?: boolean;
+  fullHeight?: boolean;
   duration?: number;
   data?: D;
   panelStyle?: any;

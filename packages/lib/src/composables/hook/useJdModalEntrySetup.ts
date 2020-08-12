@@ -45,12 +45,22 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   provide(JD_MODAL_REF_TOKEN, modalRef);
   const modalService = useJdModalService();
   const refModalContainer: Ref<HTMLElement | null> = ref(null);
-  const openStrategy = modalRef.openStrategy;
-  const overlayClose = modalRef.overlayClose || false;
-  const duration = modalRef.duration;
-  const floatingMode = modalRef.floatingMode || false;
-  const panelStyle = modalRef.panelStyle;
-  const modalShadow = !modalRef.disableShadow;
+  const {
+    openStrategy,
+    duration,
+    panelStyle,
+    overlayClose = false,
+    floatingMode = false,
+    disableShadow = false,
+    fullHeight = false
+  } = modalRef;
+  // const openStrategy = modalRef.openStrategy;
+  // const overlayClose = modalRef.overlayClose || false;
+  // const duration = modalRef.duration;
+  // const floatingMode = modalRef.floatingMode || false;
+  // const panelStyle = modalRef.panelStyle;
+  // const modalShadow = !modalRef.disableShadow;
+  // const fullHeight = !modalRef.fullHeight;
   const safeTiming = isNaN(duration) || duration < 0 ? 240 : duration;
   const animateTimer: any = ref(null);
   const opening = ref(false);
@@ -109,7 +119,8 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
         'is-opened': opened.value,
         'is-closing': closing.value,
         'floating-mode': floatingMode,
-        shadow: modalShadow
+        'full-height': fullHeight,
+        shadow: !disableShadow
       }
     ];
   });

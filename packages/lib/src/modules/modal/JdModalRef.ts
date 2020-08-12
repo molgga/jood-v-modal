@@ -27,6 +27,7 @@ export class JdModalRef<R = any, D = any, C = any> {
   protected modalFloatingOpenMode = false;
   protected modalOverlayClose = false;
   protected modalDisableShadow = false;
+  protected modalFullHeight = false;
   protected openerSubject: Subject<ModalEvent> = new Subject();
   protected closedSubject: Subject<R> = new Subject();
 
@@ -116,6 +117,15 @@ export class JdModalRef<R = any, D = any, C = any> {
   }
 
   /**
+   * 모달 height 100% 사용 여부
+   * @readonly
+   * @type {boolean}
+   */
+  get fullHeight(): boolean {
+    return this.modalFullHeight;
+  }
+
+  /**
    * 모달 오픈 상태 알리미
    * @readonly
    * @type {Subject<ModalEvent>}
@@ -129,6 +139,7 @@ export class JdModalRef<R = any, D = any, C = any> {
     this.setOpenStrategy(data.openStrategy || ModalOpenStrategy.NORMAL);
     this.setOverlayClose(data.overlayClose || false);
     this.setFloatingModel(data.floatingMode || false);
+    this.setFullHeight(data.fullHeight || false);
     this.setDisableShadow(!!data.disableShadow);
     this.setDuration(data.duration || 240);
     this.setData(data.data);
@@ -173,6 +184,10 @@ export class JdModalRef<R = any, D = any, C = any> {
 
   setDisableShadow(is: boolean): void {
     this.modalDisableShadow = !!is;
+  }
+
+  setFullHeight(is: boolean): void {
+    this.modalFullHeight = is;
   }
 
   /**
