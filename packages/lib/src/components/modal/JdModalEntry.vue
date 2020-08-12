@@ -89,11 +89,8 @@ export default defineComponent({
     box-sizing: border-box;
     > .pivot {
       display: flex;
-      // overflow: hidden;
       border-radius: 10px;
       box-sizing: border-box;
-      // box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.2), 0 24px 38px 3px rgba(0, 0, 0, 0.14),
-      //   0 9px 46px 8px rgba(0, 0, 0, 0.12);
       background-color: #ffffff;
       transition: transform 240ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms;
       > .content {
@@ -119,10 +116,13 @@ export default defineComponent({
   &.is-closing {
     background-color: rgba(0, 0, 0, 0);
   }
+  &.full-height {
+    > .panel {
+      height: 100%;
+    }
+  }
   &.shadow {
     > .panel > .pivot {
-      // box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.1), 0 24px 38px 3px rgba(0, 0, 0, 0.08),
-      //   0 9px 46px 8px rgba(0, 0, 0, 0.06);
       box-shadow: 0 0 8px rgba(0, 0, 0, 0.02), 0 3px 10px 1px rgba(0, 0, 0, 0.04),
         0 6px 6px rgba(0, 0, 0, 0.06);
     }

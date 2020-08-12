@@ -36,6 +36,13 @@
             <v-switch v-model="value.disableShadow" label="disableShadow" />
           </v-col>
           <v-col cols="12" sm="6">
+            <div class="sub-desc">fullHeight = panel height 100%</div>
+            <v-switch v-model="value.fullHeight" label="fullHeight" />
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="12" sm="6">
             <div class="sub-desc">duration = open&amp;close animate speed</div>
             <v-text-field v-model="value.duration" hide-details single-line type="number"></v-text-field>
           </v-col>
@@ -54,6 +61,7 @@ export const createTestOptions = (overwirte: any = {}) => {
     overlayClose: true,
     floatingMode: true,
     disableShadow: false,
+    fullHeight: false,
     duration: 240,
     openStrategy: ModalOpenStrategy.NORMAL,
     ...overwirte
