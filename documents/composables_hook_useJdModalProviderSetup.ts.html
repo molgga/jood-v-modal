@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>ModalEvent - Documentation</title>
+    <title>composables/hook/useJdModalProviderSetup.ts - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -30,100 +30,91 @@
 
 <div id="main">
     
-    <h1 class="page-title">ModalEvent</h1>
+    <h1 class="page-title">composables/hook/useJdModalProviderSetup.ts</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-        ModalEvent
-        </h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Subscription } from 'rxjs';
+import { ref, computed, Ref } from '@vue/composition-api';
+import { useJdModalService, JdModalRef } from '../../modules/modal';
 
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">모달에서 발생하는 이벤트</div>
-        
+/**
+ * @interface
+ * @property mounted {Function} 마운트시 호출되어야 할 함수
+ * @property unmounted {Function} 언마운트시 호출되어야 할 함수
+ * @property modals {Ref&lt;JdModalRef[]>} 현재 열려있는 전체 모달
+ * @property classes {any} 모달 컨테이너에 필요한 html class 세트
+ */
+interface JdModalProviderSetupHook {
+  mounted: Function;
+  unmounted: Function;
+  modals: Ref&lt;JdModalRef[]>;
+  classes: any;
+}
 
-        
+/**
+ * 모달의 Provider 컴포넌트 기능 훅.
+ * @export
+ * @returns {JdModalProviderSetupHook}
+ */
+export const useJdModalProviderSetup = (): JdModalProviderSetupHook => {
+  const service = useJdModalService();
+  const listener = new Subscription();
+  const modals = ref(service.modals);
+  const emptied = ref(true);
+  const animateTimer: any = ref(null);
+  const modalOpenState = computed(() => {
+    clearTimeout(animateTimer.value);
+    const hasModal = !!modals.value.length;
+    if (hasModal) {
+      emptied.value = false;
+    } else {
+      animateTimer.value = setTimeout(() => {
+        emptied.value = true;
+      }, 140);
+    }
+    return {
+      hasModal,
+      emptied
+    };
+  });
 
+  const classes = computed(() => {
+    const state = modalOpenState.value;
+    return {
+      'has-modal': state.hasModal,
+      'is-emptied': state.emptied.value
+    };
+  });
 
-<dl class="details">
+  const mounted = () => {
+    const observeModalState = service.observeModalState().subscribe(modalList => {
+      modals.value = modalList;
+    });
+    listener.add(observeModalState);
+  };
 
-    
+  const unmounted = () => {
+    listener.unsubscribe();
+    service.destroy();
+  };
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="modules_modal_types.ts.html">modules/modal/types.ts</a>, <a href="modules_modal_types.ts.html#line62">line 62</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+  return {
+    mounted,
+    unmounted,
+    classes,
+    modals
+  };
+};
+</code></pre>
+        </article>
+    </section>
 
 
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>modal/JdModalService.ts - Documentation</title>
+    <title>modules/modal/JdModalService.ts - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -25,12 +25,12 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="JdModalRef.html">JdModalRef</a><ul class='methods'><li data-type='method'><a href="JdModalRef.html#close">close</a></li><li data-type='method'><a href="JdModalRef.html#closed">closed</a></li><li data-type='method'><a href="JdModalRef.html#destroy">destroy</a></li><li data-type='method'><a href="JdModalRef.html#observeClosed">observeClosed</a></li><li data-type='method'><a href="JdModalRef.html#observeOpener">observeOpener</a></li></ul></li><li><a href="JdModalService.html">JdModalService</a><ul class='methods'><li data-type='method'><a href="JdModalService.html#close">close</a></li><li data-type='method'><a href="JdModalService.html#closeAll">closeAll</a></li><li data-type='method'><a href="JdModalService.html#closeById">closeById</a></li><li data-type='method'><a href="JdModalService.html#closeByRef">closeByRef</a></li><li data-type='method'><a href="JdModalService.html#destroy">destroy</a></li><li data-type='method'><a href="JdModalService.html#dispatchChangeState">dispatchChangeState</a></li><li data-type='method'><a href="JdModalService.html#getModalRef">getModalRef</a></li><li data-type='method'><a href="JdModalService.html#hasModalRefNext">hasModalRefNext</a></li><li data-type='method'><a href="JdModalService.html#observeModalState">observeModalState</a></li><li data-type='method'><a href="JdModalService.html#open">open</a></li><li data-type='method'><a href="JdModalService.html#pushOrder">pushOrder</a></li><li data-type='method'><a href="JdModalService.html#pushOrderById">pushOrderById</a></li><li data-type='method'><a href="JdModalService.html#resetDefaultEntryComponent">resetDefaultEntryComponent</a></li><li data-type='method'><a href="JdModalService.html#setDefaultEntryComponent">setDefaultEntryComponent</a></li><li data-type='method'><a href="JdModalService.html#setUseLocationHash">setUseLocationHash</a></li><li data-type='method'><a href="JdModalService.html#swapOrder">swapOrder</a></li><li data-type='method'><a href="JdModalService.html#swapOrderTopById">swapOrderTopById</a></li><li data-type='method'><a href="JdModalService.html#swapOrderTopByRef">swapOrderTopByRef</a></li></ul></li></ul><h3>Interfaces</h3><ul><li><a href="JdModalBeforeLeaveHook.html">JdModalBeforeLeaveHook</a></li><li><a href="JdModalEntrySetupConfig.html">JdModalEntrySetupConfig</a></li><li><a href="JdModalEntrySetupHook.html">JdModalEntrySetupHook</a></li><li><a href="JdModalProviderSetupHook.html">JdModalProviderSetupHook</a></li><li><a href="ModalConfig.html">ModalConfig</a></li><li><a href="ModalData.html">ModalData</a></li><li><a href="ModalEvent.html">ModalEvent</a></li><li><a href="ModalHashChangeEvent.html">ModalHashChangeEvent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createHashId">createHashId</a></li><li><a href="global.html#createHashIdReg">createHashIdReg</a></li><li><a href="global.html#extractHashId">extractHashId</a></li><li><a href="global.html#isCloseTargetByHashId">isCloseTargetByHashId</a></li><li><a href="global.html#JD_MODAL_REF_TOKEN">JD_MODAL_REF_TOKEN</a></li><li><a href="global.html#JD_MODAL_SERVICE_TOKEN">JD_MODAL_SERVICE_TOKEN</a></li><li><a href="global.html#ModalEventType">ModalEventType</a></li><li><a href="global.html#ModalOpenStrategy">ModalOpenStrategy</a></li><li><a href="global.html#useJdModalBeforeLeave">useJdModalBeforeLeave</a></li><li><a href="global.html#useJdModalEntrySetup">useJdModalEntrySetup</a></li><li><a href="global.html#useJdModalProviderSetup">useJdModalProviderSetup</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="JdModalRef.html">JdModalRef</a><ul class='methods'><li data-type='method'><a href="JdModalRef.html#close">close</a></li><li data-type='method'><a href="JdModalRef.html#closed">closed</a></li><li data-type='method'><a href="JdModalRef.html#destroy">destroy</a></li><li data-type='method'><a href="JdModalRef.html#observeClosed">observeClosed</a></li><li data-type='method'><a href="JdModalRef.html#observeOpener">observeOpener</a></li></ul></li><li><a href="JdModalService.html">JdModalService</a><ul class='methods'><li data-type='method'><a href="JdModalService.html#close">close</a></li><li data-type='method'><a href="JdModalService.html#closeAll">closeAll</a></li><li data-type='method'><a href="JdModalService.html#closeById">closeById</a></li><li data-type='method'><a href="JdModalService.html#closeByRef">closeByRef</a></li><li data-type='method'><a href="JdModalService.html#destroy">destroy</a></li><li data-type='method'><a href="JdModalService.html#dispatchChangeState">dispatchChangeState</a></li><li data-type='method'><a href="JdModalService.html#getModalRef">getModalRef</a></li><li data-type='method'><a href="JdModalService.html#hasModalRefNext">hasModalRefNext</a></li><li data-type='method'><a href="JdModalService.html#observeModalState">observeModalState</a></li><li data-type='method'><a href="JdModalService.html#onChangeModalState">onChangeModalState</a></li><li data-type='method'><a href="JdModalService.html#open">open</a></li><li data-type='method'><a href="JdModalService.html#pushOrder">pushOrder</a></li><li data-type='method'><a href="JdModalService.html#pushOrderById">pushOrderById</a></li><li data-type='method'><a href="JdModalService.html#resetDefaultEntryComponent">resetDefaultEntryComponent</a></li><li data-type='method'><a href="JdModalService.html#setDefaultEntryComponent">setDefaultEntryComponent</a></li><li data-type='method'><a href="JdModalService.html#setUseBlockBodyScroll">setUseBlockBodyScroll</a></li><li data-type='method'><a href="JdModalService.html#setUseLocationHash">setUseLocationHash</a></li><li data-type='method'><a href="JdModalService.html#swapOrder">swapOrder</a></li><li data-type='method'><a href="JdModalService.html#swapOrderTopById">swapOrderTopById</a></li><li data-type='method'><a href="JdModalService.html#swapOrderTopByRef">swapOrderTopByRef</a></li></ul></li></ul><h3>Interfaces</h3><ul><li><a href="JdModalBeforeLeaveHook.html">JdModalBeforeLeaveHook</a></li><li><a href="JdModalEntrySetupConfig.html">JdModalEntrySetupConfig</a></li><li><a href="JdModalEntrySetupHook.html">JdModalEntrySetupHook</a></li><li><a href="JdModalProviderSetupHook.html">JdModalProviderSetupHook</a></li><li><a href="ModalConfig.html">ModalConfig</a></li><li><a href="ModalData.html">ModalData</a></li><li><a href="ModalEvent.html">ModalEvent</a></li><li><a href="ModalHashChangeEvent.html">ModalHashChangeEvent</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createHashId">createHashId</a></li><li><a href="global.html#createHashIdReg">createHashIdReg</a></li><li><a href="global.html#extractHashId">extractHashId</a></li><li><a href="global.html#isCloseTargetByHashId">isCloseTargetByHashId</a></li><li><a href="global.html#JD_MODAL_REF_TOKEN">JD_MODAL_REF_TOKEN</a></li><li><a href="global.html#JD_MODAL_SERVICE_TOKEN">JD_MODAL_SERVICE_TOKEN</a></li><li><a href="global.html#ModalEventType">ModalEventType</a></li><li><a href="global.html#ModalOpenStrategy">ModalOpenStrategy</a></li><li><a href="global.html#useJdModalBeforeLeave">useJdModalBeforeLeave</a></li><li><a href="global.html#useJdModalEntrySetup">useJdModalEntrySetup</a></li><li><a href="global.html#useJdModalProviderSetup">useJdModalProviderSetup</a></li></ul>
 </nav>
 
 <div id="main">
     
-    <h1 class="page-title">modal/JdModalService.ts</h1>
+    <h1 class="page-title">modules/modal/JdModalService.ts</h1>
     
 
     
@@ -55,13 +55,19 @@ export class JdModalService {
     if (config &amp;&amp; config.defaultEntryComponent) {
       this.setDefaultEntryComponent(config.defaultEntryComponent);
     }
+    const observeModalState = this.observeModalState().subscribe(
+      this.onChangeModalState.bind(this)
+    );
+    this.listener.add(observeModalState);
   }
   protected modalUid = 0;
   protected modalRefMap: Map&lt;number, JdModalRef> = new Map();
   protected modalsSubject: Subject&lt;JdModalRef[]> = new Subject();
   protected listener: Subscription = new Subscription();
-  protected useLocationHash: boolean = true;
   protected defaultEntryComponent: EntryComponentType = JdModalEntry;
+  protected useLocationHash: boolean = true;
+  protected useBlockBodyScroll: boolean = false;
+  protected blockBodyStyleBefore: any = null;
 
   /**
    * 현재 열려있는 모달의 수
@@ -99,6 +105,14 @@ export class JdModalService {
   }
 
   /**
+   * 모달의 갯수에 따라 body 의 style(overflow) 속성을 변경하여 scroll 을 막는다.
+   * @param {boolean} is
+   */
+  setUseBlockBodyScroll(is: boolean): void {
+    this.useBlockBodyScroll = is;
+  }
+
+  /**
    * 모달을 감싸는(모달 기능, 모션 처리) 컴포넌트
    * @param {EntryComponentType} entryComponent
    * @returns {void}
@@ -131,6 +145,33 @@ export class JdModalService {
    */
   protected dispatchChangeState(): void {
     this.modalsSubject.next(this.modals);
+  }
+
+  /**
+   * 핸들러: 모달 상태 변경
+   * @protected
+   */
+  protected onChangeModalState(): void {
+    console.log('onChangeModalState', this.useBlockBodyScroll);
+    if (this.useBlockBodyScroll) {
+      this.touchBlockBodyScroll();
+    }
+  }
+
+  protected touchBlockBodyScroll() {
+    console.log('touchBlockBodyScroll');
+    if (this.blockBodyStyleBefore === null) {
+      this.blockBodyStyleBefore = document.body.style.overflow || '';
+    }
+    if (this.modals.length) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      if (this.blockBodyStyleBefore) {
+        document.body.style.overflow = this.blockBodyStyleBefore;
+      } else {
+        document.body.style.removeProperty('overflow');
+      }
+    }
   }
 
   /**
@@ -358,7 +399,7 @@ export class JdModalService {
 <br class="clear">
 
 <footer>
-    Documentation generated at Tue Aug 11 2020 03:17:28 GMT+0000 (Coordinated Universal Time)
+    Documentation generated at Wed Aug 12 2020 10:12:01 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script>prettyPrint();</script>

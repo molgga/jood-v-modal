@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>ModalEvent - Documentation</title>
+    <title>modules/modal/index.ts - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -30,100 +30,65 @@
 
 <div id="main">
     
-    <h1 class="page-title">ModalEvent</h1>
+    <h1 class="page-title">modules/modal/index.ts</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-        ModalEvent
-        </h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { provide, inject } from '@vue/composition-api';
+import { JdModalService } from './JdModalService';
+import { JdModalRef } from './JdModalRef';
+import { ModalConfig } from './types';
 
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">모달에서 발생하는 이벤트</div>
-        
+/**
+ * 모달 서비스 provide, inject 토큰
+ */
+export const JD_MODAL_SERVICE_TOKEN = Symbol();
 
-        
+/**
+ * 하나의 모달 처리자(정보) provide, inject 토큰
+ * ModalItem 에서 provide 되고,
+ * 모달로 열리게 되는 컴포넌트(와 하위)에서 해당 토큰으로
+ * 본인에게 주입된 ModalRef 를 꺼낼 수 있음.
+ */
+export const JD_MODAL_REF_TOKEN = Symbol();
 
+export const provideJdModalService = (config?: ModalConfig) => {
+  provide(JD_MODAL_SERVICE_TOKEN, new JdModalService(config));
+};
 
-<dl class="details">
+export const useJdModalService = (): JdModalService => {
+  const service = inject&lt;JdModalService>(JD_MODAL_SERVICE_TOKEN) as JdModalService;
+  if (!service) {
+    throw new Error(`not provide modalService. 
+      append ModalProvider Component App root.
+      ex) &lt;div id="app"> &lt;!-- root app -->
+        &lt;modal-provider /> &lt;!-- hear!! provider -->
+        &lt;your-some-component /> &lt;!-- no wrapping!! provider -->
+      &lt;/div>`);
+  }
+  return service;
+};
 
-    
+export const useJdModalRef = &lt;R, D = any, C = any>(): JdModalRef&lt;R, D, C> => {
+  const modalRef = inject(JD_MODAL_REF_TOKEN) as JdModalRef&lt;R, D, C>;
+  if (!modalRef) {
+    throw new Error(`has not provided modalRef`);
+  }
+  return modalRef;
+};
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="modules_modal_types.ts.html">modules/modal/types.ts</a>, <a href="modules_modal_types.ts.html#line62">line 62</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+export * from './types';
+export * from './utils';
+export { JdModalService, JdModalRef };
+</code></pre>
+        </article>
+    </section>
 
 
 
