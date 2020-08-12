@@ -6,8 +6,8 @@ import {
   ModalEventType,
   ModalOpenStrategy,
   ModalHashChangeEvent
-} from '../modal';
-import { createHashId, createHashIdReg, extractHashId } from '../utils';
+} from '../../modules/modal';
+import { createHashId, createHashIdReg, extractHashId } from '../../modules/modal/utils';
 
 /**
  * @interface

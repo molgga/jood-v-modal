@@ -142,7 +142,7 @@ export default defineComponent({
   - modal close = history pop 
   - (history.back = modal close)
 
-[...source](https://github.com/molgga/jood-v-modal/blob/master/packages/lib/src/composables/modal/JdModalService.ts).
+[...source](https://github.com/molgga/jood-v-modal/blob/master/packages/lib/src/modules/modal/JdModalService.ts).
 
 ```typescript
 setup() {
@@ -171,7 +171,7 @@ setup() {
 - observeOpener(): changed modal open state
 - observeClosed(): changed modal close state
 
-[...source](https://github.com/molgga/jood-v-modal/blob/master/packages/lib/src/composables/modal/JdModalRef.ts).
+[...source](https://github.com/molgga/jood-v-modal/blob/master/packages/lib/src/modules/modal/JdModalRef.ts).
 
 ```typescript
 // ContainerView
@@ -213,7 +213,7 @@ setup() {
 - useJdModalService(): inject JdModalService
 - useJdModalRef(): inject JdModalRef
 
-[...source](https://github.com/molgga/jood-v-modal/blob/master/packages/lib/src/composables/modal/index.ts).
+[...source](https://github.com/molgga/jood-v-modal/blob/master/packages/lib/src/modules/modal/index.ts).
 
 ```typescript
 // App.vue

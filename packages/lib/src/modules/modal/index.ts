@@ -42,4 +42,5 @@ export const useJdModalRef = <R, D = any, C = any>(): JdModalRef<R, D, C> => {
 };
 
 export * from './types';
+export * from './utils';
 export { JdModalService, JdModalRef };
