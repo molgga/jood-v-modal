@@ -13,13 +13,19 @@ export class JdModalService {
     if (config && config.defaultEntryComponent) {
       this.setDefaultEntryComponent(config.defaultEntryComponent);
     }
+    const observeModalState = this.observeModalState().subscribe(
+      this.onChangeModalState.bind(this)
+    );
+    this.listener.add(observeModalState);
   }
   protected modalUid = 0;
   protected modalRefMap: Map<number, JdModalRef> = new Map();
   protected modalsSubject: Subject<JdModalRef[]> = new Subject();
   protected listener: Subscription = new Subscription();
-  protected useLocationHash: boolean = true;
   protected defaultEntryComponent: EntryComponentType = JdModalEntry;
+  protected useLocationHash: boolean = true;
+  protected useBlockBodyScroll: boolean = false;
+  protected blockBodyStyleBefore: any = null;
 
   /**
    * 현재 열려있는 모달의 수
@@ -57,6 +63,14 @@ export class JdModalService {
   }
 
   /**
+   * 모달의 갯수에 따라 body 의 style(overflow) 속성을 변경하여 scroll 을 막는다.
+   * @param {boolean} is
+   */
+  setUseBlockBodyScroll(is: boolean): void {
+    this.useBlockBodyScroll = is;
+  }
+
+  /**
    * 모달을 감싸는(모달 기능, 모션 처리) 컴포넌트
    * @param {EntryComponentType} entryComponent
    * @returns {void}
@@ -89,6 +103,33 @@ export class JdModalService {
    */
   protected dispatchChangeState(): void {
     this.modalsSubject.next(this.modals);
+  }
+
+  /**
+   * 핸들러: 모달 상태 변경
+   * @protected
+   */
+  protected onChangeModalState(): void {
+    console.log('onChangeModalState', this.useBlockBodyScroll);
+    if (this.useBlockBodyScroll) {
+      this.touchBlockBodyScroll();
+    }
+  }
+
+  protected touchBlockBodyScroll() {
+    console.log('touchBlockBodyScroll');
+    if (this.blockBodyStyleBefore === null) {
+      this.blockBodyStyleBefore = document.body.style.overflow || '';
+    }
+    if (this.modals.length) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      if (this.blockBodyStyleBefore) {
+        document.body.style.overflow = this.blockBodyStyleBefore;
+      } else {
+        document.body.style.removeProperty('overflow');
+      }
+    }
   }
 
   /**
