@@ -1,5 +1,5 @@
-import { useJdModalRef, useJdModalService, ModalHashChangeEvent } from '../modal';
-import { isCloseTargetByHashId } from '../utils';
+import { useJdModalRef, useJdModalService, ModalHashChangeEvent } from '../../modules/modal';
+import { isCloseTargetByHashId } from '../../modules/modal/utils';
 
 type CastFunction<T> = () => T | Promise<T>;
 

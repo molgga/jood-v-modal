@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { ref, computed, Ref } from '@vue/composition-api';
-import { useJdModalService, JdModalRef } from '../modal';
+import { useJdModalService, JdModalRef } from '../../modules/modal';
 
 /**
  * @interface
