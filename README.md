@@ -1,9 +1,20 @@
 # @jood/v-modal
 
-Vue modal 기능 UI
+이 패키지는 모달, 컨펌, 액션시트와 같은 동적인 컴포넌트 UI 구성과 \
+이런 구성에서 일반적으로 필요한 컴포넌트간의 데이터 통신, 프로그래미틱한 제어의 기반을 제공하는것을 목표로 합니다.
 
-*** 
+Vue + composition-api + rxjs 를 활용한 Vue 전용 패키지 입니다. \
+Angular material 의 DialogRef 에서 영감을 받았습니다.
 
+> __[Demo](https://molgga.github.io/jood-v-modal)__
+| __[Demo source code](https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/example)__
+| __[Documentation](https://molgga.github.io/jood-v-modal/documents)__
+| __[Github](https://github.com/molgga/jood-v-modal)__
+| __[NPM](https://www.npmjs.com/package/@jood/v-modal)__
+\
+\
+![Vue](https://img.shields.io/static/v1.svg?label=&style=flat-square&logoColor=white&color=4fc08d&logo=vue.js&message=Vue)
+![Typescript](https://img.shields.io/static/v1.svg?label=&style=flat-square&logoColor=white&color=3178c6&logo=typescript&message=Typescript)
 ![TRAVIS](https://travis-ci.org/molgga/jood-v-modal.svg?branch=master)
 ![NPM version](https://img.shields.io/npm/v/@jood/v-modal.svg)
 ![NPM license](https://img.shields.io/npm/l/@jood/v-modal)
@@ -12,9 +23,7 @@ Vue modal 기능 UI
 
 ***
 
-## Get started
-
-### npm install
+## 시작하기
 
 ```javascript
 $ npm install @jood/v-modal
@@ -31,7 +40,7 @@ import '@jood/v-modal/dist/v-modal.css';
 ```html
 <template>
   <div>
-    <jd-modal-provider /> <!-- nowrapping -->
+    <jd-modal-provider /> <!-- 모달 서비스 상태와 열리는 모달에게 JdModaRef 를 주입해 주는 등의 관리를 합니다. -->
     <div>
       <button @click="onOpen">onOpen</button>
     </div>
@@ -39,34 +48,43 @@ import '@jood/v-modal/dist/v-modal.css';
 </template>
 
 <script lang="ts">
-import { defineComponent, onUnmounted } from "@vue/composition-api";
 import { Subscription } from 'rxjs';
+import { defineComponent, onUnmounted } from "@vue/composition-api";
 import { provideJdModalService, useJdModalService, JdModalProvider, JdModalRef } from "@jood/v-modal";
-import SampleModalView from "@/components/modal/SampleModalView.vue";
+import SomeModal from "./SomeModal.vue";
+
 export default defineComponent({
   components: {
     JdModalProvider
   },
   setup() {
-    provideJdModalService(); // provide service
-    const modalService = useJdModalService(); // use(inject) service
+    provideJdModalService(); // 모달 서비스 공급 - 이제 하위 컴포넌트 모든 곳에서 서비스에 접근이 가능합니다.
+    const modalService = useJdModalService(); // 모달 서비스 주입 및 사용
     const modalResultListener = new Subscription();
     const onOpen = () => {
       const modalRef = modalService.open({
-        component: SampleModalView,
-        data: { 
+        component: SomeModal, // 모달로 열려는 컴포넌트
+        data: { // 모달로 전달할 데이터
+          // 값을 변형하지 않으므로 reactive, ref 와 같은 반응형 데이터를 전달하면 반응성은 그대로 유지 됩니다.
           passModalData1: 1,
           passModalData2: { foo: 'bar' },
         }
-      });
+      }); // JdModalRef 가 반환됩니다.
+
+      // SomeModal -> App 으로 결과를 전달 받을 수 있습니다.
       const observeResult = modalRef.observeClosed(result => {
+        // 꼭 모달을 연 곳에서만 결과를 받을 수 있는게 아닙니다. 
+        // 해당 modalRef 를 알고 있는 모든 곳에서 결과를 받을 수 있습니다.
         console.log(result);
       });
       modalResultListener.add(observeResult);
+
+      // modalRef.close(); // 직접 닫을 수 있습니다.
+      // modalService.closeById(modalRef.id); // 이렇게도 닫을 수 있습니다.
     };
     onUnmounted(() => {
       modalResultListener.unscribe();
-      modalService.closeAll();
+      modalService.closeAll(); // 열려있는 모든 모달을 닫을 수 있습니다.
     });
     return {
       onOpen
@@ -76,7 +94,7 @@ export default defineComponent({
 </script>
 ```
 
-### SampleModalView.vue
+### SomeModal.vue
 ```html
 <template>
   <div class="sample-modal-view">
@@ -86,13 +104,14 @@ export default defineComponent({
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 import { useJdModalRef, useJdModalService } from "@jood/v-modal";
+
 export default defineComponent({
   setup() {
-    const modalService = useJdModalService(); // use(inject) JdModalService 
-    const modalRef = useJdModalRef(); // use(inject) JdModalRef
-    console.log(modalRef);
+    const modalService = useJdModalService(); // 여기서도 모달 서비스를 사용할 수 있습니다.
+    const modalRef = useJdModalRef(); // 모달로 열리면서 주입된 JdModalRef 입니다. 하위 컴포넌트 모든곳에서 주입 받을 수 있습니다.
+    console.log(modalRef); // 모달을 통해 전달된 데이터에 접근하거나, 모달을 직접 닫거나 결과를 전달 할 수 있습니다.
     const onClose = () =>{
-      modalRef.close({ passResult: 1 }); // modal close & pass result
+      modalRef.close({ passResult: 1 }); // 결과를 전달 할 수 있습니다.
     }
     return { 
       onClose 
@@ -109,210 +128,3 @@ export default defineComponent({
 }
 </style>
 ```
-***
-
-## JdModalService
-
-- open()
-  - component[default=undefined]: modal component
-  - data[default=null]: pass data to component(inject useJdModalRef) 
-  - openStrategy[default=ModalOpenStrategy.NORMAL]: modal stack direction
-    - NORMAL: center | center
-    - TOP_STACK: center | top
-    - BOTTOM_STACK: center | bottom
-    - LEFT_STACK: left | center
-    - RIGHT_STACK: right | center
-  - duration[default=240]: modal open|close transition speed
-  - overlayClose[default=false]: overlay click close
-  - floatingMode[default=true]: nested modal stack motion
-  - disableShadow[default=false]: disable entryComponent css box-shadow
-  - entryComponent[default=JdModalEntry(component)]: modal item wrapping component
-    - @see: useJdModalEntrySetup()
-  - panelStyle[default=undefined]: entryComponent panel css style
-
-- closeAll(), closeById(modalId: number), closeByRef(modalRef: JdModalRef)
-  - close modal
-
-- observeModalState(): (rxjs)Observable
-  - changed modalService state (ex: opened modals.length)
-
-- setUseLocationHash()
-  - use location hash change(history stack)
-  - modal open = history push
-  - modal close = history pop 
-  - (history.back = modal close)
-
-[...source](https://github.com/molgga/jood-v-modal/blob/master/packages/lib/src/modules/modal/JdModalService.ts).
-
-```typescript
-setup() {
-  const modalService = useJdModalService();
-  modalService.open({
-    component: MyModalItem,
-    data: {},
-    openStrategy: ModalOpenStrategy.BOTTOM_STACK,
-    duration: 120,
-    overlayClose: true,
-    entryComponent: MyCustomModalItemWapper,
-    floatingMode: true,
-    disableShadow: false,
-    panelStyle: { backgroundColor:'#ff0000' },
-  });
-  return {};
-}
-```
-
-*** 
-
-## JdModalRef
-
-- id: modal unique id
-- close(result?:any): modal close & pass result
-- observeOpener(): changed modal open state
-- observeClosed(): changed modal close state
-
-[...source](https://github.com/molgga/jood-v-modal/blob/master/packages/lib/src/modules/modal/JdModalRef.ts).
-
-```typescript
-// ContainerView
-setup() {
-  const modalResultListener = new Subscription();
-  const onOpen = () => {
-    const modalRef = modalService.open({
-      component: MyModalView,
-      data: { passModalData: 'any pass' }
-    });
-    const observeResult = modalRef.observeClosed(result => {
-      console.log(result);
-    });
-    modalResultListener.add(observeResult);
-  };
-  onUnmounted(() => {
-    modalResultListener.unscribe();
-  });
-  return {};
-}
-```
-
-```typescript
-// MyModalView
-setup() {
-  const modalRef = useJdModalRef();
-  const passData = modalRef.data;
-  const onClose = () => {
-    modalRef.close('any result');
-  }
-  return {};
-}
-```
-
-*** 
-## provide & inject
-
-- provideJdModalService(): provide JdModalService
-- useJdModalService(): inject JdModalService
-- useJdModalRef(): inject JdModalRef
-
-[...source](https://github.com/molgga/jood-v-modal/blob/master/packages/lib/src/modules/modal/index.ts).
-
-```typescript
-// App.vue
-setup() {
-  provideJdModalService();
-  return {};
-}
-
-// SomeContainer.vue
-setup() {
-  const modalService = useJdModalService();
-  const onOpen = () => {
-    modalService.open({ 
-      component: SomeModal,
-      data: { pass1: 1, pass2: 'foo' }
-    })
-  }
-  return {};
-}
-
-// SomeModal.vue
-setup() {
-  const modalService = useJdModalService();
-  const modalRef = useJdModalRef();
-  return {};
-}
-
-// SomeModalChild.vue
-setup() {
-  const modalService = useJdModalService();
-  const modalRef = useJdModalRef();
-  return {};
-}
-```
-
-***
-
-## Customizing
-
- advance customizing modal
-
-- useJdModalProviderSetup(): (ex: JdModalProvider.vue)
-  - mounted(): require call onMounted|onBeforeMount
-  - unmounted(): require call onUnmounted|onBforeUnmount
-  - modals: opened JdModalRef
-  - classes: conainer DOM class set (has, none, visible ...)
-
-- useJdModalEntrySetup(): (ex: JdModalEntry.vue)
-  - refModalContainer: require modal DOM container
-  - mounted(): require call onMounted|onBeforeMount
-  - unmounted(): require call onUnmounted|onBforeUnmount
-  - classes: conainer DOM class set (animate, direction ...)
-  - styles: container DOM style set (animate ...)
-
-[...source: component](https://github.com/molgga/jood-v-modal/tree/master/packages/lib/src/components/modal). \
-[...source: hook](https://github.com/molgga/jood-v-modal/tree/master/packages/lib/src/composables/hook).
-
-```typescript
-// ex) MyModalEntry.vue
-<template>
-  <div class="my-modal-entry" :class="classes">
-    <component :is="modalRef.component"></component>
-  </div>
-</template>
-setup(props) {
-  const {
-    mounted, unmounted, onOverlayClick, refModalContainer, classes, styles
-  } = useJdModalEntrySetup({ modalRef: props.modalRef });
-  onMounted(() => {
-    mounted();
-  });
-  onUnmounted(() => {
-    unmounted();
-  });
-  return {};
-}
-<style lang="scss" scoped>
-.my-modal-entry { 
-  background-color:#ff0000; 
-  transition: opacity 200ms;
-  opacity:0;
-  &.is-opening { opacty:1 } // modal open start
-  &.is-closing { opacity:0; } // modal close start
-  &.shadow { box-shadow: 0 10px 10px rgba(0,0,0,0.2); } // disableShadow: false
-  &.ops-normal {} // ModalOpenStrategy.NORMAL
-  &.ops-leftstack {} // ModalOpenStrategy.LEFT_STACK
-  &.ops-rightstack {} // ModalOpenStrategy.RIGHT_STACK
-  &.ops-topstack {} // ModalOpenStrategy.TOP_STACK
-  &.ops-bottomstack {} // ModalOpenStrategy.BOTTOM_STACK
-}
-</style>
-```
-
-***
-
-### See
-
-- [Example(web)](https://molgga.github.io/jood-v-modal).
-- [Example(source)](https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/example).
-- [Github](https://github.com/molgga/jood-v-modal).
-- [NPM](https://www.npmjs.com/package/@jood/v-modal).
-- [Doc](https://molgga.github.io/jood-v-modal/documents).

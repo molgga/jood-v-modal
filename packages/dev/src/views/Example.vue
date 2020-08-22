@@ -4,16 +4,14 @@
       <template v-if="exampleState.component">
         <component :is="exampleState.component" />
       </template>
-      <template v-else>
-        -
-      </template>
+      <template v-else>-</template>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api';
-import { ExampleApps } from '@/components/example';
+import { ExampleApps, ExampleList } from '@/components/example';
 
 export default defineComponent({
   props: {
@@ -29,6 +27,8 @@ export default defineComponent({
       let component: any;
       if (importComponent[exampleKey]) {
         component = importComponent[exampleKey].component;
+      } else {
+        component = ExampleList[0].component;
       }
       return {
         component
