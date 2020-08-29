@@ -6,7 +6,7 @@
 Vue + composition-api + rxjs 를 활용한 Vue 전용 패키지 입니다.
 
 > __[Demo](https://molgga.github.io/jood-v-modal)__
-| __[Demo source code](https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/example)__
+| __[Demo source code](https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/demo)__
 | __[Documentation](https://molgga.github.io/jood-v-modal/documents)__
 | __[Github](https://github.com/molgga/jood-v-modal)__
 | __[NPM](https://www.npmjs.com/package/@jood/v-modal)__
