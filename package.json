@@ -24,7 +24,10 @@
     "typescript",
     "vue",
     "modal",
+    "dialog",
     "confirm",
-    "actionsheet"
+    "actionsheet",
+    "composition-api",
+    "composable"
   ]
 }
