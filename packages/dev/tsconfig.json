@@ -27,5 +27,5 @@
     "../lib/src/**/*.ts",
     "../lib/src/**/*.vue"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "lib-package"]
 }
