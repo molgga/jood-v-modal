@@ -1,9 +1,10 @@
 # @jood/v-modal
 
-이 패키지는 모달, 컨펌, 액션시트와 같은 동적인 컴포넌트 UI 구성과 \
-컴포넌트간의 데이터 통신, 프로그래미틱한 제어의 기반을 제공하는것을 목표로 합니다.
+Dynamic component UI configurations such as modal, confirm, and action sheets \
+The goal is to provide a foundation for data communication and progressive control between components.
 
-Vue + composition-api + rxjs 를 활용한 Vue 전용 패키지 입니다.
+This is a dedicated package for Vue using Vue + composition-api + rxjs. \
+(When Vue3 is supported, the composition-api dependency will be removed.)
 
 > __[Demo](https://molgga.github.io/jood-v-modal)__
 | __[Demo source code](https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/demo)__
