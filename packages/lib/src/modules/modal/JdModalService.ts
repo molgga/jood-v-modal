@@ -110,7 +110,6 @@ export class JdModalService {
    * @protected
    */
   protected onChangeModalState(): void {
-    console.log('onChangeModalState', this.useBlockBodyScroll);
     if (this.useBlockBodyScroll) {
       this.touchBlockBodyScroll();
     }
