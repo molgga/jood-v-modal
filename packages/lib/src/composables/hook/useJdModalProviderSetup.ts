@@ -52,8 +52,8 @@ export const useJdModalProviderSetup = (): JdModalProviderSetupHook => {
   });
 
   const mounted = () => {
-    const observeModalState = service.observeModalState().subscribe(modalList => {
-      modals.value = modalList;
+    const observeModalState = service.observeModalState().subscribe(modalState => {
+      modals.value = modalState.modals;
     });
     listener.add(observeModalState);
   };

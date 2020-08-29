@@ -13,6 +13,15 @@ export interface ModalConfig {
 }
 
 /**
+ * 모달 서비스 상태
+ * @export
+ * @interface ModalState
+ */
+export interface ModalState {
+  modals: JdModalRef[];
+}
+
+/**
  * 모달 window hash change 이벤트
  * @export
  * @interface ModalHashChangeEvent

@@ -1,5 +1,12 @@
 import { Subject, Observable, Subscription } from 'rxjs';
-import { ModalEvent, ModalEventType, ModalData, ModalConfig, EntryComponentType } from './types';
+import {
+  ModalEvent,
+  ModalEventType,
+  ModalData,
+  ModalConfig,
+  EntryComponentType,
+  ModalState
+} from './types';
 import { JdModalRef } from './JdModalRef';
 import { JdModalEntry } from '../../components';
 
@@ -20,7 +27,7 @@ export class JdModalService {
   }
   protected modalUid = 0;
   protected modalRefMap: Map<number, JdModalRef> = new Map();
-  protected modalsSubject: Subject<JdModalRef[]> = new Subject();
+  protected modalsSubject: Subject<ModalState> = new Subject();
   protected listener: Subscription = new Subscription();
   protected defaultEntryComponent: EntryComponentType = JdModalEntry;
   protected useLocationHash: boolean = true;
@@ -91,9 +98,9 @@ export class JdModalService {
    * 모달의 갯 수 변경시 알림용 옵저버.
    * modals 만으로 외부에서 모달의 갯수 변경 사항을 알 수 있으면
    * 필요가 없으나 반응(상태 갱신) 처리가 자동으로 되지 않아 수동으로 변경사항을 알리고 알 수 있도록 추가함.
-   * @returns {Observable<JdModalRef[]>}
+   * @returns {Observable<ModalState[]>}
    */
-  observeModalState(): Observable<JdModalRef[]> {
+  observeModalState(): Observable<ModalState> {
     return this.modalsSubject.asObservable();
   }
 
@@ -102,7 +109,16 @@ export class JdModalService {
    * @protected
    */
   protected dispatchChangeState(): void {
-    this.modalsSubject.next(this.modals);
+    this.modalsSubject.next(this.getState());
+  }
+
+  /**
+   * 현재 모달 상태.
+   */
+  getState(): ModalState {
+    return {
+      modals: this.modals
+    };
   }
 
   /**
