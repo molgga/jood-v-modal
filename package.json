@@ -16,7 +16,8 @@
     "ci:bootstrap": "yarn install --production=false",
     "ci:test": "yarn workspace @jood/v-modal test",
     "ci:build": "npm run generate",
-    "ci:deploy-before": "npm run ci:build && npm run symlink && npm run page:clear && npm run page:expose"
+    "ci:deploy-before": "npm run ci:build && npm run symlink && npm run page:clear && npm run page:expose",
+    "ci:deploy-pre-test": "npm run ci:test && npm run ci:deploy-before"
   },
   "keywords": [
     "javascript",
