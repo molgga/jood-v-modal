@@ -1,8 +1,8 @@
 <template>
-  <div class="example-view">
+  <div class="demo-view">
     <div class="panel">
-      <template v-if="exampleState.component">
-        <component :is="exampleState.component" />
+      <template v-if="demoState.component">
+        <component :is="demoState.component" />
       </template>
       <template v-else>-</template>
     </div>
@@ -11,24 +11,24 @@
 
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api';
-import { ExampleApps, ExampleList } from '@/components/example';
+import { DemoApps, DemoList } from '@/components/demo';
 
 export default defineComponent({
   props: {
-    example: {
+    demo: {
       type: String,
       default: ''
     }
   },
   setup(props) {
-    const importComponent: any = ExampleApps;
-    const exampleState = computed(() => {
-      const exampleKey = props.example;
+    const importComponent: any = DemoApps;
+    const demoState = computed(() => {
+      const demoKey = props.demo;
       let component: any;
-      if (importComponent[exampleKey]) {
-        component = importComponent[exampleKey].component;
+      if (importComponent[demoKey]) {
+        component = importComponent[demoKey].component;
       } else {
-        component = ExampleList[0].component;
+        component = DemoList[0].component;
       }
       return {
         component
@@ -36,14 +36,14 @@ export default defineComponent({
     });
 
     return {
-      exampleState
+      demoState
     };
   }
 });
 </script>
 
 <style lang="scss" scoped>
-.example-view {
+.demo-view {
   > .panel {
     width: 100%;
   }
