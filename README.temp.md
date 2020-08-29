@@ -190,7 +190,7 @@ setup() {
       component: MyModalView,
       data: { passModalData: 'any pass' }
     });
-    const observeResult = modalRef.observeClosed(result => {
+    const observeResult = modalRef.observeClosed().subscribe(result => {
       console.log(result);
     });
     modalResultListener.add(observeResult);

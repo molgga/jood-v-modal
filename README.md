@@ -3,8 +3,7 @@
 이 패키지는 모달, 컨펌, 액션시트와 같은 동적인 컴포넌트 UI 구성과 \
 컴포넌트간의 데이터 통신, 프로그래미틱한 제어의 기반을 제공하는것을 목표로 합니다.
 
-Vue + composition-api + rxjs 를 활용한 Vue 전용 패키지 입니다. \
-Angular material 의 DialogRef 에서 영감을 받았습니다.
+Vue + composition-api + rxjs 를 활용한 Vue 전용 패키지 입니다.
 
 > __[Demo](https://molgga.github.io/jood-v-modal)__
 | __[Demo source code](https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/example)__
@@ -88,7 +87,7 @@ export default defineComponent({
       }); // JdModalRef 가 반환됩니다.
 
       // SomeModal -> App 으로 결과를 전달 받을 수 있습니다.
-      const observeResult = modalRef.observeClosed(result => {
+      const observeResult = modalRef.observeClosed().subscribe(result => {
         // 꼭 모달을 연 곳에서만 결과를 받을 수 있는게 아닙니다. 
         // 해당 modalRef 를 알고 있는 모든 곳에서 결과를 받을 수 있습니다.
         console.log(result);
