@@ -29,7 +29,7 @@ import {
   ModalHashChangeEvent,
   useJdModalService,
   useJdModalBeforeLeave
-} from '@/lib-package';
+} from '@jood/v-modal';
 
 export default defineComponent({
   setup() {

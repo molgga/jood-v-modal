@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, onMounted, onUnmounted } from '@vue/composition-api';
-import { useJdModalService, JdModalRef } from '@/lib-package';
+import { useJdModalService, JdModalRef } from '@jood/v-modal';
 import ModalOptions, { createTestOptions } from '../common/ModalOptions.vue';
 import SampleModal1 from '../common/SampleModal1.vue';
 import SampleModal2 from '../common/SampleModal2.vue';

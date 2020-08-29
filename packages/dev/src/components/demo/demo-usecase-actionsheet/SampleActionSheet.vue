@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api';
-import { useJdModalRef, ModalOpenStrategy } from '@/lib-package';
+import { useJdModalRef, ModalOpenStrategy } from '@jood/v-modal';
 interface Action<T = any> {
   label: string;
   description?: string;

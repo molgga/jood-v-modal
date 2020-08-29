@@ -14,14 +14,16 @@
             <a
               href="https://github.com/molgga/jood-v-modal/blob/master/packages/lib/src/components/modal/JdModalEntry.vue"
               target="_blank"
-            >JdModalEntry</a>
+              >JdModalEntry</a
+            >
           </li>
           <li>
             @see:
             <a
               href="https://github.com/molgga/jood-v-modal/blob/master/packages/lib/src/composables/hook/useJdModalEntrySetup.ts"
               target="_blank"
-            >useJdModalEntrySetup</a>
+              >useJdModalEntrySetup</a
+            >
           </li>
         </ul>
       </v-card-text>
@@ -35,7 +37,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, onMounted, onUnmounted } from '@vue/composition-api';
-import { useJdModalService, JdModalRef } from '@/lib-package';
+import { useJdModalService, JdModalRef } from '@jood/v-modal';
 import ModalOptions, { createTestOptions } from '../common/ModalOptions.vue';
 import CustomModalEntry from '../common/CustomModalEntry.vue';
 import SampleNestedModal1 from '../common/SampleNestedModal1.vue';

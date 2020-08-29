@@ -40,7 +40,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, onUnmounted, reactive } from '@vue/composition-api';
-import { JdModalRef, useJdModalEntrySetup } from '@/lib-package';
+import { JdModalRef, useJdModalEntrySetup } from '@jood/v-modal';
 
 interface IProps {
   index: number;

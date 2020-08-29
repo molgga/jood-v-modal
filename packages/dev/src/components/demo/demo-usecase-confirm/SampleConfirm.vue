@@ -16,14 +16,15 @@
         :key="index"
         v-bind="action.attr"
         @click="onClose(action)"
-      >{{ action.label }}</v-btn>
+        >{{ action.label }}</v-btn
+      >
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api';
-import { useJdModalRef, ModalOpenStrategy } from '@/lib-package';
+import { useJdModalRef, ModalOpenStrategy } from '@jood/v-modal';
 
 export interface ConfirmAction {
   label: string;

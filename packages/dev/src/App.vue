@@ -67,7 +67,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api';
 import { demoLinks } from '@/components/demo';
-import { provideJdModalService, useJdModalService, JdModalProvider } from '@/lib-package';
+import { provideJdModalService, useJdModalService, JdModalProvider } from '@jood/v-modal';
 
 export default defineComponent({
   components: {

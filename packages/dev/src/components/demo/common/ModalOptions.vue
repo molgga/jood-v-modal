@@ -44,7 +44,12 @@
         <v-row>
           <v-col cols="12" sm="6">
             <div class="sub-desc">duration = open&amp;close animate speed</div>
-            <v-text-field v-model="value.duration" hide-details single-line type="number"></v-text-field>
+            <v-text-field
+              v-model="value.duration"
+              hide-details
+              single-line
+              type="number"
+            ></v-text-field>
           </v-col>
         </v-row>
       </v-expansion-panel-content>
@@ -54,7 +59,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from '@vue/composition-api';
-import { ModalOpenStrategy } from '@/lib-package';
+import { ModalOpenStrategy } from '@jood/v-modal';
 
 export const createTestOptions = (overwirte: any = {}) => {
   return {

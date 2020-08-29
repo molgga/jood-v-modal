@@ -21,7 +21,7 @@ import {
   onUnmounted,
   onBeforeUnmount
 } from '@vue/composition-api';
-import { useJdModalService, JdModalRef } from '@/lib-package';
+import { useJdModalService, JdModalRef } from '@jood/v-modal';
 import ModalOptions, { createTestOptions } from '../common/ModalOptions.vue';
 import CustomModalEntry from '../common/CustomModalEntry.vue';
 import SampleNestedModal1 from '../common/SampleNestedModal1.vue';

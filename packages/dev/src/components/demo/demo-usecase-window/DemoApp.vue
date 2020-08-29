@@ -3,7 +3,7 @@
     <template v-if="state.modals.length">
       <div class="simple-stack">
         <div class="stack-list">
-          <div v-for="(modalRef) in state.modals" :key="modalRef.id" class="stack-item">
+          <div v-for="modalRef in state.modals" :key="modalRef.id" class="stack-item">
             <v-chip
               class="stack-chip"
               label
@@ -11,10 +11,11 @@
               close-icon="delete"
               text-color="white"
               color="indigo"
-              :class="{'is-active': isModalTopIndex(modalRef.id)}"
+              :class="{ 'is-active': isModalTopIndex(modalRef.id) }"
               @click="onOrderToTop(modalRef.id)"
               @click:close="onCloseByModalId(modalRef.id)"
-            >{{ modalRef.id }}</v-chip>
+              >{{ modalRef.id }}</v-chip
+            >
           </div>
         </div>
       </div>
@@ -36,7 +37,7 @@
 <script lang="ts">
 import { Subscription } from 'rxjs';
 import { defineComponent, reactive, onMounted, onUnmounted } from '@vue/composition-api';
-import { useJdModalService, JdModalRef } from '@/lib-package';
+import { useJdModalService, JdModalRef } from '@jood/v-modal';
 import ModalOptions, { createTestOptions } from '../common/ModalOptions.vue';
 import SampleNestedModal1 from '../common/SampleNestedModal1.vue';
 

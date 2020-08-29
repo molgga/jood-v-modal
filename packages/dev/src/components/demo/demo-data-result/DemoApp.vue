@@ -35,7 +35,7 @@
 <script lang="ts">
 import { Subscription } from 'rxjs';
 import { defineComponent, reactive, onMounted, onUnmounted } from '@vue/composition-api';
-import { useJdModalService, JdModalRef } from '@/lib-package';
+import { useJdModalService, JdModalRef } from '@jood/v-modal';
 import ModalOptions, { createTestOptions } from '../common/ModalOptions.vue';
 import SampleModal1, { SampleModalData, SampleModalResult } from '../common/SampleModal1.vue';
 
