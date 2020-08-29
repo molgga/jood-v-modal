@@ -19,8 +19,8 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, onUnmounted } from '@vue/composition-api';
-import { JdModalRef } from '../../modules';
-import { useJdModalEntrySetup } from '../../composables';
+import { JdModalRef } from '../modules';
+import { useJdModalEntrySetup } from '../composables';
 
 interface IProps {
   index: number;

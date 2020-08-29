@@ -1,13 +1,15 @@
 import { provide, Ref, ref, computed } from '@vue/composition-api';
 import {
-  JD_MODAL_REF_TOKEN,
-  useJdModalService,
-  JdModalRef,
   ModalEventType,
   ModalOpenStrategy,
-  ModalHashChangeEvent
-} from '../../modules/modal';
-import { createHashId, createHashIdReg, extractHashId } from '../../modules/modal/utils';
+  ModalHashChangeEvent,
+  JD_MODAL_REF_TOKEN,
+  JdModalRef,
+  useJdModalService,
+  createHashId,
+  createHashIdReg,
+  extractHashId
+} from '../modules';
 
 /**
  * @interface

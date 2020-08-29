@@ -8,7 +8,7 @@ import {
   ModalState
 } from './types';
 import { JdModalRef } from './JdModalRef';
-import { JdModalEntry } from '../../components';
+import { JdModalEntry } from '../components';
 
 /**
  * 모달 서비스
