@@ -1,4 +1,4 @@
-import { provide, Ref, ref, computed } from '@vue/composition-api';
+import { provide, Ref, ref, computed } from 'vue';
 import {
   ModalEventType,
   ModalOpenStrategy,

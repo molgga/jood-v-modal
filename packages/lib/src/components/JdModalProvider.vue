@@ -14,13 +14,12 @@
 
 <script lang="ts">
 import { Subscription } from 'rxjs';
-import { ref, computed, onUnmounted, onMounted, defineComponent } from '@vue/composition-api';
+import { ref, computed, onUnmounted, onMounted, defineComponent } from 'vue';
 import { useJdModalService, JdModalRef } from '../modules';
 import { useJdModalProviderSetup } from '../composables';
 
-export default defineComponent({
+export default {
   name: 'JdModalProvider',
-
   setup() {
     const { mounted, unmounted, classes, modals } = useJdModalProviderSetup();
     onMounted(() => {
@@ -35,7 +34,7 @@ export default defineComponent({
       modals
     };
   }
-});
+};
 </script>
 
 <style lang="scss" scoped>

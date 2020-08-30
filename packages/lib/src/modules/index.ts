@@ -1,4 +1,4 @@
-import { provide, inject } from '@vue/composition-api';
+import { provide, inject } from 'vue';
 import { JdModalService } from './JdModalService';
 import { JdModalRef } from './JdModalRef';
 import { ModalConfig } from './types';

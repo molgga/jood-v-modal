@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { ref, computed, Ref } from '@vue/composition-api';
+import { ref, computed, Ref } from 'vue';
 import { useJdModalService, JdModalRef } from '../modules';
 
 /**
@@ -24,8 +24,8 @@ interface JdModalProviderSetupHook {
 export const useJdModalProviderSetup = (): JdModalProviderSetupHook => {
   const service = useJdModalService();
   const listener = new Subscription();
-  const modals = ref(service.modals);
-  const emptied = ref(true);
+  const modals = ref(service.modals) as Ref<JdModalRef[]>;
+  const emptied = ref<boolean>(true);
   const animateTimer: any = ref(null);
   const modalOpenState = computed(() => {
     clearTimeout(animateTimer.value);

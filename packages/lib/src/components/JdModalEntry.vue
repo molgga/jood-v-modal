@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted } from '@vue/composition-api';
+import { defineComponent, onMounted, onUnmounted } from 'vue';
 import { JdModalRef } from '../modules';
 import { useJdModalEntrySetup } from '../composables';
 
@@ -27,7 +27,7 @@ interface IProps {
   modalRef: JdModalRef;
 }
 
-export default defineComponent({
+export default {
   name: 'JdModalEntry',
   props: {
     index: {
@@ -64,7 +64,7 @@ export default defineComponent({
       styles
     };
   }
-});
+};
 </script>
 
 <style lang="scss" scoped>
