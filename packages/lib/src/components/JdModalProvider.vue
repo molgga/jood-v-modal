@@ -25,7 +25,6 @@ export default {
     onMounted(() => {
       mounted();
     });
-
     onUnmounted(() => {
       unmounted();
     });

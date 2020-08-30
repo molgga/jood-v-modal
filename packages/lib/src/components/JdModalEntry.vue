@@ -48,15 +48,12 @@ export default {
     } = useJdModalEntrySetup({
       modalRef: props.modalRef
     });
-
     onMounted(() => {
       mounted();
     });
-
     onUnmounted(() => {
       unmounted();
     });
-
     return {
       refModalContainer,
       onOverlayClick,

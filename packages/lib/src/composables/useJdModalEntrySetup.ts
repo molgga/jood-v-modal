@@ -1,4 +1,4 @@
-import { provide, Ref, ref, computed } from 'vue';
+import { provide, Ref, ref, computed, shallowRef, reactive } from 'vue';
 import {
   ModalEventType,
   ModalOpenStrategy,
@@ -46,7 +46,6 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   const { modalRef } = setup;
   provide(JD_MODAL_REF_TOKEN, modalRef);
   const modalService = useJdModalService();
-  const refModalContainer: Ref<HTMLElement | null> = ref(null);
   const {
     openStrategy,
     duration,
@@ -56,19 +55,15 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     disableShadow = false,
     fullHeight = false
   } = modalRef;
-  // const openStrategy = modalRef.openStrategy;
-  // const overlayClose = modalRef.overlayClose || false;
-  // const duration = modalRef.duration;
-  // const floatingMode = modalRef.floatingMode || false;
-  // const panelStyle = modalRef.panelStyle;
-  // const modalShadow = !modalRef.disableShadow;
-  // const fullHeight = !modalRef.fullHeight;
-  const safeTiming = isNaN(duration) || duration < 0 ? 240 : duration;
-  const animateTimer: any = ref(null);
-  const opening = ref(false);
-  const opened = ref(false);
-  const closing = ref(false);
   const usedLocationHash = modalService.usedLocationHash;
+  const refModalContainer: Ref<HTMLElement | null> = shallowRef(null);
+  const safeTiming = isNaN(duration) || duration < 0 ? 240 : duration;
+  const openState = reactive({
+    opening: false,
+    opened: false,
+    closing: false
+  });
+  let animateTimer: any = null;
 
   const onOverlayClick = (evt: MouseEvent) => {
     if (overlayClose && evt.target === refModalContainer.value) {
@@ -85,10 +80,10 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
       if (usedLocationHash) {
         popLocationHash();
       }
-      opening.value = false;
-      opened.value = false;
-      closing.value = true;
-      animateTimer.value = setTimeout(() => {
+      openState.opening = false;
+      openState.opened = false;
+      openState.closing = true;
+      animateTimer = setTimeout(() => {
         modalRef.closed();
         observeOpener.unsubscribe();
       }, safeTiming);
@@ -117,9 +112,9 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     return [
       openType,
       {
-        'is-opening': opening.value,
-        'is-opened': opened.value,
-        'is-closing': closing.value,
+        'is-opening': openState.opening,
+        'is-opened': openState.opened,
+        'is-closing': openState.closing,
         'floating-mode': floatingMode,
         'full-height': fullHeight,
         shadow: !disableShadow
@@ -186,15 +181,15 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   };
 
   const mountedOpening = () => {
-    opening.value = true;
-    animateTimer.value = setTimeout(mountedOpened, safeTiming);
+    openState.opening = true;
+    animateTimer = setTimeout(mountedOpened, safeTiming);
   };
 
   const mountedOpened = () => {
     if (usedLocationHash) {
       touchLocationHash();
     }
-    opened.value = true;
+    openState.opened = true;
     modalRef.opener.next({
       type: ModalEventType.OPENED,
       modalRef
@@ -206,11 +201,11 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
       type: ModalEventType.OPEN,
       modalRef
     });
-    animateTimer.value = setTimeout(mountedOpening, 15);
+    animateTimer = setTimeout(mountedOpening, 15);
   };
 
   const unmounted = () => {
-    clearTimeout(animateTimer.value);
+    clearTimeout(animateTimer);
     observeOpener.unsubscribe();
   };
 
