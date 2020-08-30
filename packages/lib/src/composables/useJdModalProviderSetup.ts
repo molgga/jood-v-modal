@@ -1,6 +1,7 @@
 import { Subscription } from 'rxjs';
-import { ref, computed, Ref } from 'vue';
+import { computed, shallowReactive } from 'vue';
 import { useJdModalService, JdModalRef } from '../modules';
+import { ModalState } from '../modules/types';
 
 /**
  * @interface
@@ -12,8 +13,13 @@ import { useJdModalService, JdModalRef } from '../modules';
 interface JdModalProviderSetupHook {
   mounted: Function;
   unmounted: Function;
-  modals: Ref<JdModalRef[]>;
+  state: HookState;
   classes: any;
+}
+
+interface HookState {
+  modals: JdModalRef[];
+  emptied: boolean;
 }
 
 /**
@@ -24,37 +30,38 @@ interface JdModalProviderSetupHook {
 export const useJdModalProviderSetup = (): JdModalProviderSetupHook => {
   const service = useJdModalService();
   const listener = new Subscription();
-  const modals = ref(service.modals) as Ref<JdModalRef[]>;
-  const emptied = ref<boolean>(true);
-  const animateTimer: any = ref(null);
-  const modalOpenState = computed(() => {
-    clearTimeout(animateTimer.value);
-    const hasModal = !!modals.value.length;
+  let animateTimer: any = null;
+
+  const state = shallowReactive<HookState>({
+    modals: service.modals,
+    emptied: true
+  });
+  const classes = computed(() => {
+    const modals = state.modals;
+    const hasModal = !!(modals && modals.length);
+    const emptied = state.emptied;
+    return {
+      'has-modal': hasModal,
+      'is-emptied': emptied
+    };
+  });
+
+  const onChangeModalState = (modalState: ModalState) => {
+    const { modals } = modalState;
+    const hasModal = !!(modals && modals.length);
+    state.modals = modals;
+    clearTimeout(animateTimer);
     if (hasModal) {
-      emptied.value = false;
+      state.emptied = false;
     } else {
-      animateTimer.value = setTimeout(() => {
-        emptied.value = true;
+      animateTimer = setTimeout(() => {
+        state.emptied = true;
       }, 140);
     }
-    return {
-      hasModal,
-      emptied
-    };
-  });
-
-  const classes = computed(() => {
-    const state = modalOpenState.value;
-    return {
-      'has-modal': state.hasModal,
-      'is-emptied': state.emptied.value
-    };
-  });
+  };
 
   const mounted = () => {
-    const observeModalState = service.observeModalState().subscribe(modalState => {
-      modals.value = modalState.modals;
-    });
+    const observeModalState = service.observeModalState().subscribe(onChangeModalState);
     listener.add(observeModalState);
   };
 
@@ -67,6 +74,6 @@ export const useJdModalProviderSetup = (): JdModalProviderSetupHook => {
     mounted,
     unmounted,
     classes,
-    modals
+    state
   };
 };
