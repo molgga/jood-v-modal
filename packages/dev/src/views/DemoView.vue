@@ -1,8 +1,9 @@
 <template>
   <div class="demo-view">
     <div class="panel">
-      <template v-if="demoState.component">
-        <component :is="demoState.component" />
+      demo-view
+      <template v-if="demoState2">
+        <component :is="demoState2" />
       </template>
       <template v-else>-</template>
     </div>
@@ -10,8 +11,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api';
-import { DemoApps, DemoList } from '@/components/demo';
+import {
+  defineComponent,
+  computed,
+  defineAsyncComponent,
+  shallowRef,
+  watch,
+  watchEffect
+} from 'vue';
+import { DemoApps, DemoList } from '@/components/demo-vue3';
 
 export default defineComponent({
   props: {
@@ -35,8 +43,30 @@ export default defineComponent({
       };
     });
 
+    const demoState2 = shallowRef(null);
+
+    watchEffect(
+      // () => {
+      //   console.log('######################### 1');
+      //   return props.demo;
+      // }
+      () => {
+        console.log('######################### 2');
+        const demoKey = props.demo;
+        let component: any;
+        if (importComponent[demoKey]) {
+          component = importComponent[demoKey].component;
+        } else {
+          component = DemoList[0].component;
+        }
+        demoState2.value = component;
+        console.log(112, demoState2.value);
+      }
+    );
+
     return {
-      demoState
+      demoState,
+      demoState2
     };
   }
 });

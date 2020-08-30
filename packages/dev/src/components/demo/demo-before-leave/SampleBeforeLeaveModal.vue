@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onUnmounted, onMounted, computed } from '@vue/composition-api';
+import { defineComponent, reactive, onUnmounted, onMounted, computed } from 'vue';
 import {
   useJdModalRef,
   ModalHashChangeEvent,

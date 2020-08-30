@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { Subscription } from 'rxjs';
-import { defineComponent, reactive, onUnmounted } from '@vue/composition-api';
+import { defineComponent, reactive, onUnmounted } from 'vue';
 import { useJdModalRef, useJdModalService } from '@jood/v-modal';
 import SampleNestedModal from '../common/SampleNestedModal3.vue';
 

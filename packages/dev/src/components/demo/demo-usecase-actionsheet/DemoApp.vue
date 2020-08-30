@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { Subscription } from 'rxjs';
-import { defineComponent, reactive, onMounted, onUnmounted } from '@vue/composition-api';
+import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
 import { useJdModalService, JdModalRef, ModalOpenStrategy } from '@jood/v-modal';
 import ModalOptions, { createTestOptions } from '../common/ModalOptions.vue';
 import SampleActionSheet, { ActionResult, ActionData } from './SampleActionSheet.vue';

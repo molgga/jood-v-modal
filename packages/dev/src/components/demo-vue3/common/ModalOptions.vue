@@ -1,4 +1,8 @@
 <template>
+  <div class="modal-options">
+    modal-options
+  </div>
+  <!--
   <v-expansion-panels v-model="state.panel" class="modal-options">
     <v-expansion-panel>
       <v-expansion-panel-header>
@@ -55,23 +59,12 @@
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-expansion-panels>
+  -->
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
 import { ModalOpenStrategy } from '@jood/v-modal';
-
-export const createTestOptions = (overwirte: any = {}) => {
-  return {
-    overlayClose: true,
-    floatingMode: true,
-    disableShadow: false,
-    fullHeight: false,
-    duration: 240,
-    openStrategy: ModalOpenStrategy.NORMAL,
-    ...overwirte
-  };
-};
 
 export default defineComponent({
   model: {

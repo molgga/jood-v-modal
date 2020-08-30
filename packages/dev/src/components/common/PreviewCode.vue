@@ -6,14 +6,14 @@
         <div class="desc">{{ viewState.description }}</div>
       </div>
     </template>
-    <vue-code-highlight class="panel-viewer" :language="viewState.language">
+    <!-- <vue-code-highlight class="panel-viewer" :language="viewState.language">
       <slot>{{ viewState.code }}</slot>
-    </vue-code-highlight>
+    </vue-code-highlight> -->
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api';
+import { defineComponent, computed } from 'vue';
 import 'prismjs';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-bash';

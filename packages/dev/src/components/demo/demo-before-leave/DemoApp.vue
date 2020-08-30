@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onMounted, onUnmounted } from '@vue/composition-api';
+import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
 import { useJdModalService, JdModalRef, ModalHashChangeEvent } from '@jood/v-modal';
 import ModalOptions, { createTestOptions } from '../common/ModalOptions.vue';
 import SampleBeforeLeaveModal from './SampleBeforeLeaveModal.vue';

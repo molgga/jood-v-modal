@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted, reactive } from '@vue/composition-api';
+import { defineComponent, onMounted, onUnmounted, reactive } from 'vue';
 import { JdModalRef, useJdModalEntrySetup } from '@jood/v-modal';
 
 interface IProps {
@@ -47,7 +47,7 @@ interface IProps {
   modalRef: JdModalRef;
 }
 
-export default defineComponent({
+export default {
   name: 'CustomModalEntry',
   props: {
     index: {
@@ -100,7 +100,7 @@ export default defineComponent({
       myState
     };
   }
-});
+};
 </script>
 
 <style lang="scss" scoped>

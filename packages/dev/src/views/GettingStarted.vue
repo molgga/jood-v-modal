@@ -58,8 +58,7 @@
               href="https://medium.com/angular-in-depth/the-best-way-to-unsubscribe-rxjs-observable-in-the-angular-applications-d8f9aa42f6a0"
               target="_blank"
             >
-              The Best Way To Unsubscribe RxJS Observables
-              <strike>In The Angular Applications!</strike>
+              The Best Way To Unsubscribe RxJS Observables In The Angular Applications!
             </a>
           </li>
         </ul>
@@ -103,7 +102,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
+import { defineComponent } from 'vue';
 import PreviewCode from '@/components/common/PreviewCode.vue';
 import PanelDevider from '@/components/common/PanelDevider.vue';
 import Codes from '@/codes/getting-started';

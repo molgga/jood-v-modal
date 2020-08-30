@@ -53,7 +53,7 @@ export default defineComponent({
 
 <script lang="ts">
 import { Subscription } from 'rxjs';
-import { defineComponent, onUnmounted } from '@vue/composition-api';
+import { defineComponent, onUnmounted } from 'vue';
 import { useJdModalService, ModalOpenStrategy, JdModalRef } from '@jood/v-modal';
 import MySomeModal from './MySomeModal.vue';
 export default defineComponent({
@@ -98,7 +98,7 @@ export default defineComponent({
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
+import { defineComponent } from 'vue'
 import { useJdModalRef } from '@jood/v-modal';
 export default defineComponent({
   setup() {

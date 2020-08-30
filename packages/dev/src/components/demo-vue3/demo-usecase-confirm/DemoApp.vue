@@ -22,7 +22,8 @@
 import { Subscription } from 'rxjs';
 import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
 import { useJdModalService, JdModalRef, ModalOpenStrategy } from '@jood/v-modal';
-import ModalOptions, { createTestOptions } from '../common/ModalOptions.vue';
+import { createTestOptions } from '../common/createTestOptions';
+import ModalOptions from '../common/ModalOptions.vue';
 import SampleConfirm, { ConfirmData, ConfirmAction } from './SampleConfirm.vue';
 
 export default {

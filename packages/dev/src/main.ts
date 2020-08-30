@@ -1,5 +1,5 @@
 import '@jood/v-modal/dist/v-modal.css';
-import 'vuetify/dist/vuetify.min.css';
+// import 'vuetify/dist/vuetify.min.css';
 import 'vue-code-highlight/themes/prism-tomorrow.css';
 // import 'vue-code-highlight/themes/prism.css';
 // import 'vue-code-highlight/themes/prism-coy.css';
@@ -11,22 +11,44 @@ import 'vue-code-highlight/themes/prism-tomorrow.css';
 // import 'vue-code-highlight/themes/duotone-sea.css';
 // import 'vue-code-highlight/themes/window.css';
 
-import Vue from 'vue';
+import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
-import VueCompositionAPI from '@vue/composition-api';
-import Vuetify from 'vuetify';
+// import Vuetify from 'vuetify';
+// Vue.config.productionTip = false;
+// Vue.use(VueCompositionAPI);
+// Vue.use(Vuetify);
 
-Vue.config.productionTip = false;
-Vue.use(VueCompositionAPI);
-Vue.use(Vuetify);
+const vueApp = createApp(App as any, {
+  // router
+  // vuetify: new Vuetify({
+  //   icons: {
+  //     iconfont: 'md'
+  //   }
+  // })
+});
 
-new Vue({
-  router,
-  vuetify: new Vuetify({
-    icons: {
-      iconfont: 'md'
-    }
-  }),
-  render: h => h(App)
-}).$mount('#app');
+// vueApp.config.productionTip
+// vueApp.use(VueRouter);
+// vueApp.use(Vuetify);
+vueApp.use(router);
+vueApp.mount('#app');
+
+// import Vue from 'vue';
+// import App from './App.vue';
+// import router from './router';
+// import Vuetify from 'vuetify';
+
+// Vue.config.productionTip = false;
+// Vue.use(VueCompositionAPI);
+// Vue.use(Vuetify);
+
+// new Vue({
+//   router,
+//   vuetify: new Vuetify({
+//     icons: {
+//       iconfont: 'md'
+//     }
+//   }),
+//   render: h => h(App)
+// }).$mount('#app');

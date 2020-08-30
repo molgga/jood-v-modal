@@ -1,5 +1,10 @@
 <template>
-  <v-app id="app">
+  <div id="app">
+    <jd-modal-provider />
+    app
+    <router-view class="app-body" />
+  </div>
+  <!-- <v-app id="app">
     <jd-modal-provider />
 
     <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
@@ -14,9 +19,7 @@
           <v-list-item v-for="(demo, index) in demoLinks" :key="index" link :to="demo.to">
             <v-list-item-content>
               <v-list-item-title>{{ demo.label }}</v-list-item-title>
-              <v-list-item-subtitle v-if="demo.description">
-                {{ demo.description }}
-              </v-list-item-subtitle>
+              <v-list-item-subtitle v-if="demo.description">{{ demo.description }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -61,15 +64,15 @@
         <router-view class="app-body" />
       </v-container>
     </v-main>
-  </v-app>
+  </v-app>-->
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
-import { demoLinks } from '@/components/demo';
+import { defineComponent } from 'vue';
+import { demoLinks } from '@/components/demo-vue3';
 import { provideJdModalService, useJdModalService, JdModalProvider } from '@jood/v-modal';
 
-export default defineComponent({
+export default {
   components: {
     JdModalProvider
   },
@@ -104,7 +107,7 @@ export default defineComponent({
       onGoDocument
     };
   }
-});
+};
 </script>
 <style>
 body {

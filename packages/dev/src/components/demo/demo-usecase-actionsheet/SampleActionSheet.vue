@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api';
+import { defineComponent, computed } from 'vue';
 import { useJdModalRef, ModalOpenStrategy } from '@jood/v-modal';
 interface Action<T = any> {
   label: string;

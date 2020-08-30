@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from '@vue/composition-api';
+import { defineComponent, reactive } from 'vue';
 import { useJdModalRef } from '@jood/v-modal';
 
 export default defineComponent({
