@@ -40,7 +40,7 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { provide, Ref, ref, computed } from '@vue/composition-api';
+            <pre class="prettyprint source linenums"><code>import { provide, Ref, computed, shallowRef, shallowReactive } from '@vue/composition-api';
 import {
   ModalEventType,
   ModalOpenStrategy,
@@ -88,7 +88,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   const { modalRef } = setup;
   provide(JD_MODAL_REF_TOKEN, modalRef);
   const modalService = useJdModalService();
-  const refModalContainer: Ref&lt;HTMLElement | null> = ref(null);
+  const refModalContainer: Ref&lt;HTMLElement | null> = shallowRef(null);
   const {
     openStrategy,
     duration,
@@ -98,19 +98,14 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     disableShadow = false,
     fullHeight = false
   } = modalRef;
-  // const openStrategy = modalRef.openStrategy;
-  // const overlayClose = modalRef.overlayClose || false;
-  // const duration = modalRef.duration;
-  // const floatingMode = modalRef.floatingMode || false;
-  // const panelStyle = modalRef.panelStyle;
-  // const modalShadow = !modalRef.disableShadow;
-  // const fullHeight = !modalRef.fullHeight;
-  const safeTiming = isNaN(duration) || duration &lt; 0 ? 240 : duration;
-  const animateTimer: any = ref(null);
-  const opening = ref(false);
-  const opened = ref(false);
-  const closing = ref(false);
   const usedLocationHash = modalService.usedLocationHash;
+  const safeTiming = isNaN(duration) || duration &lt; 0 ? 240 : duration;
+  const openState = shallowReactive({
+    opening: false,
+    opened: false,
+    closing: false
+  });
+  let animateTimer: any = null;
 
   const onOverlayClick = (evt: MouseEvent) => {
     if (overlayClose &amp;&amp; evt.target === refModalContainer.value) {
@@ -127,10 +122,10 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
       if (usedLocationHash) {
         popLocationHash();
       }
-      opening.value = false;
-      opened.value = false;
-      closing.value = true;
-      animateTimer.value = setTimeout(() => {
+      openState.opening = false;
+      openState.opened = false;
+      openState.closing = true;
+      animateTimer = setTimeout(() => {
         modalRef.closed();
         observeOpener.unsubscribe();
       }, safeTiming);
@@ -159,9 +154,9 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     return [
       openType,
       {
-        'is-opening': opening.value,
-        'is-opened': opened.value,
-        'is-closing': closing.value,
+        'is-opening': openState.opening,
+        'is-opened': openState.opened,
+        'is-closing': openState.closing,
         'floating-mode': floatingMode,
         'full-height': fullHeight,
         shadow: !disableShadow
@@ -228,15 +223,15 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   };
 
   const mountedOpening = () => {
-    opening.value = true;
-    animateTimer.value = setTimeout(mountedOpened, safeTiming);
+    openState.opening = true;
+    animateTimer = setTimeout(mountedOpened, safeTiming);
   };
 
   const mountedOpened = () => {
     if (usedLocationHash) {
       touchLocationHash();
     }
-    opened.value = true;
+    openState.opened = true;
     modalRef.opener.next({
       type: ModalEventType.OPENED,
       modalRef
@@ -248,11 +243,11 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
       type: ModalEventType.OPEN,
       modalRef
     });
-    animateTimer.value = setTimeout(mountedOpening, 15);
+    animateTimer = setTimeout(mountedOpening, 15);
   };
 
   const unmounted = () => {
-    clearTimeout(animateTimer.value);
+    clearTimeout(animateTimer);
     observeOpener.unsubscribe();
   };
 
@@ -277,7 +272,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
 <br class="clear">
 
 <footer>
-    Documentation generated at Sat Aug 29 2020 10:49:47 GMT+0000 (Coordinated Universal Time)
+    Documentation generated at Mon Aug 31 2020 02:38:25 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script>prettyPrint();</script>
