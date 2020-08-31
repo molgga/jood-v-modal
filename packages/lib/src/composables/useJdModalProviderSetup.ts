@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
-import { ref, computed, Ref } from '@vue/composition-api';
-import { useJdModalService, JdModalRef } from '../modules';
+import { computed, Ref, shallowRef } from '@vue/composition-api';
+import { useJdModalService, JdModalRef, ModalState } from '../modules';
 
 /**
  * @interface
@@ -24,37 +24,33 @@ interface JdModalProviderSetupHook {
 export const useJdModalProviderSetup = (): JdModalProviderSetupHook => {
   const service = useJdModalService();
   const listener = new Subscription();
-  const modals = ref(service.modals);
-  const emptied = ref(true);
-  const animateTimer: any = ref(null);
-  const modalOpenState = computed(() => {
-    clearTimeout(animateTimer.value);
-    const hasModal = !!modals.value.length;
+
+  let animateTimer: any = null;
+  const modals = shallowRef(service.modals);
+  const emptied = shallowRef(true);
+  const classes = computed(() => {
+    const hasModal = !!(modals.value && modals.value.length);
+    return {
+      'has-modal': hasModal,
+      'is-emptied': emptied.value
+    };
+  });
+
+  const onChangeModalState = (modalState: ModalState) => {
+    modals.value = modalState.modals;
+    clearTimeout(animateTimer);
+    const hasModal = !!(modals.value && modals.value.length);
     if (hasModal) {
       emptied.value = false;
     } else {
-      animateTimer.value = setTimeout(() => {
+      animateTimer = setTimeout(() => {
         emptied.value = true;
       }, 140);
     }
-    return {
-      hasModal,
-      emptied
-    };
-  });
-
-  const classes = computed(() => {
-    const state = modalOpenState.value;
-    return {
-      'has-modal': state.hasModal,
-      'is-emptied': state.emptied.value
-    };
-  });
+  };
 
   const mounted = () => {
-    const observeModalState = service.observeModalState().subscribe(modalState => {
-      modals.value = modalState.modals;
-    });
+    const observeModalState = service.observeModalState().subscribe(onChangeModalState);
     listener.add(observeModalState);
   };
 
