@@ -65,6 +65,8 @@ export default defineComponent({
   min-height: 320px;
   max-width: 100vw;
   box-sizing: border-box;
+  border-radius: 10px;
+  border: 10px solid #333333;
   .test-box {
     margin: 10px;
     padding: 50px;
