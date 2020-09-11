@@ -1,14 +1,15 @@
 <template>
-  <demo-layout @goGithub="onGoGithub" @goNpm="onGoNpm" @goDoc="onGoDocument">
-    <template #menu>
-      <nav class="menu-wrap">
-        <demo-menu :menuList="menuList" />
-      </nav>
-    </template>
-
+  <div>
     <jd-modal-provider />
-    <router-view class="app-body" />
-  </demo-layout>
+    <demo-layout @goGithub="onGoGithub" @goNpm="onGoNpm" @goDoc="onGoDocument">
+      <template #menu>
+        <nav class="menu-wrap">
+          <demo-menu :menuList="menuList" />
+        </nav>
+      </template>
+      <router-view class="app-body" />
+    </demo-layout>
+  </div>
 </template>
 
 <script lang="ts">
