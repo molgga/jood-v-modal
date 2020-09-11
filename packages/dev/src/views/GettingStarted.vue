@@ -3,11 +3,11 @@
     <div class="panel">
       <demo-preview-code v-bind="Codes.install" />
 
-      <demo-panel-devicer />
+      <demo-panel-devider />
 
       <demo-preview-code v-bind="Codes.main" />
 
-      <demo-panel-devicer :half="true" />
+      <demo-panel-devider :half="true" />
 
       <div class="panel-desc">
         <p class="pg">
@@ -16,11 +16,11 @@
         </p>
       </div>
 
-      <demo-panel-devicer />
+      <demo-panel-devider />
 
       <demo-preview-code v-bind="Codes.app" />
 
-      <demo-panel-devicer :half="true" />
+      <demo-panel-devider :half="true" />
 
       <div class="panel-desc">
         <ul class="panel-list">
@@ -37,11 +37,11 @@
         </ul>
       </div>
 
-      <demo-panel-devicer />
+      <demo-panel-devider />
 
       <demo-preview-code v-bind="Codes.someContainer" />
 
-      <demo-panel-devicer :half="true" />
+      <demo-panel-devider :half="true" />
 
       <div class="panel-desc">
         <p class="pg">
@@ -82,11 +82,11 @@
         </ul>
       </div>
 
-      <demo-panel-devicer />
+      <demo-panel-devider />
 
       <demo-preview-code v-bind="Codes.someModal" />
 
-      <demo-panel-devicer :half="true" />
+      <demo-panel-devider :half="true" />
 
       <div class="panel-desc">
         <p class="pg">

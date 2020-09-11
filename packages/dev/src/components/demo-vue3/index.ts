@@ -14,6 +14,13 @@ export const DemoList = [
     component: defineAsyncComponent(() => import('@/components/demo-vue3/demo-nested/DemoApp.vue'))
   },
   {
+    key: 'custom-panelStyle',
+    label: 'Custom panelStyle',
+    component: defineAsyncComponent(() =>
+      import('@/components/demo-vue3/demo-panel-style/DemoApp.vue')
+    )
+  },
+  {
     key: 'before-leave',
     label: 'Hook beforeLeave',
     component: defineAsyncComponent(() =>
@@ -21,10 +28,17 @@ export const DemoList = [
     )
   },
   {
-    key: 'custom-panelStyle',
-    label: 'Custom panelStyle',
+    key: 'location-hash',
+    label: 'Location hash',
     component: defineAsyncComponent(() =>
-      import('@/components/demo-vue3/demo-panel-style/DemoApp.vue')
+      import('@/components/demo-vue3/demo-location-hash/DemoApp.vue')
+    )
+  },
+  {
+    key: 'custom-entry-modal',
+    label: 'Custom entryComponent',
+    component: defineAsyncComponent(() =>
+      import('@/components/demo-vue3/demo-entry-modal/DemoApp.vue')
     )
   },
   {
@@ -39,6 +53,13 @@ export const DemoList = [
     label: 'Usecase ActionSheet',
     component: defineAsyncComponent(() =>
       import('@/components/demo-vue3/demo-usecase-actionsheet/DemoApp.vue')
+    )
+  },
+  {
+    key: 'usecase-window',
+    label: 'Usecase Window',
+    component: defineAsyncComponent(() =>
+      import('@/components/demo-vue3/demo-usecase-window/DemoApp.vue')
     )
   }
 ];

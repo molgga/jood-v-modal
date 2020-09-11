@@ -1,7 +1,12 @@
 <template>
   <div>
     <jd-modal-provider />
-    <demo-layout @goGithub="onGoGithub" @goNpm="onGoNpm" @goDoc="onGoDocument">
+    <demo-layout
+      title="@jood/v-modal"
+      @goGithub="onGoGithub"
+      @goNpm="onGoNpm"
+      @goDoc="onGoDocument"
+    >
       <template #menu>
         <nav class="menu-wrap">
           <demo-menu :menuList="menuList" />

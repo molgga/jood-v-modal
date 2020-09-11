@@ -213,8 +213,10 @@ export default defineComponent({
     position: fixed;
     top: 0;
     left: 0;
+    bottom: 0;
     width: 200px;
-    height: 100%;
+    word-break: break-all;
+    overflow-y: auto;
     box-sizing: border-box;
     border-right: 1px solid #e3e3e3;
     background-color: #ffffff;

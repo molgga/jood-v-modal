@@ -9,7 +9,7 @@
     <div class="foot">
       <p class="desc">...text change &amp; browser back = confirm</p>
       <div>
-        <demo-button text :color="isChanged ? '#ff0000' : '#999999'" @click="onBack">
+        <demo-button :color="isChanged ? 'danger' : '#f0f0f0'" @click="onBack">
           history back
         </demo-button>
       </div>

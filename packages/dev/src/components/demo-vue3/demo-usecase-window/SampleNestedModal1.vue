@@ -4,9 +4,8 @@
       <h2 class="tit">modalId: {{ state.modalId }}</h2>
     </div>
     <div class="foot">
-      <v-btn text color="#ff0000" @click="onBack">histor back</v-btn>|
-      <v-btn text color="secondary" @click="onOpen">open</v-btn>|
-      <v-btn text color="secondary" @click="onClose">close</v-btn>
+      <demo-button @click="onOpen">open</demo-button> |
+      <demo-button @click="onClose">close</demo-button>
     </div>
   </div>
 </template>
@@ -15,7 +14,7 @@
 import { Subscription } from 'rxjs';
 import { defineComponent, reactive, onUnmounted } from 'vue';
 import { useJdModalRef, useJdModalService } from '@jood/v-modal';
-import SampleNestedModal from '../common/SampleNestedModal3.vue';
+import SampleNestedModal from './SampleNestedModal2.vue';
 
 export default defineComponent({
   setup() {

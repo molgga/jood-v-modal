@@ -11,11 +11,8 @@
       <div class="pivot" :style="styles.pivot">
         <div class="my-head">
           <div class="aside">
-            <strong>test</strong>
-            <ul>
-              <li>myState: {{ myState }}</li>
-            </ul>
-            <ul>
+            <strong>{{ myState.myTitle }}</strong>
+            <ul class="text-list">
               <li>modalRef.id: {{ modalRef.id }}</li>
               <li>modalRef.duration: {{ modalRef.duration }}</li>
               <li>modalRef.openStrategy: {{ modalRef.openStrategy }}</li>
@@ -173,6 +170,14 @@ export default {
         max-height: 100%;
       }
     }
+  }
+}
+.text-list {
+  padding: 10px 5px;
+  font-size: 13px;
+  > li {
+    padding: 5px 0;
+    list-style: square inside;
   }
 }
 </style>

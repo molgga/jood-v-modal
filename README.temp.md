@@ -276,8 +276,8 @@ setup() {
   - classes: conainer DOM class set (animate, direction ...)
   - styles: container DOM style set (animate ...)
 
-[...source: component](https://github.com/molgga/jood-v-modal/tree/master/packages/lib/src/components/modal). \
-[...source: hook](https://github.com/molgga/jood-v-modal/tree/master/packages/lib/src/composables/hook).
+[...source: component](https://github.com/molgga/jood-v-modal/tree/master/packages/lib/src/components). \
+[...source: hook](https://github.com/molgga/jood-v-modal/tree/master/packages/lib/src/composables).
 
 ```typescript
 // ex) MyModalEntry.vue

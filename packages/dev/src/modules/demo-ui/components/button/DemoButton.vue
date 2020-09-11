@@ -62,7 +62,7 @@ export default defineComponent({
       color: #bdb542;
     }
     &.danger {
-      color: #862b2b;
+      color: #d13131;
     }
   }
   &:not(.is-text) {
@@ -80,7 +80,7 @@ export default defineComponent({
     }
     &.danger {
       color: #ffffff;
-      background-color: #862b2b;
+      background-color: #d13131;
     }
   }
 }

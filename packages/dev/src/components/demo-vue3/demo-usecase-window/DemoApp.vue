@@ -1,45 +1,39 @@
 <template>
-  <v-container>
+  <div>
     <template v-if="state.modals.length">
       <div class="simple-stack">
         <div class="stack-list">
           <div v-for="modalRef in state.modals" :key="modalRef.id" class="stack-item">
-            <v-chip
+            <div
               class="stack-chip"
-              label
-              close
-              close-icon="delete"
-              text-color="white"
-              color="indigo"
               :class="{ 'is-active': isModalTopIndex(modalRef.id) }"
               @click="onOrderToTop(modalRef.id)"
-              @click:close="onCloseByModalId(modalRef.id)"
-              >{{ modalRef.id }}</v-chip
             >
+              <span class="label">{{ modalRef.id }}</span>
+              <i class="icon material-icons" @click="onCloseByModalId(modalRef.id)">close</i>
+            </div>
           </div>
         </div>
       </div>
     </template>
 
-    <v-card>
-      <v-card-title>Usecase Window</v-card-title>
-      <v-card-text>
-        <v-btn color="success" @click="onOpen">open</v-btn>
-      </v-card-text>
-    </v-card>
+    <demo-panel title="usecase window">
+      <demo-button @click="onOpen">open</demo-button>
+    </demo-panel>
 
     <hr class="partition" />
 
     <modal-options v-model="state.modalOptions" />
-  </v-container>
+  </div>
 </template>
 
 <script lang="ts">
 import { Subscription } from 'rxjs';
 import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
 import { useJdModalService, JdModalRef } from '@jood/v-modal';
-import ModalOptions, { createTestOptions } from '../common/ModalOptions.vue';
-import SampleNestedModal1 from '../common/SampleNestedModal1.vue';
+import { createTestOptions } from '../common/createTestOptions';
+import ModalOptions from '../common/ModalOptions.vue';
+import SampleNestedModal1 from './SampleNestedModal1.vue';
 
 export default defineComponent({
   components: {
@@ -47,6 +41,8 @@ export default defineComponent({
   },
   setup() {
     const modalService = useJdModalService();
+    modalService.setUseLocationHash(false);
+
     const listener = new Subscription();
     const state = reactive({
       modalOptions: createTestOptions(),
@@ -129,19 +125,33 @@ export default defineComponent({
     display: flex;
     flex-wrap: nowrap;
     float: left;
-    padding: 8px 10px 1px 10px;
+    padding: 3px 10px;
     box-sizing: border-box;
   }
   .stack-item {
     margin: 1px;
   }
   .stack-chip {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
     width: 100%;
     opacity: 0.4;
     border-radius: 0;
+    box-sizing: border-box;
+    color: #ffffff;
+    background-color: #2a9e64;
+    cursor: pointer;
+    .label {
+      flex: 1;
+      margin-right: 10px;
+    }
+    .icon {
+      display: block;
+      margin-right: -10px;
+      font-size: 16px;
+    }
     &.is-active {
-      margin-top: -8px;
-      height: 40px;
       opacity: 1;
     }
   }

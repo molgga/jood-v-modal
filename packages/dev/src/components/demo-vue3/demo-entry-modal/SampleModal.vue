@@ -4,7 +4,7 @@
       <div v-for="i in 10" :key="i" class="test-box">{{ i }}</div>
     </div>
     <div class="panel-foot">
-      <v-btn text color="primary" @click="onClose">close</v-btn>
+      <demo-button text color="primary" @click="onClose">close</demo-button>
     </div>
   </div>
 </template>
