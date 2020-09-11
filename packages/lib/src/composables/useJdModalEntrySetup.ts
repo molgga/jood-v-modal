@@ -66,7 +66,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   let animateTimer: any = null;
 
   const onOverlayClick = (evt: MouseEvent) => {
-    if (overlayClose && evt.target === refModalContainer.value) {
+    if (overlayClose) {
       modalRef.close();
     }
   };
