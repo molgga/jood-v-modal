@@ -1,5 +1,5 @@
 <template>
-  <div class="preview-code">
+  <div class="demo-preview-code">
     <template v-if="viewState.hasHead">
       <div class="code-head">
         <h3 class="tit">{{ viewState.title }}</h3>
@@ -20,6 +20,7 @@ import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-bash';
 
 export default defineComponent({
+  name: 'DemoPreviewCode',
   props: {
     title: {
       type: String,
@@ -64,7 +65,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.preview-code {
+.demo-preview-code {
   .panel-head {
     .tit {
       font-size: 18px;

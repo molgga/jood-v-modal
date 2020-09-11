@@ -1,7 +1,8 @@
 <template>
   <div>
-    <demo-panel title="usecase confirm">
-      <demo-button @click="onOpen">open</demo-button>
+    <demo-panel title="usecase ActionSheet">
+      <demo-button @click="onOpen">open</demo-button> |
+      <demo-button @click="onOpen2">open2</demo-button>
     </demo-panel>
 
     <hr class="partition" />
@@ -16,9 +17,9 @@ import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
 import { useJdModalService, JdModalRef, ModalOpenStrategy } from '@jood/v-modal';
 import { createTestOptions } from '../common/createTestOptions';
 import ModalOptions from '../common/ModalOptions.vue';
-import SampleConfirm, { ConfirmData, ConfirmAction } from './SampleConfirm.vue';
+import SampleActionSheet, { ActionResult, ActionData } from './SampleActionSheet.vue';
 
-export default {
+export default defineComponent({
   components: {
     ModalOptions
   },
@@ -29,22 +30,30 @@ export default {
       modalOptions: createTestOptions()
     });
     const onOpen = () => {
-      const modalRef = modalService.open<number, ConfirmData>({
+      openModal([
+        { label: 'HTML', description: 'HyperText Markup Language', value: 1 },
+        { label: 'CSS', description: 'Cascading Style Sheets', value: 2 },
+        { label: 'Javascript', description: 'Dynamic client-side scripting', value: 3 },
+        { label: 'Foo', description: 'barrrrr', value: 4 }
+      ]);
+    };
+    const onOpen2 = () => {
+      openModal(
+        Array.from(Array(30)).map((a, b) => {
+          return { label: b, value: b };
+        })
+      );
+    };
+    const openModal = (actions: any) => {
+      const modalRef = modalService.open<ActionResult<number>, ActionData<number>>({
         ...state.modalOptions,
-        component: SampleConfirm,
+        component: SampleActionSheet,
         overlayClose: true,
-        data: {
-          title: 'Foo',
-          message: `barrrr message`,
-          actions: [
-            { label: 'cancel', value: 0, attr: { color: '#ff0000', text: true } },
-            { label: 'hello', value: 1, attr: { color: '#999999', text: true } },
-            { label: 'ok', value: 2, attr: { color: 'primary', text: true } }
-          ]
-        }
+        data: { actions }
       });
       const observeResult = modalRef.observeClosed().subscribe(result => {
-        console.log('close result:', result);
+        const { value } = (result && result.action) || {};
+        console.log('close result:', value);
         listener.remove(observeResult);
       });
       listener.add(observeResult);
@@ -55,10 +64,11 @@ export default {
     });
     return {
       state,
-      onOpen
+      onOpen,
+      onOpen2
     };
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

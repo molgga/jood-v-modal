@@ -11,14 +11,14 @@
       </div>
     </template>
     <div class="confirm-foot">
-      <button
+      <demo-button
         v-for="(action, index) in actions"
         :key="index"
         v-bind="action.attr"
         @click="onClose(action)"
       >
         {{ action.label }}
-      </button>
+      </demo-button>
     </div>
   </div>
 </template>
@@ -88,6 +88,7 @@ export default defineComponent({
   max-width: 90vw;
   max-height: 60vh;
   border-radius: 5px;
+  box-sizing: border-box;
   overflow: hidden;
   &.ops-left,
   &.ops-right {

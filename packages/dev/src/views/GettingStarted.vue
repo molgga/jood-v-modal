@@ -1,13 +1,13 @@
 <template>
   <div class="page-view">
     <div class="panel">
-      <preview-code v-bind="Codes.install" />
+      <demo-preview-code v-bind="Codes.install" />
 
-      <panel-devider />
+      <demo-panel-devicer />
 
-      <preview-code v-bind="Codes.main" />
+      <demo-preview-code v-bind="Codes.main" />
 
-      <panel-devider :half="true" />
+      <demo-panel-devicer :half="true" />
 
       <div class="panel-desc">
         <p class="pg">
@@ -16,11 +16,11 @@
         </p>
       </div>
 
-      <panel-devider />
+      <demo-panel-devicer />
 
-      <preview-code v-bind="Codes.app" />
+      <demo-preview-code v-bind="Codes.app" />
 
-      <panel-devider :half="true" />
+      <demo-panel-devicer :half="true" />
 
       <div class="panel-desc">
         <ul class="panel-list">
@@ -37,11 +37,11 @@
         </ul>
       </div>
 
-      <panel-devider />
+      <demo-panel-devicer />
 
-      <preview-code v-bind="Codes.someContainer" />
+      <demo-preview-code v-bind="Codes.someContainer" />
 
-      <panel-devider :half="true" />
+      <demo-panel-devicer :half="true" />
 
       <div class="panel-desc">
         <p class="pg">
@@ -82,11 +82,11 @@
         </ul>
       </div>
 
-      <panel-devider />
+      <demo-panel-devicer />
 
-      <preview-code v-bind="Codes.someModal" />
+      <demo-preview-code v-bind="Codes.someModal" />
 
-      <panel-devider :half="true" />
+      <demo-panel-devicer :half="true" />
 
       <div class="panel-desc">
         <p class="pg">

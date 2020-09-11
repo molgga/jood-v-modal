@@ -7,7 +7,7 @@ This is a dedicated package for Vue using Vue + composition-api + rxjs. \
 (When Vue3 is supported, the composition-api dependency will be removed.)
 
 > __[Demo](https://molgga.github.io/jood-v-modal)__
-| __[Demo source code](https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/demo)__
+| __[Demo source code](https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/demo-vue3)__
 | __[Documentation](https://molgga.github.io/jood-v-modal/documents)__
 | __[Github](https://github.com/molgga/jood-v-modal)__
 | __[NPM](https://www.npmjs.com/package/@jood/v-modal)__

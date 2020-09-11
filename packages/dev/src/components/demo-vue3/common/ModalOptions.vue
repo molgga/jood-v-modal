@@ -1,65 +1,51 @@
 <template>
-  <div class="modal-options">
-    modal-options
-  </div>
-  <!--
-  <v-expansion-panels v-model="state.panel" class="modal-options">
-    <v-expansion-panel>
-      <v-expansion-panel-header>
-        <div class="tit">modal test options</div>
-      </v-expansion-panel-header>
-      <v-expansion-panel-content>
-        <v-row>
-          <v-col cols="12" sm="12">
-            <div class="sub-desc">openStrategy = open direction</div>
-            <v-radio-group v-model="value.openStrategy" row>
-              <v-radio
-                v-for="opt in optionOpenStrategy"
-                :key="opt.value"
-                :label="opt.label"
-                :value="opt.value"
-              ></v-radio>
-            </v-radio-group>
-          </v-col>
-        </v-row>
+  <demo-panel title="Modal test options">
+    <div class="row-panel">
+      <em class="row-tit">openStrategy</em>
+      <div class="row-group">
+        <div class="row-group-label">
+          <label v-for="opt in optionOpenStrategy" :key="opt.value" class="row-label">
+            <input
+              type="radio"
+              name="openStrategy"
+              :value="opt.value"
+              v-model="modelValue.openStrategy"
+            />
+            <span class="label">{{ opt.label }}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row-panel">
+      <em class="row-tit">etc</em>
+      <div class="row-group">
+        <label class="row-box">
+          <input type="checkbox" v-model="modelValue.overlayClose" />
+          <span class="label">overlayClose</span>
+        </label>
 
-        <v-row>
-          <v-col cols="12" sm="6">
-            <div class="sub-desc">overlay click = close</div>
-            <v-switch v-model="value.overlayClose" label="overlayClose" />
-          </v-col>
-          <v-col cols="12" sm="6">
-            <div class="sub-desc">nested modal = some motion</div>
-            <v-switch v-model="value.floatingMode" label="floatingMode" />
-          </v-col>
-        </v-row>
+        <label class="row-box">
+          <input type="checkbox" v-model="modelValue.floatingMode" />
+          <span class="label">floatingMode</span>
+        </label>
 
-        <v-row>
-          <v-col cols="12" sm="6">
-            <div class="sub-desc">disableShadow = box-shadow: none</div>
-            <v-switch v-model="value.disableShadow" label="disableShadow" />
-          </v-col>
-          <v-col cols="12" sm="6">
-            <div class="sub-desc">fullHeight = panel height 100%</div>
-            <v-switch v-model="value.fullHeight" label="fullHeight" />
-          </v-col>
-        </v-row>
+        <label class="row-box">
+          <input type="checkbox" v-model="modelValue.disableShadow" />
+          <span class="label">disableShadow</span>
+        </label>
 
-        <v-row>
-          <v-col cols="12" sm="6">
-            <div class="sub-desc">duration = open&amp;close animate speed</div>
-            <v-text-field
-              v-model="value.duration"
-              hide-details
-              single-line
-              type="number"
-            ></v-text-field>
-          </v-col>
-        </v-row>
-      </v-expansion-panel-content>
-    </v-expansion-panel>
-  </v-expansion-panels>
-  -->
+        <label class="row-box">
+          <input type="checkbox" v-model="modelValue.fullHeight" />
+          <span class="label">fullHeight</span>
+        </label>
+
+        <label class="row-box">
+          <input type="number" v-model="modelValue.duration" />
+          <span class="label">animate duration</span>
+        </label>
+      </div>
+    </div>
+  </demo-panel>
 </template>
 
 <script lang="ts">
@@ -72,12 +58,12 @@ export default defineComponent({
     event: 'change'
   },
   props: {
-    value: {
+    modelValue: {
       type: Object,
       default: () => ({})
     }
   },
-  setup() {
+  setup(props) {
     const optionOpenStrategy = [
       { value: ModalOpenStrategy.NORMAL, label: 'NORMAL' },
       { value: ModalOpenStrategy.TOP_STACK, label: 'TOP_STACK' },
@@ -85,19 +71,53 @@ export default defineComponent({
       { value: ModalOpenStrategy.RIGHT_STACK, label: 'RIGHT_STACK' },
       { value: ModalOpenStrategy.BOTTOM_STACK, label: 'BOTTOM_STACK' }
     ];
-    const state = reactive({
-      panel: 0
-    });
-
     return {
-      optionOpenStrategy,
-      state
+      optionOpenStrategy
     };
   }
 });
 </script>
 
 <style lang="scss" scoped>
+.row-panel {
+  padding: 10px 0px;
+  &:first-child {
+    padding-top: 0;
+  }
+  &:last-child {
+    padding-bottom: 0;
+  }
+  .row-tit {
+    display: block;
+    padding-bottom: 8px;
+    font-size: 14px;
+    color: #999999;
+  }
+  .row-group {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .row-group-label {
+    margin: -5px 0;
+  }
+  .row-label {
+    display: inline-block;
+    padding: 5px 10px;
+    .label {
+      padding: 5px;
+    }
+  }
+  .row-box {
+    display: block;
+    padding: 10px;
+    width: 33.33%;
+    box-sizing: border-box;
+    .label {
+      padding: 5px;
+    }
+  }
+}
+
 .tit {
   font-size: 14px;
   font-weight: bold;

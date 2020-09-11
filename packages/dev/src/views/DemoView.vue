@@ -1,9 +1,8 @@
 <template>
   <div class="demo-view">
     <div class="panel">
-      demo-view
-      <template v-if="demoState2">
-        <component :is="demoState2" />
+      <template v-if="demoComponent">
+        <component :is="demoComponent" />
       </template>
       <template v-else>-</template>
     </div>
@@ -30,7 +29,8 @@ export default defineComponent({
   },
   setup(props) {
     const importComponent: any = DemoApps;
-    const demoState = computed(() => {
+    const demoComponent = shallowRef(null);
+    watchEffect(() => {
       const demoKey = props.demo;
       let component: any;
       if (importComponent[demoKey]) {
@@ -38,35 +38,10 @@ export default defineComponent({
       } else {
         component = DemoList[0].component;
       }
-      return {
-        component
-      };
+      demoComponent.value = component;
     });
-
-    const demoState2 = shallowRef(null);
-
-    watchEffect(
-      // () => {
-      //   console.log('######################### 1');
-      //   return props.demo;
-      // }
-      () => {
-        console.log('######################### 2');
-        const demoKey = props.demo;
-        let component: any;
-        if (importComponent[demoKey]) {
-          component = importComponent[demoKey].component;
-        } else {
-          component = DemoList[0].component;
-        }
-        demoState2.value = component;
-        console.log(112, demoState2.value);
-      }
-    );
-
     return {
-      demoState,
-      demoState2
+      demoComponent
     };
   }
 });
