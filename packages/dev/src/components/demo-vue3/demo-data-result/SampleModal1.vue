@@ -36,9 +36,7 @@ export default defineComponent({
       text: modalData.passText || ''
     });
     const onCancel = () => {
-      modalRef.close({
-        resultText: anyResult.text
-      });
+      modalRef.close();
     };
     const onClose = () => {
       modalRef.close({
