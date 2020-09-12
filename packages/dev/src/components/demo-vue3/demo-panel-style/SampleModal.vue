@@ -33,23 +33,27 @@ export default defineComponent({
   width: 480px;
   max-width: 90vw;
   min-height: 320px;
-  max-height: 95vh;
+  max-height: 80vh;
   box-sizing: border-box;
   .panel-body {
     flex: 1;
-    padding: 20px;
+    min-width: 0;
+    min-height: 0;
     overflow: auto;
+    box-sizing: border-box;
     .test-box {
       margin: 10px;
       padding: 50px 0;
       text-align: center;
       border: 1px dashed #ff9900;
+      box-sizing: border-box;
     }
   }
   .panel-foot {
     display: flex;
     justify-content: flex-end;
     padding: 20px;
+    height: 40px;
     border-top: 1px solid #dddddd;
   }
 }
