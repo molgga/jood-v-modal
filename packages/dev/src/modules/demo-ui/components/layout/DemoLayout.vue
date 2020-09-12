@@ -1,14 +1,10 @@
 <template>
-  <div class="demo-layout">
+  <div class="demo-layout" :class="classes">
     <div class="ly-header" :style="headStyle">
       <div class="aside">
         <i class="menu-toggle material-icons" @click="onMenuToggle">
-          <template v-if="layoutState.asideOpen">
-            menu
-          </template>
-          <template v-else>
-            menu_open
-          </template>
+          <template v-if="layoutState.asideOpen">menu</template>
+          <template v-else>menu_open</template>
         </i>
         <h1 class="tit">{{ title }}</h1>
       </div>
@@ -19,22 +15,19 @@
           class="out-link material-icons"
           @click="onOutlink('goGithub')"
           title="Github"
-          >code</i
-        >
+        >code</i>
         <i
           v-if="outNpm"
           class="out-link material-icons"
           @click="onOutlink('goNpm')"
           title="NPM package"
-          >move_to_inbox</i
-        >
+        >move_to_inbox</i>
         <i
           v-if="outDoc"
           class="out-link material-icons"
           @click="onOutlink('goDoc')"
           title="Documentaion"
-          >library_books</i
-        >
+        >library_books</i>
       </div>
     </div>
     <div class="ly-aside" :style="asideStyle">
@@ -45,6 +38,7 @@
         <slot></slot>
       </div>
     </div>
+    <div class="ly-overlay" @click="onMenuToggle"></div>
   </div>
 </template>
 
@@ -80,8 +74,9 @@ export default defineComponent({
   },
   setup(props, context) {
     const { emit } = context;
+    const isWide = () => 960 <= window.innerWidth;
     const layoutState = reactive({
-      asideOpen: 960 <= window.innerWidth,
+      asideOpen: isWide(),
       top: props.sizeTop,
       left: props.sizeAside,
       right: 0,
@@ -90,7 +85,7 @@ export default defineComponent({
     const padState = computed(() => {
       const { asideOpen, top: sizeTop, left: sizeLeft } = layoutState;
       const top = `${sizeTop}px`;
-      const left = asideOpen ? `${sizeLeft}px` : 0;
+      const left = asideOpen && isWide() ? `${sizeLeft}px` : 0;
       return {
         top,
         left,
@@ -121,6 +116,12 @@ export default defineComponent({
         padding: `${top} ${right} ${bottom} ${left}`
       };
     });
+    const classes = computed(() => {
+      const { asideOpen } = layoutState;
+      return {
+        'need-overlay': asideOpen && !isWide()
+      };
+    });
 
     const asideOpen = () => {
       layoutState.asideOpen = true;
@@ -146,6 +147,7 @@ export default defineComponent({
 
     return {
       layoutState,
+      classes,
       headStyle,
       asideStyle,
       bodyStyle,
@@ -173,6 +175,7 @@ export default defineComponent({
     color: #ffffff;
     box-sizing: border-box;
     background-color: #2a9e64;
+    z-index: 50;
     .aside {
       display: flex;
       flex-direction: row;
@@ -221,6 +224,7 @@ export default defineComponent({
     border-right: 1px solid #e3e3e3;
     background-color: #ffffff;
     transition: transform 200ms;
+    z-index: 10;
   }
   .ly-body {
     display: flex;
@@ -234,6 +238,22 @@ export default defineComponent({
     width: 100%;
     max-width: 1200px;
     box-sizing: border-box;
+  }
+
+  .ly-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  &.need-overlay {
+    .ly-overlay {
+      display: block;
+    }
   }
 }
 </style>

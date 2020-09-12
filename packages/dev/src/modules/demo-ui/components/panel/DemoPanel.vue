@@ -52,12 +52,14 @@ export default defineComponent({
   > .panel-head {
     padding: 10px;
     .tit {
-      font-size: 16px;
+      font-size: 20px;
       font-weight: bold;
     }
     .desc {
-      font-size: 13px;
-      color: #999999;
+      padding-top: 10px;
+      font-size: 14px;
+      color: #777777;
+      white-space: pre-line;
     }
   }
   > .panel-body {

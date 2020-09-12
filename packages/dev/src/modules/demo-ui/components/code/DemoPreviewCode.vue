@@ -78,12 +78,12 @@ export default defineComponent({
     }
   }
   .panel-viewer {
-    ::v-deep > pre {
+    ::v-deep(pre) {
       display: block;
       box-shadow: none;
       border-radius: 5px;
     }
-    ::v-deep > pre > code {
+    ::v-deep(pre > code) {
       display: block;
       padding: 7px 10px;
       font-weight: normal;

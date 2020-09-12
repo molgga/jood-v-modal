@@ -56,8 +56,8 @@ export default {
     ];
 
     return {
-      demoLinks,
       menuList,
+      demoLinks,
       onGoGithub,
       onGoNpm,
       onGoDocument

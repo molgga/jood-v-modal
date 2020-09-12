@@ -10,14 +10,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  computed,
-  defineAsyncComponent,
-  shallowRef,
-  watch,
-  watchEffect
-} from 'vue';
+import { defineComponent, shallowRef, watchEffect } from 'vue';
 import { DemoApps, DemoList } from '@/components/demo-vue3';
 
 export default defineComponent({
