@@ -3,8 +3,10 @@
 Dynamic component UI configurations such as modal, confirm, and action sheets \
 The goal is to provide a foundation for data communication and progressive control between components.
 
-This is a dedicated package for Vue using Vue + composition-api + rxjs. \
-(When Vue3 is supported, the composition-api dependency will be removed.)
+This is a dedicated package for Vue. \
+
+- \>=0.3.x : with Vue3
+- ~~^0.2.x : with @vue/composition-api~~
 
 > __[Demo](https://molgga.github.io/jood-v-modal)__
 | __[Demo source code](https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/demo-vue3)__

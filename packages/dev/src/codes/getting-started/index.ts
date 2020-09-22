@@ -25,7 +25,7 @@ export default {
 </template>
 
 <script lang="ts">
-import { defineComponent, onUnmounted } from "@vue/composition-api";
+import { defineComponent, onUnmounted } from "vue";
 import { provideJdModalService, JdModalProvider } from "@jood/v-modal";
 
 export default defineComponent({

@@ -47,7 +47,7 @@ import '@jood/v-modal/dist/v-modal.css';
 </template>
 
 <script lang="ts">
-import { defineComponent, onUnmounted } from "@vue/composition-api";
+import { defineComponent, onUnmounted } from "vue";
 import { Subscription } from 'rxjs';
 import { provideJdModalService, useJdModalService, JdModalProvider, JdModalRef } from "@jood/v-modal";
 import SampleModalView from "@/components/modal/SampleModalView.vue";
@@ -92,7 +92,7 @@ export default defineComponent({
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { defineComponent } from "vue";
 import { useJdModalRef, useJdModalService } from "@jood/v-modal";
 export default defineComponent({
   setup() {
