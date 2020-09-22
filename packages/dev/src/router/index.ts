@@ -1,6 +1,7 @@
 import { defineAsyncComponent } from 'vue';
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-
+const isBuild = !!process.env.VUE_APP_BUILD;
+const BASE_URL = isBuild ? '/jood-v-modal' : '';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -29,7 +30,7 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(BASE_URL),
   routes
 });
 
