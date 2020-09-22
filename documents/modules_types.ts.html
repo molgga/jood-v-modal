@@ -40,10 +40,11 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { VueConstructor, AsyncComponent, Component } from 'vue';
+            <pre class="prettyprint source linenums"><code>// import { VueConstructor, AsyncComponent, Component } from 'vue';
+import { Component } from 'vue';
 import { JdModalRef } from './JdModalRef';
 
-export type EntryComponentType = VueConstructor | Component | AsyncComponent | any;
+export type EntryComponentType = Component | any; //VueConstructor | Component | AsyncComponent | any;
 
 /**
  * 모달 서비스 config
@@ -148,7 +149,7 @@ export enum ModalOpenStrategy {
 <br class="clear">
 
 <footer>
-    Documentation generated at Mon Aug 31 2020 02:38:25 GMT+0000 (Coordinated Universal Time)
+    Documentation generated at Tue Sep 22 2020 15:45:11 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script>prettyPrint();</script>
