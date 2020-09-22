@@ -23,11 +23,12 @@
     "javascript",
     "typescript",
     "vue",
+    "vue3",
+    "vue3.0",
+    "composition-api",
     "modal",
-    "dialog",
     "confirm",
     "actionsheet",
-    "composition-api",
-    "composable"
+    "dialog"
   ]
 }
