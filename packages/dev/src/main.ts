@@ -6,7 +6,7 @@ import App from './App.vue';
 import router from './router';
 import { plugin as DemoUI } from '@/modules/demo-ui';
 
-const vueApp = createApp(App as any);
+const vueApp = createApp(App);
 vueApp.use(router);
 vueApp.use(DemoUI);
 vueApp.mount('#app');

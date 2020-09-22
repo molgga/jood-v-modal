@@ -1,4 +1,4 @@
-import { provide, Ref, ref, computed, shallowRef, reactive } from 'vue';
+import { Ref, computed, shallowRef, reactive, provide } from 'vue';
 import {
   ModalEventType,
   ModalOpenStrategy,
