@@ -2,7 +2,7 @@
   <div class="jd-modal-provider" :class="classes">
     <div class="appender">
       <component
-        v-for="(modalRef, index) in modals"
+        v-for="(modalRef, index) in state.modals"
         :is="modalRef.entryComponent"
         :key="modalRef.id"
         :index="index"
@@ -13,27 +13,27 @@
 </template>
 
 <script lang="ts">
-import { onUnmounted, onMounted, defineComponent } from '@vue/composition-api';
+import { Subscription } from 'rxjs';
+import { onUnmounted, onMounted } from 'vue';
+import { useJdModalService, JdModalRef } from '../modules';
 import { useJdModalProviderSetup } from '../composables';
 
-export default defineComponent({
+export default {
   name: 'JdModalProvider',
-
   setup() {
-    const { mounted, unmounted, classes, modals } = useJdModalProviderSetup();
+    const { mounted, unmounted, classes, state } = useJdModalProviderSetup();
     onMounted(() => {
       mounted();
     });
-
     onUnmounted(() => {
       unmounted();
     });
     return {
       classes,
-      modals
+      state
     };
   }
-});
+};
 </script>
 
 <style lang="scss" scoped>

@@ -1,6 +1,7 @@
 import { Subscription } from 'rxjs';
-import { computed, Ref, shallowRef } from '@vue/composition-api';
-import { useJdModalService, JdModalRef, ModalState } from '../modules';
+import { computed, shallowReactive } from 'vue';
+import { useJdModalService, JdModalRef } from '../modules';
+import { ModalState } from '../modules/types';
 
 /**
  * @interface
@@ -12,8 +13,13 @@ import { useJdModalService, JdModalRef, ModalState } from '../modules';
 interface JdModalProviderSetupHook {
   mounted: Function;
   unmounted: Function;
-  modals: Ref<JdModalRef[]>;
+  state: HookState;
   classes: any;
+}
+
+interface HookState {
+  modals: JdModalRef[];
+  emptied: boolean;
 }
 
 /**
@@ -24,27 +30,33 @@ interface JdModalProviderSetupHook {
 export const useJdModalProviderSetup = (): JdModalProviderSetupHook => {
   const service = useJdModalService();
   const listener = new Subscription();
-
   let animateTimer: any = null;
-  const modals = shallowRef(service.modals);
-  const emptied = shallowRef(true);
+
+  const state = shallowReactive<HookState>({
+    modals: service.modals,
+    emptied: true
+  });
+
   const classes = computed(() => {
-    const hasModal = !!(modals.value && modals.value.length);
+    const modals = state.modals;
+    const hasModal = !!(modals && modals.length);
+    const emptied = state.emptied;
     return {
       'has-modal': hasModal,
-      'is-emptied': emptied.value
+      'is-emptied': emptied
     };
   });
 
   const onChangeModalState = (modalState: ModalState) => {
-    modals.value = modalState.modals;
+    const { modals } = modalState;
+    const hasModal = !!(modals && modals.length);
+    state.modals = modals;
     clearTimeout(animateTimer);
-    const hasModal = !!(modals.value && modals.value.length);
     if (hasModal) {
-      emptied.value = false;
+      state.emptied = false;
     } else {
       animateTimer = setTimeout(() => {
-        emptied.value = true;
+        state.emptied = true;
       }, 140);
     }
   };
@@ -63,6 +75,6 @@ export const useJdModalProviderSetup = (): JdModalProviderSetupHook => {
     mounted,
     unmounted,
     classes,
-    modals
+    state
   };
 };

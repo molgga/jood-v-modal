@@ -13,7 +13,7 @@ Vue modal 기능 UI
 *** 
 
 - [Demo](https://molgga.github.io/jood-v-modal).
-- [Demo(source)](https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/demo).
+- [Demo(source)](https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/demo-vue3).
 - [Github](https://github.com/molgga/jood-v-modal).
 - [NPM](https://www.npmjs.com/package/@jood/v-modal).
 - [Doc](https://molgga.github.io/jood-v-modal/documents).
@@ -276,8 +276,8 @@ setup() {
   - classes: conainer DOM class set (animate, direction ...)
   - styles: container DOM style set (animate ...)
 
-[...source: component](https://github.com/molgga/jood-v-modal/tree/master/packages/lib/src/components/modal). \
-[...source: hook](https://github.com/molgga/jood-v-modal/tree/master/packages/lib/src/composables/hook).
+[...source: component](https://github.com/molgga/jood-v-modal/tree/master/packages/lib/src/components). \
+[...source: hook](https://github.com/molgga/jood-v-modal/tree/master/packages/lib/src/composables).
 
 ```typescript
 // ex) MyModalEntry.vue
@@ -320,7 +320,7 @@ setup(props) {
 ### See
 
 - [Demo](https://molgga.github.io/jood-v-modal).
-- [Demo(source)](https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/demo).
+- [Demo(source)](https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/demo-vue3).
 - [Github](https://github.com/molgga/jood-v-modal).
 - [NPM](https://www.npmjs.com/package/@jood/v-modal).
 - [Doc](https://molgga.github.io/jood-v-modal/documents).

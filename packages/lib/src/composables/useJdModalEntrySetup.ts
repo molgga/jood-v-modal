@@ -1,4 +1,4 @@
-import { provide, Ref, computed, shallowRef, shallowReactive } from '@vue/composition-api';
+import { Ref, computed, shallowRef, reactive, provide } from 'vue';
 import {
   ModalEventType,
   ModalOpenStrategy,
@@ -46,7 +46,6 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   const { modalRef } = setup;
   provide(JD_MODAL_REF_TOKEN, modalRef);
   const modalService = useJdModalService();
-  const refModalContainer: Ref<HTMLElement | null> = shallowRef(null);
   const {
     openStrategy,
     duration,
@@ -57,8 +56,9 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     fullHeight = false
   } = modalRef;
   const usedLocationHash = modalService.usedLocationHash;
+  const refModalContainer: Ref<HTMLElement | null> = shallowRef(null);
   const safeTiming = isNaN(duration) || duration < 0 ? 240 : duration;
-  const openState = shallowReactive({
+  const openState = reactive({
     opening: false,
     opened: false,
     closing: false
@@ -66,7 +66,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   let animateTimer: any = null;
 
   const onOverlayClick = (evt: MouseEvent) => {
-    if (overlayClose && evt.target === refModalContainer.value) {
+    if (overlayClose) {
       modalRef.close();
     }
   };

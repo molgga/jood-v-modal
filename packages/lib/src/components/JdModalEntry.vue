@@ -4,9 +4,9 @@
     class="jd-modal-entry"
     :class="classes"
     :style="styles.modal"
-    @click="onOverlayClick"
     tabindex="0"
   >
+    <div class="overlay" @click="onOverlayClick"></div>
     <div class="panel">
       <div class="pivot" :style="styles.pivot">
         <div class="content">
@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted } from '@vue/composition-api';
+import { defineComponent, onMounted, onUnmounted } from 'vue';
 import { JdModalRef } from '../modules';
 import { useJdModalEntrySetup } from '../composables';
 
@@ -27,7 +27,7 @@ interface IProps {
   modalRef: JdModalRef;
 }
 
-export default defineComponent({
+export default {
   name: 'JdModalEntry',
   props: {
     index: {
@@ -48,15 +48,12 @@ export default defineComponent({
     } = useJdModalEntrySetup({
       modalRef: props.modalRef
     });
-
     onMounted(() => {
       mounted();
     });
-
     onUnmounted(() => {
       unmounted();
     });
-
     return {
       refModalContainer,
       onOverlayClick,
@@ -64,7 +61,7 @@ export default defineComponent({
       styles
     };
   }
-});
+};
 </script>
 
 <style lang="scss" scoped>
@@ -78,11 +75,20 @@ export default defineComponent({
   overflow: hidden;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0);
-  transition: background-color 240ms;
   pointer-events: initial;
+  > .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 1);
+    transition: opacity 240ms;
+    opacity: 0;
+  }
 
   > .panel {
+    position: relative;
     display: flex;
     max-height: 100%;
     max-width: 100%;
@@ -102,19 +108,27 @@ export default defineComponent({
   }
 
   &:nth-child(1).is-opening {
-    background-color: rgba(0, 0, 0, 0.3);
+    > .overlay {
+      opacity: 0.3;
+    }
   }
   &:nth-child(2).is-opening {
-    background-color: rgba(0, 0, 0, 0.2);
+    > .overlay {
+      opacity: 0.2;
+    }
   }
   &.is-opening {
-    background-color: rgba(0, 0, 0, 0.05);
+    > .overlay {
+      opacity: 0.05;
+    }
   }
   &.is-opened {
     transition: initial !important;
   }
   &.is-closing {
-    background-color: rgba(0, 0, 0, 0);
+    > .overlay {
+      opacity: 0;
+    }
   }
   &.full-height {
     > .panel {

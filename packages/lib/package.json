@@ -1,6 +1,6 @@
 {
   "name": "@jood/v-modal",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "main": "dist/v-modal.common.js",
   "types": "dist/types/index.d.ts",
   "module": "src/index.ts",
@@ -20,8 +20,7 @@
     "generate": "npm run build && npm run declaration"
   },
   "peerDependencies": {
-    "@vue/composition-api": ">=0.6.7",
-    "vue": ">=2.6.11"
+    "vue": ">=3.0.0"
   },
   "dependencies": {
     "rxjs": ">=6.5.5"
@@ -33,11 +32,12 @@
     "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
-    "@vue/cli-plugin-babel": "~4.4.0",
-    "@vue/cli-plugin-eslint": "~4.4.0",
-    "@vue/cli-plugin-typescript": "~4.4.0",
-    "@vue/cli-plugin-unit-jest": "~4.4.0",
-    "@vue/cli-service": "~4.4.0",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-typescript": "~4.5.0",
+    "@vue/cli-plugin-unit-jest": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0-0",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^5.0.2",
     "@vue/test-utils": "^1.0.3",

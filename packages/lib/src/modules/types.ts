@@ -1,7 +1,8 @@
-import { VueConstructor, AsyncComponent, Component } from 'vue';
+// import { VueConstructor, AsyncComponent, Component } from 'vue';
+import { Component } from 'vue';
 import { JdModalRef } from './JdModalRef';
 
-export type EntryComponentType = VueConstructor | Component | AsyncComponent | any;
+export type EntryComponentType = Component | any; //VueConstructor | Component | AsyncComponent | any;
 
 /**
  * 모달 서비스 config
