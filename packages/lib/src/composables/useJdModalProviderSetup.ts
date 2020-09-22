@@ -36,6 +36,7 @@ export const useJdModalProviderSetup = (): JdModalProviderSetupHook => {
     modals: service.modals,
     emptied: true
   });
+
   const classes = computed(() => {
     const modals = state.modals;
     const hasModal = !!(modals && modals.length);
