@@ -91,7 +91,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   });
 
   const classes = computed(() => {
-    let openType;
+    let openType: string;
     switch (openStrategy) {
       case ModalOpenStrategy.TOP_STACK:
         openType = 'ops-topstack';

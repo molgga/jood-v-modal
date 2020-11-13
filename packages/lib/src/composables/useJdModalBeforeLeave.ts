@@ -36,9 +36,11 @@ export const useJdModalBeforeLeave = (): JdModalBeforeLeaveHook => {
 
   const attachBeforeLeave = () => {
     window.addEventListener('hashchange', beforeLeaveHandle);
+    modalRef.attachBeforeLeave();
   };
 
   const detachBeforeLeave = () => {
+    modalRef.detachBeforeLeave();
     window.removeEventListener('hashchange', beforeLeaveHandle);
   };
 
@@ -62,10 +64,14 @@ export const useJdModalBeforeLeave = (): JdModalBeforeLeaveHook => {
       holdBeforeLeave = true;
       evt._preventModalClose = true;
       history.forward(); // 브라우저는 이미 뒤로가기가 되어서 다시 forwad 시킴.
+      await new Promise(resolve => {
+        setTimeout(() => resolve(), 10);
+      });
       const confirm = await fnConfirm();
       if (!confirm) {
         holdBeforeLeave = false;
       } else {
+        detachBeforeLeave();
         modalRef.close();
         history.back();
       }
