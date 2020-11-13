@@ -30,6 +30,7 @@ export class JdModalRef<R = any, D = any, C = any> {
   protected modalFullHeight = false;
   protected openerSubject: Subject<ModalEvent> = new Subject();
   protected closedSubject: Subject<R> = new Subject();
+  protected attachedBeforeLeave = false;
 
   /**
    * 모달의 id
@@ -190,16 +191,28 @@ export class JdModalRef<R = any, D = any, C = any> {
     this.modalFullHeight = is;
   }
 
+  attachBeforeLeave() {
+    this.attachedBeforeLeave = true;
+  }
+
+  detachBeforeLeave() {
+    this.attachedBeforeLeave = false;
+  }
+
   /**
    * 모달 닫기.
    * @param {R} [result] 모달이 닫힐 때 외부(보통은 모달을 열은 곳, observeClosed 를 통해) 전달 할 결과값
    */
   close(result?: R): void {
     this.modalResult = result;
-    this.openerSubject.next({
-      type: ModalEventType.CLOSE,
-      modalRef: this
-    });
+    if (this.attachedBeforeLeave) {
+      history.back();
+    } else {
+      this.openerSubject.next({
+        type: ModalEventType.CLOSE,
+        modalRef: this
+      });
+    }
   }
 
   /**
