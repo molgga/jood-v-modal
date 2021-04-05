@@ -65,7 +65,7 @@ export const useJdModalBeforeLeave = (): JdModalBeforeLeaveHook => {
       evt._preventModalClose = true;
       history.forward(); // 브라우저는 이미 뒤로가기가 되어서 다시 forwad 시킴.
       await new Promise(resolve => {
-        setTimeout(() => resolve(), 10);
+        setTimeout(() => resolve(false), 10);
       });
       const confirm = await fnConfirm();
       if (!confirm) {
