@@ -63,10 +63,11 @@ export default defineComponent({
 .sample-modal {
   padding: 20px;
   width: 380px;
+  height: 100%;
   min-height: 320px;
   max-width: 100vw;
   box-sizing: border-box;
-  border-radius: 10px;
+  // border-radius: 10px;
   border: 10px solid #333333;
   background-color: #ffff00;
   .test-box {

@@ -19,18 +19,10 @@
 
 <script lang="ts">
 import { defineComponent, reactive, onUnmounted, onMounted, computed } from 'vue';
-import {
-  useJdModalRef,
-  ModalHashChangeEvent,
-  useJdModalService,
-  useJdModalBeforeLeave
-} from '@jood/v-modal';
+import { useJdModalRef, useJdModalBeforeLeave } from '@jood/v-modal';
 
 export default defineComponent({
   setup() {
-    const modalService = useJdModalService();
-    const modalRef = useJdModalRef();
-    const modalData = modalRef.data || {};
     const {
       attachBeforeLeave,
       detachBeforeLeave,
@@ -38,7 +30,7 @@ export default defineComponent({
       setBeforeLeaveValidate
     } = useJdModalBeforeLeave();
     const state = reactive({
-      text: ''
+      text: 'foo'
     });
     const isChanged = computed(() => !!state.text);
 

@@ -7,8 +7,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
-import { useJdModalService, JdModalRef, ModalHashChangeEvent } from '@jood/v-modal';
+import { defineComponent } from 'vue';
+import { useJdModalService } from '@jood/v-modal';
 import SampleBeforeLeaveModal from './SampleBeforeLeaveModal.vue';
 
 export default defineComponent({
