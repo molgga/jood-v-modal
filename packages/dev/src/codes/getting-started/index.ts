@@ -33,7 +33,11 @@ export default defineComponent({
     JdModalProvider
   },
   setup() {
-    provideJdModalService();
+    const modalService = provideJdModalService();
+
+    // if (process.client) { modalService.init(); }
+    modalService.init();
+
     return {};
   }
 });

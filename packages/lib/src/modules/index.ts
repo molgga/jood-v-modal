@@ -16,8 +16,10 @@ export const JD_MODAL_SERVICE_TOKEN = Symbol();
  */
 export const JD_MODAL_REF_TOKEN = Symbol();
 
-export const provideJdModalService = (config?: ModalConfig) => {
-  provide(JD_MODAL_SERVICE_TOKEN, new JdModalService(config));
+export const provideJdModalService = (): JdModalService => {
+  const service = new JdModalService();
+  provide(JD_MODAL_SERVICE_TOKEN, service);
+  return service;
 };
 
 export const useJdModalService = (): JdModalService => {

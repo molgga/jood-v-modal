@@ -16,15 +16,6 @@ import { JdModalEntry } from '../components';
  * @class JdModalService
  */
 export class JdModalService {
-  constructor(config?: ModalConfig) {
-    if (config && config.defaultEntryComponent) {
-      this.setDefaultEntryComponent(config.defaultEntryComponent);
-    }
-    const observeModalState = this.observeModalState().subscribe(
-      this.onChangeModalState.bind(this)
-    );
-    this.listener.add(observeModalState);
-  }
   protected modalUid = 0;
   protected modalRefMap: Map<number, JdModalRef> = new Map();
   protected modalsSubject: Subject<ModalState> = new Subject();
@@ -33,6 +24,18 @@ export class JdModalService {
   protected useLocationHash: boolean = true;
   protected useBlockBodyScroll: boolean = false;
   protected blockBodyStyleBefore: any = null;
+
+  /**
+   * 초기화
+   * @param {ModalConfig} [config]
+   */
+  init(config?: ModalConfig) {
+    if (config && config.defaultEntryComponent) {
+      this.setDefaultEntryComponent(config.defaultEntryComponent);
+    }
+    const observeState = this.observeModalState().subscribe(this.onChangeModalState.bind(this));
+    this.listener.add(observeState);
+  }
 
   /**
    * 현재 열려있는 모달의 수

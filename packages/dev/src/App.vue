@@ -20,16 +20,16 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { demoLinks } from '@/components/demo-vue3';
-import { provideJdModalService, useJdModalService, JdModalProvider } from '@jood/v-modal';
+import { provideJdModalService, JdModalProvider } from '@jood/v-modal';
 
 export default {
   components: {
     JdModalProvider
   },
   setup() {
-    provideJdModalService();
-    const modalService = useJdModalService();
+    const modalService = provideJdModalService();
     modalService.setUseLocationHash(true);
+    modalService.init();
 
     const onGoDocument = () => {
       openTo('https://molgga.github.io/jood-v-modal/documents');
