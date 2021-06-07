@@ -67,13 +67,14 @@ export const useJdModalBeforeLeave = (): JdModalBeforeLeaveHook => {
       await new Promise(resolve => {
         setTimeout(() => resolve(false), 10);
       });
+
       const confirm = await fnConfirm();
       if (!confirm) {
         holdBeforeLeave = false;
       } else {
         detachBeforeLeave();
         modalRef.close();
-        history.back();
+        // history.back();
       }
     }
   };

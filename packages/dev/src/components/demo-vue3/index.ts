@@ -29,7 +29,7 @@ export const DemoList = [
   },
   {
     key: 'before-leave',
-    label: 'Hook beforeLeave',
+    label: 'before leave',
     component: defineAsyncComponent(() =>
       import('@/components/demo-vue3/demo-before-leave/DemoApp.vue')
     )
