@@ -1,43 +1,44 @@
 <template>
   <div>
-    <demo-panel title="pandleStyle">
+    <demo-panel title="Custom panelStyle">
       <demo-button @click="onOpen">open</demo-button>
+      <br />
+      <br />
+      <a
+        href="https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/demo-vue3/demo-panel-style"
+        target="_blank"
+        >demo code</a
+      >
     </demo-panel>
 
-    <hr class="partition" />
+    <demo-panel-devider />
 
-    <modal-options v-model="state.modalOptions" />
+    <demo-panel title="panelStyle option">
+      <demo-preview-code v-bind="Codes.Sample1" />
+    </demo-panel>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
-import { useJdModalService, JdModalRef } from '@jood/v-modal';
-import { createTestModalOptions, createTestOptions } from '../common/createTestOptions';
-import ModalOptions from '../common/ModalOptions.vue';
+import { defineComponent, onUnmounted } from 'vue';
+import { useJdModalService } from '@jood/v-modal';
+import Codes from '../../../codes/panel-style';
 import SampleModal from './SampleModal.vue';
 
 export default defineComponent({
-  components: {
-    ModalOptions
-  },
   setup() {
     const modalService = useJdModalService();
-    const state = reactive({
-      modalOptions: createTestOptions()
-    });
 
     const onOpen = () => {
-      const modalOptions = createTestModalOptions(state.modalOptions);
       modalService.open({
-        ...modalOptions,
         panelStyle: {
           borderRadius: '0',
-          border: '4px solid #000000',
-          backgroundColor: '#f0fff7',
+          border: '10px solid #ff0000',
+          backgroundColor: '#ffff00',
           margin: '20px 0',
           overflow: 'hidden'
         },
+        overlayClose: true,
         component: SampleModal
       });
     };
@@ -47,18 +48,11 @@ export default defineComponent({
     });
 
     return {
-      state,
+      Codes,
       onOpen
     };
   }
 });
 </script>
 
-<style lang="scss" scoped>
-.partition {
-  display: block;
-  margin: 0;
-  padding: 20px 0;
-  border: none;
-}
-</style>
+<style lang="scss" scoped></style>

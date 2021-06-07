@@ -40,7 +40,7 @@ export interface ModalHashChangeEvent extends HashChangeEvent {
  * @template C 컴포넌트 타입
  * @property {C} component 모달로 열려고 하는 컴포넌트
  * @property {EntryComponentType} [entryComponent] 모달을 감싸는(모달 기능 주입, 모션 처리 등을 하는) 컴포넌트.
- * @property {ModalOpenStrategy} [openStrategy] 오픈 방식(방향)
+ * @property {OpenStrategy} [openStrategy] 오픈 방식(방향)
  * @property {boolean} [overlayClose] 오버레이 영역 클릭시 닫기 처리 여부
  * @property {boolean} [floatingMode] 중첩 열기시 애니메이트 처리 여부
  * @property {boolean} [disableShadow] 그림자 처리 여부
@@ -85,6 +85,7 @@ export interface ModalEvent {
 
 /**
  * 모달의 오픈 방식
+ * @deprecated
  * @export
  * @enum {number}
  */

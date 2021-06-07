@@ -19,6 +19,13 @@
 
     <demo-panel title="usecase window">
       <demo-button @click="onOpen">open</demo-button>
+      <br />
+      <br />
+      <a
+        href="https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/demo-vue3/demo-usecase-window"
+        target="_blank"
+        >demo code</a
+      >
     </demo-panel>
 
     <hr class="partition" />
@@ -30,31 +37,24 @@
 <script lang="ts">
 import { Subscription } from 'rxjs';
 import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
-import { useJdModalService, JdModalRef } from '@jood/v-modal';
-import { createTestModalOptions, createTestOptions } from '../common/createTestOptions';
-import ModalOptions from '../common/ModalOptions.vue';
+import { useJdModalService } from '@jood/v-modal';
 import SampleNestedModal1 from './SampleNestedModal1.vue';
 
 export default defineComponent({
-  components: {
-    ModalOptions
-  },
   setup() {
     const modalService = useJdModalService();
     modalService.setUseLocationHash(false);
 
     const listener = new Subscription();
     const state = reactive({
-      modalOptions: createTestOptions(),
       modals: []
     });
 
     const onOpen = () => {
-      const modalOptions = createTestModalOptions(state.modalOptions);
       modalService.open({
-        ...modalOptions,
-        data: { modalOptions },
-        component: SampleNestedModal1
+        component: SampleNestedModal1,
+        overlayClose: true,
+        floatingMode: true
       });
     };
 

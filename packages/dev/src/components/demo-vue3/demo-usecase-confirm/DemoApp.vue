@@ -2,36 +2,32 @@
   <div>
     <demo-panel title="usecase confirm">
       <demo-button @click="onOpen">open</demo-button>
+      <br />
+      <br />
+      <a
+        href="https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/demo-vue3/demo-usecase-confirm"
+        target="_blank"
+        >demo code</a
+      >
     </demo-panel>
 
     <hr class="partition" />
-
-    <modal-options v-model="state.modalOptions" />
   </div>
 </template>
 
 <script lang="ts">
 import { Subscription } from 'rxjs';
-import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
-import { useJdModalService, JdModalRef, ModalOpenStrategy } from '@jood/v-modal';
-import { createTestModalOptions, createTestOptions } from '../common/createTestOptions';
-import ModalOptions from '../common/ModalOptions.vue';
-import SampleConfirm, { ConfirmData, ConfirmAction } from './SampleConfirm.vue';
+import { reactive, onUnmounted } from 'vue';
+import { useJdModalService } from '@jood/v-modal';
+import SampleConfirm, { ConfirmData } from './SampleConfirm.vue';
 
 export default {
-  components: {
-    ModalOptions
-  },
+  components: {},
   setup() {
     const modalService = useJdModalService();
     const listener = new Subscription();
-    const state = reactive({
-      modalOptions: createTestOptions()
-    });
     const onOpen = () => {
-      const modalOptions = createTestModalOptions(state.modalOptions);
       const modalRef = modalService.open<number, ConfirmData>({
-        ...modalOptions,
         component: SampleConfirm,
         overlayClose: true,
         data: {
@@ -55,7 +51,6 @@ export default {
       modalService.closeAll();
     });
     return {
-      state,
       onOpen
     };
   }

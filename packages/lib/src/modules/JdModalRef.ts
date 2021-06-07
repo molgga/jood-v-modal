@@ -17,7 +17,7 @@ export class JdModalRef<R = any, D = any, C = any> {
   protected modalResult: R | undefined;
   protected modalComponent: C | null = null;
   protected modalPanelStyle: any;
-  protected modalOpenStrategy: OpenStrategy; // ModalOpenStrategy = ModalOpenStrategy.NORMAL;
+  protected modalOpenStrategy: OpenStrategy;
   protected modalTransitionDuration = 240;
   protected modalFloatingOpenMode = false;
   protected modalOverlayClose = false;

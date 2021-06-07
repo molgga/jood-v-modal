@@ -12,8 +12,7 @@
 </template>
 
 <script lang="ts">
-import { Subscription } from 'rxjs';
-import { defineComponent, reactive, onUnmounted } from 'vue';
+import { defineComponent, reactive } from 'vue';
 import { useJdModalRef, useJdModalService } from '@jood/v-modal';
 import SampleNestedModal from './SampleNestedModal2.vue';
 
@@ -21,22 +20,15 @@ export default defineComponent({
   setup() {
     const modalService = useJdModalService();
     const modalRef = useJdModalRef();
-    const modalOptions = modalRef.data.modalOptions;
-    const listener = new Subscription();
     const state = reactive({
       modalId: modalRef.id
     });
     const onOpen = () => {
-      const openedModalRef = modalService.open({
-        ...modalOptions,
-        data: { modalOptions },
-        component: SampleNestedModal
+      modalService.open({
+        component: SampleNestedModal,
+        overlayClose: true,
+        floatingMode: true
       });
-      const obseverClosed = openedModalRef.observeClosed().subscribe(onClosedResult);
-      listener.add(obseverClosed);
-    };
-    const onClosedResult = (result: any) => {
-      console.log('onClosedResult', result);
     };
     const onClose = () => {
       modalRef.close({
@@ -46,9 +38,6 @@ export default defineComponent({
     const onBack = () => {
       history.back();
     };
-    onUnmounted(() => {
-      listener.unsubscribe();
-    });
     return {
       state,
       onOpen,

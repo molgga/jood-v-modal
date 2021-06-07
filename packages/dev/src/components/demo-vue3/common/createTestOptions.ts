@@ -1,4 +1,3 @@
-import { ModalOpenStrategy } from '@jood/v-modal';
 import { OpenStrategy, StackBottom, StackLeft, StackNormal, StackRight, StackTop } from '~@lib';
 
 export enum TestOpenStrategy {

@@ -3,32 +3,30 @@
     <demo-panel title="usecase ActionSheet">
       <demo-button @click="onOpen">open</demo-button> |
       <demo-button @click="onOpen2">open2</demo-button>
+      <br />
+      <br />
+      <a
+        href="https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/demo-vue3/demo-usecase-actionsheet"
+        target="_blank"
+        >demo code</a
+      >
     </demo-panel>
 
     <hr class="partition" />
-
-    <modal-options v-model="state.modalOptions" />
   </div>
 </template>
 
 <script lang="ts">
 import { Subscription } from 'rxjs';
-import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
-import { useJdModalService, JdModalRef, ModalOpenStrategy } from '@jood/v-modal';
-import { createTestModalOptions, createTestOptions } from '../common/createTestOptions';
-import ModalOptions from '../common/ModalOptions.vue';
+import { defineComponent, onUnmounted } from 'vue';
+import { useJdModalService, StackBottom } from '@jood/v-modal';
 import SampleActionSheet, { ActionResult, ActionData } from './SampleActionSheet.vue';
 
 export default defineComponent({
-  components: {
-    ModalOptions
-  },
+  components: {},
   setup() {
     const modalService = useJdModalService();
     const listener = new Subscription();
-    const state = reactive({
-      modalOptions: createTestOptions()
-    });
     const onOpen = () => {
       openModal([
         { label: 'HTML', description: 'HyperText Markup Language', value: 1 },
@@ -45,11 +43,10 @@ export default defineComponent({
       );
     };
     const openModal = (actions: any) => {
-      const modalOptions = createTestModalOptions(state.modalOptions);
       const modalRef = modalService.open<ActionResult<number>, ActionData<number>>({
-        ...modalOptions,
         component: SampleActionSheet,
         overlayClose: true,
+        openStrategy: new StackBottom(),
         data: { actions }
       });
       const observeResult = modalRef.observeClosed().subscribe(result => {
@@ -64,7 +61,6 @@ export default defineComponent({
       modalService.closeAll();
     });
     return {
-      state,
       onOpen,
       onOpen2
     };

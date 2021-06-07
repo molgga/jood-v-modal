@@ -84,7 +84,10 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
 
   const styles = computed(() => {
     const { opening, opened, closing, index, modalLength } = openState;
-    const styleSet: any = Object.assign(openStrategy.base(safeTiming), panelStyle);
+    const styleSet: any = openStrategy.base(safeTiming);
+    if (panelStyle) {
+      mergeStyle(styleSet, { pivot: panelStyle });
+    }
     if (!disableShadow) {
       mergeStyle(styleSet, openStrategy.shadow());
     }

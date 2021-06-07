@@ -4,7 +4,7 @@
       <h2 class="tit">sample-modal1</h2>
     </div>
     <div class="body">
-      <input v-model="anyResult.text" placeholder="Result text" />
+      <input class="test-put" v-model="anyResult.text" placeholder="Result text" />
     </div>
     <div class="foot">
       <div class="aside">
@@ -33,7 +33,7 @@ export default defineComponent({
     const modalRef = useJdModalRef<SampleModalResult, SampleModalData>();
     const modalData = modalRef.data || {};
     const anyResult = reactive({
-      text: modalData.passText || ''
+      text: 'hello ' + modalData.passText || ''
     });
     const onCancel = () => {
       modalRef.close();
@@ -81,6 +81,9 @@ export default defineComponent({
     .spacer {
       flex: 1;
     }
+  }
+  .test-put {
+    font-size: 24px;
   }
 }
 </style>
