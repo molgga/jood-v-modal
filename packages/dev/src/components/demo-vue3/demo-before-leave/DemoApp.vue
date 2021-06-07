@@ -23,7 +23,8 @@ export default defineComponent({
     const modalService = useJdModalService();
     const onOpen = () => {
       modalService.open({
-        component: SampleBeforeLeaveModal
+        component: SampleBeforeLeaveModal,
+        overlayClose: true
       });
     };
     return {

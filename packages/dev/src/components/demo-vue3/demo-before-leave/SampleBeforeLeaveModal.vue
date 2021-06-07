@@ -4,12 +4,18 @@
       <h2 class="tit">SampleBeforeLeave</h2>
     </div>
     <div class="body">
-      <input v-model="state.text" placeholder="Result" />
+      <label>
+        <input type="checkbox" v-model="state.isChanged" @change="onChange" />
+        isChanged
+      </label>
+
+      <div v-if="state.isChanged" class="desc">
+        confirm before leave
+      </div>
     </div>
     <div class="foot">
-      <p class="desc">...text change &amp; browser back = confirm</p>
       <div>
-        <demo-button :color="isChanged ? 'danger' : '#f0f0f0'" @click="onBack">
+        <demo-button :color="state.isChanged ? 'danger' : '#f0f0f0'" @click="onBack">
           history back
         </demo-button>
       </div>
@@ -18,8 +24,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onUnmounted, onMounted, computed } from 'vue';
-import { useJdModalRef, useJdModalBeforeLeave } from '@jood/v-modal';
+import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
+import { useJdModalBeforeLeave } from '@jood/v-modal';
 
 export default defineComponent({
   setup() {
@@ -30,15 +36,16 @@ export default defineComponent({
       setBeforeLeaveValidate
     } = useJdModalBeforeLeave();
     const state = reactive({
-      text: 'foo'
+      isChanged: true
     });
-    const isChanged = computed(() => !!state.text);
 
     setBeforeLeaveValidate(() => {
-      return !isChanged.value;
+      console.log('setBeforeLeaveValidate');
+      return !state.isChanged;
     });
 
     setBeforeLeaveConfirm(async () => {
+      console.log('setBeforeLeaveConfirm');
       return new Promise(resolve => {
         resolve(confirm('back?'));
       });
@@ -46,6 +53,13 @@ export default defineComponent({
 
     const onBack = () => {
       history.back();
+    };
+
+    const onChange = () => {
+      detachBeforeLeave();
+      if (state.isChanged) {
+        attachBeforeLeave();
+      }
     };
 
     onMounted(() => {
@@ -58,7 +72,7 @@ export default defineComponent({
 
     return {
       state,
-      isChanged,
+      onChange,
       onBack
     };
   }
@@ -86,14 +100,14 @@ export default defineComponent({
     margin-top: 10px;
     padding: 10px 0;
     box-sizing: border-box;
+    .desc {
+      padding: 10px;
+      color: #666666;
+    }
   }
   > .foot {
     margin-top: 10px;
     box-sizing: border-box;
-    .desc {
-      font-size: 13px;
-      color: #999999;
-    }
   }
 }
 </style>
