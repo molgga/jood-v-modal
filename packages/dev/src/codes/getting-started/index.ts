@@ -58,7 +58,7 @@ export default defineComponent({
 <script lang="ts">
 import { Subscription } from 'rxjs';
 import { defineComponent, onUnmounted } from 'vue';
-import { useJdModalService, ModalOpenStrategy, JdModalRef } from '@jood/v-modal';
+import { useJdModalService, StackRight, JdModalRef } from '@jood/v-modal';
 import MySomeModal from './MySomeModal.vue';
 export default defineComponent({
   setup() {
@@ -68,7 +68,7 @@ export default defineComponent({
       const modalRef = modalService.open({
         component: MySomeModal,
         overlayClose: true,
-        openStrategy: ModalOpenStrategy.RIGHT_STACK,
+        openStrategy: new StackRight(),
         data: { passParam1: 'pass data', passParam2: 2 },
       });
       const observeResult = modalRef.observeClosed().subscribe((result) => {

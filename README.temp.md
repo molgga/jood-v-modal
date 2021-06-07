@@ -124,12 +124,12 @@ export default defineComponent({
 - open()
   - component[default=undefined]: modal component
   - data[default=null]: pass data to component(inject useJdModalRef) 
-  - openStrategy[default=ModalOpenStrategy.NORMAL]: modal stack direction
-    - NORMAL: center | center
-    - TOP_STACK: center | top
-    - BOTTOM_STACK: center | bottom
-    - LEFT_STACK: left | center
-    - RIGHT_STACK: right | center
+  - openStrategy[default=StackNormal]: modal open style
+    - StackNormal: center | center
+    - StackTop: center | top
+    - StackBottom: center | bottom
+    - StackLeft: left | center
+    - StackRight: right | center
   - duration[default=240]: modal open|close transition speed
   - overlayClose[default=false]: overlay click close
   - floatingMode[default=true]: nested modal stack motion
@@ -158,7 +158,7 @@ setup() {
   modalService.open({
     component: MyModalItem,
     data: {},
-    openStrategy: ModalOpenStrategy.BOTTOM_STACK,
+    openStrategy: new StackBottom(),
     duration: 120,
     overlayClose: true,
     entryComponent: MyCustomModalItemWapper,
@@ -306,11 +306,6 @@ setup(props) {
   &.is-opening { opacty:1 } // modal open start
   &.is-closing { opacity:0; } // modal close start
   &.shadow { box-shadow: 0 10px 10px rgba(0,0,0,0.2); } // disableShadow: false
-  &.ops-normal {} // ModalOpenStrategy.NORMAL
-  &.ops-leftstack {} // ModalOpenStrategy.LEFT_STACK
-  &.ops-rightstack {} // ModalOpenStrategy.RIGHT_STACK
-  &.ops-topstack {} // ModalOpenStrategy.TOP_STACK
-  &.ops-bottomstack {} // ModalOpenStrategy.BOTTOM_STACK
 }
 </style>
 ```

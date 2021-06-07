@@ -2,7 +2,17 @@
   <div>
     <demo-panel title="location hash">
       <demo-button @click="onOpen">open</demo-button>
+
+      <br />
+      <br />
+      <a
+        href="https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/demo-vue3/demo-location-hash"
+        target="_blank"
+        >demo code</a
+      >
     </demo-panel>
+
+    <demo-panel-devider />
 
     <demo-panel>
       <div>
@@ -31,29 +41,19 @@
         </template>
       </div>
     </demo-panel>
-
-    <hr class="partition" />
-
-    <modal-options v-model="state.modalOptions" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
-import { useJdModalService, JdModalRef } from '@jood/v-modal';
-import { createTestOptions, createTestModalOptions } from '../common/createTestOptions';
-import ModalOptions from '../common/ModalOptions.vue';
+import { defineComponent, reactive, onUnmounted } from 'vue';
+import { useJdModalService } from '@jood/v-modal';
 import SampleNestedModal1 from './SampleNestedModal1.vue';
 
 export default defineComponent({
-  components: {
-    ModalOptions
-  },
   setup() {
     const modalService = useJdModalService();
     const state = reactive({
-      useLocationHash: true,
-      modalOptions: createTestOptions()
+      useLocationHash: true
     });
 
     const onChangeUseLocationHash = () => {
@@ -61,11 +61,10 @@ export default defineComponent({
     };
 
     const onOpen = () => {
-      const modalOptions = createTestModalOptions(state.modalOptions);
       modalService.open({
-        ...modalOptions,
-        data: { modalOptions },
-        component: SampleNestedModal1
+        component: SampleNestedModal1,
+        overlayClose: true,
+        floatingMode: true
       });
     };
 

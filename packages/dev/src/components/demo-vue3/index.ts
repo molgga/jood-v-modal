@@ -10,8 +10,15 @@ export const DemoList = [
   },
   {
     key: 'nested',
-    label: 'Nested modal',
+    label: 'Options & Nested modal',
     component: defineAsyncComponent(() => import('@/components/demo-vue3/demo-nested/DemoApp.vue'))
+  },
+  {
+    key: 'open-strategy',
+    label: 'OpenStrategy',
+    component: defineAsyncComponent(() =>
+      import('@/components/demo-vue3/demo-open-strategy/DemoApp.vue')
+    )
   },
   {
     key: 'custom-panelStyle',

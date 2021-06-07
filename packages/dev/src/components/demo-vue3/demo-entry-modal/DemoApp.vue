@@ -2,6 +2,13 @@
   <div>
     <demo-panel title="Modal entryComponent">
       <demo-button @click="onOpen">open</demo-button>
+      <br />
+      <br />
+      <a
+        href="https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/demo-vue3/demo-entry-modal"
+        target="_blank"
+        >demo code</a
+      >
     </demo-panel>
 
     <demo-panel-devider />

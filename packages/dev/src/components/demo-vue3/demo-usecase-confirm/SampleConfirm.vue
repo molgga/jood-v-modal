@@ -1,5 +1,5 @@
 <template>
-  <div class="sample-confirm" :class="classes">
+  <div class="sample-confirm">
     <template v-if="title">
       <div class="confirm-head">
         <div class="confirm-title">{{ title }}</div>
@@ -24,8 +24,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
-import { useJdModalRef, ModalOpenStrategy } from '@jood/v-modal';
+import { defineComponent } from 'vue';
+import { useJdModalRef } from '@jood/v-modal';
 
 export interface ConfirmAction {
   label: string;
@@ -46,29 +46,10 @@ export default defineComponent({
     const modalData = modalRef.data || ({} as ConfirmData);
     const { title = '', message = '', actions = [] } = modalData;
     const openStrategy = modalRef.openStrategy;
-    const classes = computed(() => {
-      let clsOpenType = '';
-      switch (openStrategy) {
-        case ModalOpenStrategy.BOTTOM_STACK:
-          clsOpenType = 'ops-bottom';
-          break;
-        case ModalOpenStrategy.TOP_STACK:
-          clsOpenType = 'ops-top';
-          break;
-        case ModalOpenStrategy.LEFT_STACK:
-          clsOpenType = 'ops-left';
-          break;
-        case ModalOpenStrategy.RIGHT_STACK:
-          clsOpenType = 'ops-right';
-          break;
-      }
-      return [clsOpenType];
-    });
     const onClose = (action: ConfirmAction) => {
       modalRef.close(action.value);
     };
     return {
-      classes,
       title,
       message,
       actions,
@@ -90,11 +71,6 @@ export default defineComponent({
   border-radius: 5px;
   box-sizing: border-box;
   overflow: hidden;
-  &.ops-left,
-  &.ops-right {
-    height: 100%;
-    max-height: 100vh;
-  }
   .confirm-head {
     padding: 5px 20px;
   }

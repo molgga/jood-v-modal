@@ -2,6 +2,13 @@
   <div>
     <demo-panel title="Before leave">
       <demo-button @click="onOpen">open</demo-button>
+      <br />
+      <br />
+      <a
+        href="https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/demo-vue3/demo-before-leave"
+        target="_blank"
+        >demo code</a
+      >
     </demo-panel>
   </div>
 </template>
