@@ -3,12 +3,12 @@
     ref="refModalContainer"
     class="jd-modal-entry"
     :class="classes"
-    :style="styles.modal"
+    :style="styles.styleSet.modal"
     tabindex="0"
   >
-    <div class="overlay" @click="onOverlayClick"></div>
-    <div class="panel">
-      <div class="pivot" :style="styles.pivot">
+    <div class="overlay" :style="styles.styleSet.overlay" @click="onOverlayClick"></div>
+    <div class="panel" :style="styles.styleSet.panel">
+      <div class="pivot" :style="styles.styleSet.pivot">
         <div class="content">
           <component :is="modalRef.component"></component>
         </div>
@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted } from 'vue';
+import { defineComponent, onMounted, onUnmounted, watch } from 'vue';
 import { JdModalRef } from '../modules';
 import { useJdModalEntrySetup } from '../composables';
 
@@ -27,14 +27,16 @@ interface IProps {
   modalRef: JdModalRef;
 }
 
-export default {
+export default defineComponent({
   name: 'JdModalEntry',
   props: {
     index: {
-      type: Number
+      type: Number,
+      default: 0
     },
     modalRef: {
-      type: JdModalRef
+      type: JdModalRef,
+      default: null
     }
   },
   setup(props: IProps) {
@@ -46,8 +48,10 @@ export default {
       classes,
       styles
     } = useJdModalEntrySetup({
+      index: props.index,
       modalRef: props.modalRef
     });
+
     onMounted(() => {
       mounted();
     });
@@ -61,7 +65,7 @@ export default {
       styles
     };
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>
@@ -106,6 +110,11 @@ export default {
       }
     }
   }
+  &.full-height {
+    > .panel {
+      height: 100%;
+    }
+  }
 
   &:nth-child(1).is-opening {
     > .overlay {
@@ -130,11 +139,7 @@ export default {
       opacity: 0;
     }
   }
-  &.full-height {
-    > .panel {
-      height: 100%;
-    }
-  }
+  /**
   &.shadow {
     > .panel > .pivot {
       box-shadow: 0 0 8px rgba(0, 0, 0, 0.02), 0 3px 10px 1px rgba(0, 0, 0, 0.04),
@@ -325,6 +330,7 @@ export default {
         transform: translateY(0%);
       }
     }
-  }
+  } 
+  */
 }
 </style>

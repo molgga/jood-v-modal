@@ -1,11 +1,6 @@
 import { Observable, Subject } from 'rxjs';
-import {
-  ModalOpenStrategy,
-  ModalEvent,
-  ModalEventType,
-  ModalData,
-  EntryComponentType
-} from './types';
+import { OpenStrategy, StackNormal } from './open-strategy';
+import { ModalEvent, ModalEventType, ModalData, EntryComponentType } from './types';
 
 /**
  * 하나의 모달 (정보)
@@ -22,7 +17,7 @@ export class JdModalRef<R = any, D = any, C = any> {
   protected modalResult: R | undefined;
   protected modalComponent: C | null = null;
   protected modalPanelStyle: any;
-  protected modalOpenStrategy: ModalOpenStrategy = ModalOpenStrategy.NORMAL;
+  protected modalOpenStrategy: OpenStrategy; // ModalOpenStrategy = ModalOpenStrategy.NORMAL;
   protected modalTransitionDuration = 240;
   protected modalFloatingOpenMode = false;
   protected modalOverlayClose = false;
@@ -31,6 +26,10 @@ export class JdModalRef<R = any, D = any, C = any> {
   protected openerSubject: Subject<ModalEvent> = new Subject();
   protected closedSubject: Subject<R> = new Subject();
   protected attachedBeforeLeave = false;
+
+  constructor() {
+    this.modalOpenStrategy = new StackNormal() as any;
+  }
 
   /**
    * 모달의 id
@@ -75,9 +74,9 @@ export class JdModalRef<R = any, D = any, C = any> {
   /**
    * 모달 오픈 방식
    * @readonly
-   * @type {ModalOpenStrategy}
+   * @type {OpenStrategy}
    */
-  get openStrategy(): ModalOpenStrategy {
+  get openStrategy(): OpenStrategy {
     return this.modalOpenStrategy;
   }
 
@@ -137,7 +136,11 @@ export class JdModalRef<R = any, D = any, C = any> {
 
   assignModalData(data: ModalData<D>) {
     this.setComponent(data.component);
-    this.setOpenStrategy(data.openStrategy || ModalOpenStrategy.NORMAL);
+    this.setOpenStrategy(data.openStrategy || new StackNormal());
+    // this.setOpenStrategy(data.openStrategy || new StackLeft());
+    // this.setOpenStrategy(data.openStrategy || new StackRight());
+    // this.setOpenStrategy(data.openStrategy || new StackTop());
+    // this.setOpenStrategy(data.openStrategy || new StackBottom());
     this.setOverlayClose(data.overlayClose || false);
     this.setFloatingModel(data.floatingMode || false);
     this.setFullHeight(data.fullHeight || false);
@@ -167,7 +170,7 @@ export class JdModalRef<R = any, D = any, C = any> {
     this.modalEntryComponent = entryComponent;
   }
 
-  setOpenStrategy(openStrategy: ModalOpenStrategy): void {
+  setOpenStrategy(openStrategy: OpenStrategy): void {
     this.modalOpenStrategy = openStrategy;
   }
 

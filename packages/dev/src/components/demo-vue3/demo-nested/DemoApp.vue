@@ -13,7 +13,7 @@
 <script lang="ts">
 import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
 import { useJdModalService, JdModalRef } from '@jood/v-modal';
-import { createTestOptions } from '../common/createTestOptions';
+import { createTestModalOptions, createTestOptions } from '../common/createTestOptions';
 import ModalOptions from '../common/ModalOptions.vue';
 import SampleNestedModal1 from './SampleNestedModal1.vue';
 
@@ -27,9 +27,10 @@ export default defineComponent({
       modalOptions: createTestOptions()
     });
     const onOpen = () => {
+      const modalOptions = createTestModalOptions(state.modalOptions);
       modalService.open({
-        ...state.modalOptions,
-        data: { modalOptions: state.modalOptions },
+        ...modalOptions,
+        data: { modalOptions },
         component: SampleNestedModal1
       });
     };

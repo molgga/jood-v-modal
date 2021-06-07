@@ -13,7 +13,7 @@
 <script lang="ts">
 import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
 import { useJdModalService, JdModalRef } from '@jood/v-modal';
-import { createTestOptions } from '../common/createTestOptions';
+import { createTestModalOptions, createTestOptions } from '../common/createTestOptions';
 import ModalOptions from '../common/ModalOptions.vue';
 import SampleModal from './SampleModal.vue';
 
@@ -28,8 +28,9 @@ export default defineComponent({
     });
 
     const onOpen = () => {
+      const modalOptions = createTestModalOptions(state.modalOptions);
       modalService.open({
-        ...state.modalOptions,
+        ...modalOptions,
         panelStyle: {
           borderRadius: '0',
           border: '4px solid #000000',

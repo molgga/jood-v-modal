@@ -29,7 +29,7 @@ interface HookState {
  */
 export const useJdModalProviderSetup = (): JdModalProviderSetupHook => {
   const service = useJdModalService();
-  const listener = new Subscription();
+  let listener: Subscription;
   let animateTimer: any = null;
 
   const state = shallowReactive<HookState>({
@@ -62,6 +62,7 @@ export const useJdModalProviderSetup = (): JdModalProviderSetupHook => {
   };
 
   const mounted = () => {
+    listener = new Subscription();
     const observeModalState = service.observeModalState().subscribe(onChangeModalState);
     listener.add(observeModalState);
   };

@@ -15,7 +15,7 @@
 import { Subscription } from 'rxjs';
 import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
 import { useJdModalService, JdModalRef, ModalOpenStrategy } from '@jood/v-modal';
-import { createTestOptions } from '../common/createTestOptions';
+import { createTestModalOptions, createTestOptions } from '../common/createTestOptions';
 import ModalOptions from '../common/ModalOptions.vue';
 import SampleActionSheet, { ActionResult, ActionData } from './SampleActionSheet.vue';
 
@@ -45,8 +45,9 @@ export default defineComponent({
       );
     };
     const openModal = (actions: any) => {
+      const modalOptions = createTestModalOptions(state.modalOptions);
       const modalRef = modalService.open<ActionResult<number>, ActionData<number>>({
-        ...state.modalOptions,
+        ...modalOptions,
         component: SampleActionSheet,
         overlayClose: true,
         data: { actions }
