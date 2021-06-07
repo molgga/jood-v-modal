@@ -14,7 +14,7 @@
 import { Subscription } from 'rxjs';
 import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
 import { useJdModalService, JdModalRef, ModalOpenStrategy } from '@jood/v-modal';
-import { createTestOptions } from '../common/createTestOptions';
+import { createTestModalOptions, createTestOptions } from '../common/createTestOptions';
 import ModalOptions from '../common/ModalOptions.vue';
 import SampleConfirm, { ConfirmData, ConfirmAction } from './SampleConfirm.vue';
 
@@ -29,8 +29,9 @@ export default {
       modalOptions: createTestOptions()
     });
     const onOpen = () => {
+      const modalOptions = createTestModalOptions(state.modalOptions);
       const modalRef = modalService.open<number, ConfirmData>({
-        ...state.modalOptions,
+        ...modalOptions,
         component: SampleConfirm,
         overlayClose: true,
         data: {

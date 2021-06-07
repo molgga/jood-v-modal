@@ -1,8 +1,8 @@
-// import { VueConstructor, AsyncComponent, Component } from 'vue';
 import { Component } from 'vue';
 import { JdModalRef } from './JdModalRef';
+import { OpenStrategy } from './open-strategy';
 
-export type EntryComponentType = Component | any; //VueConstructor | Component | AsyncComponent | any;
+export type EntryComponentType = Component | any;
 
 /**
  * 모달 서비스 config
@@ -51,7 +51,7 @@ export interface ModalHashChangeEvent extends HashChangeEvent {
 export interface ModalData<D = any, C = any> {
   component: C;
   entryComponent?: EntryComponentType;
-  openStrategy?: ModalOpenStrategy;
+  openStrategy?: OpenStrategy;
   overlayClose?: boolean;
   floatingMode?: boolean;
   disableShadow?: boolean;

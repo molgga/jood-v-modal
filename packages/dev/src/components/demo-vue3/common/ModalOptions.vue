@@ -49,8 +49,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
-import { ModalOpenStrategy } from '@jood/v-modal';
+import { defineComponent } from 'vue';
+import { TestOpenStrategy } from '../common/createTestOptions';
 
 export default defineComponent({
   model: {
@@ -65,11 +65,11 @@ export default defineComponent({
   },
   setup(props) {
     const optionOpenStrategy = [
-      { value: ModalOpenStrategy.NORMAL, label: 'NORMAL' },
-      { value: ModalOpenStrategy.TOP_STACK, label: 'TOP_STACK' },
-      { value: ModalOpenStrategy.LEFT_STACK, label: 'LEFT_STACK' },
-      { value: ModalOpenStrategy.RIGHT_STACK, label: 'RIGHT_STACK' },
-      { value: ModalOpenStrategy.BOTTOM_STACK, label: 'BOTTOM_STACK' }
+      { value: TestOpenStrategy.StackNormal, label: 'StackNormal' },
+      { value: TestOpenStrategy.StackLeft, label: 'StackLeft' },
+      { value: TestOpenStrategy.StackRight, label: 'StackRight' },
+      { value: TestOpenStrategy.StackTop, label: 'StackTop' },
+      { value: TestOpenStrategy.StackBottom, label: 'StackBottom' }
     ];
     return {
       optionOpenStrategy
