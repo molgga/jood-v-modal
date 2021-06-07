@@ -40,11 +40,11 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// import { VueConstructor, AsyncComponent, Component } from 'vue';
-import { Component } from 'vue';
+            <pre class="prettyprint source linenums"><code>import { Component } from 'vue';
 import { JdModalRef } from './JdModalRef';
+import { OpenStrategy } from './open-strategy';
 
-export type EntryComponentType = Component | any; //VueConstructor | Component | AsyncComponent | any;
+export type EntryComponentType = Component | any;
 
 /**
  * 모달 서비스 config
@@ -82,7 +82,7 @@ export interface ModalHashChangeEvent extends HashChangeEvent {
  * @template C 컴포넌트 타입
  * @property {C} component 모달로 열려고 하는 컴포넌트
  * @property {EntryComponentType} [entryComponent] 모달을 감싸는(모달 기능 주입, 모션 처리 등을 하는) 컴포넌트.
- * @property {ModalOpenStrategy} [openStrategy] 오픈 방식(방향)
+ * @property {OpenStrategy} [openStrategy] 오픈 방식(방향)
  * @property {boolean} [overlayClose] 오버레이 영역 클릭시 닫기 처리 여부
  * @property {boolean} [floatingMode] 중첩 열기시 애니메이트 처리 여부
  * @property {boolean} [disableShadow] 그림자 처리 여부
@@ -93,7 +93,7 @@ export interface ModalHashChangeEvent extends HashChangeEvent {
 export interface ModalData&lt;D = any, C = any> {
   component: C;
   entryComponent?: EntryComponentType;
-  openStrategy?: ModalOpenStrategy;
+  openStrategy?: OpenStrategy;
   overlayClose?: boolean;
   floatingMode?: boolean;
   disableShadow?: boolean;
@@ -127,6 +127,7 @@ export interface ModalEvent {
 
 /**
  * 모달의 오픈 방식
+ * @deprecated
  * @export
  * @enum {number}
  */
@@ -149,7 +150,7 @@ export enum ModalOpenStrategy {
 <br class="clear">
 
 <footer>
-    Documentation generated at Mon May 24 2021 08:39:33 GMT+0000 (Coordinated Universal Time)
+    Documentation generated at Mon Jun 07 2021 10:19:49 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script>prettyPrint();</script>

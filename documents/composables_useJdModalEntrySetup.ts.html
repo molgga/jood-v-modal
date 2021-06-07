@@ -40,12 +40,14 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Ref, computed, shallowRef, reactive, provide } from 'vue';
+            <pre class="prettyprint source linenums"><code>import { Subscription } from 'rxjs';
+import { Ref, computed, shallowRef, reactive, provide } from 'vue';
 import {
-  ModalEventType,
-  ModalOpenStrategy,
-  ModalHashChangeEvent,
   JD_MODAL_REF_TOKEN,
+  ModalEventType,
+  ModalHashChangeEvent,
+  ModalEvent,
+  ModalState,
   JdModalRef,
   useJdModalService,
   createHashId,
@@ -59,6 +61,7 @@ import {
  */
 interface JdModalEntrySetupConfig {
   modalRef: JdModalRef;
+  index?: number;
 }
 
 /**
@@ -71,9 +74,9 @@ interface JdModalEntrySetupConfig {
  * @property styles {any} 모달에 필요한 html style 세트
  */
 interface JdModalEntrySetupHook {
-  mounted: Function;
-  unmounted: Function;
-  onOverlayClick: Function;
+  mounted(): void;
+  unmounted(): void;
+  onOverlayClick(evt: MouseEvent): void;
   refModalContainer: Ref&lt;HTMLElement | null>;
   classes: any;
   styles: any;
@@ -103,17 +106,67 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   const openState = reactive({
     opening: false,
     opened: false,
-    closing: false
+    closing: false,
+    index: setup.index || 0,
+    modalLength: modalService.modals.length
   });
+  let listener: Subscription;
   let animateTimer: any = null;
 
-  const onOverlayClick = (evt: MouseEvent) => {
-    if (overlayClose) {
-      modalRef.close();
+  const classes = computed(() => {
+    return {
+      'is-opening': openState.opening,
+      'is-opened': openState.opened,
+      'is-closing': openState.closing,
+      'floating-mode': floatingMode,
+      'full-height': fullHeight,
+      shadow: !disableShadow
+    };
+  });
+
+  const styles = computed(() => {
+    const { opening, opened, closing, index, modalLength } = openState;
+    const styleSet: any = openStrategy.base(safeTiming);
+    if (panelStyle) {
+      mergeStyle(styleSet, { pivot: panelStyle });
+    }
+    if (!disableShadow) {
+      mergeStyle(styleSet, openStrategy.shadow());
+    }
+    if (opening) {
+      if (!floatingMode) {
+        mergeStyle(styleSet, openStrategy.opening());
+      } else {
+        const floatingOpening = openStrategy.floatingOpening();
+        const floatingLength = floatingOpening.length;
+        const floatingIndex =
+          modalLength &lt;= index + 1
+            ? floatingLength - 1
+            : Math.max(0, floatingLength - (modalLength - index));
+        mergeStyle(styleSet, floatingOpening[floatingIndex]);
+      }
+    }
+    if (opened) {
+      mergeStyle(styleSet, openStrategy.opened());
+    }
+    if (closing) {
+      mergeStyle(styleSet, openStrategy.closing());
+    }
+    return { styleSet };
+  });
+
+  const mergeStyle = (styleSet: any, mergeTarget: any) => {
+    for (const key in mergeTarget) {
+      styleSet[key] = Object.assign(styleSet[key] || {}, mergeTarget[key]);
     }
   };
 
-  const observeOpener = modalRef.observeOpener().subscribe(evt => {
+  const onChangeModalState = (modalState: ModalState) => {
+    const { modals } = modalState;
+    openState.modalLength = modals.length;
+  };
+
+  const onChangeOpener = (evt: ModalEvent) => {
     if (evt.type === ModalEventType.OPENED) {
       if (refModalContainer &amp;&amp; refModalContainer.value) {
         refModalContainer.value.focus();
@@ -127,64 +180,15 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
       openState.closing = true;
       animateTimer = setTimeout(() => {
         modalRef.closed();
-        observeOpener.unsubscribe();
       }, safeTiming);
     }
-  });
+  };
 
-  const classes = computed(() => {
-    let openType: string;
-    switch (openStrategy) {
-      case ModalOpenStrategy.TOP_STACK:
-        openType = 'ops-topstack';
-        break;
-      case ModalOpenStrategy.LEFT_STACK:
-        openType = 'ops-leftstack';
-        break;
-      case ModalOpenStrategy.RIGHT_STACK:
-        openType = 'ops-rightstack';
-        break;
-      case ModalOpenStrategy.BOTTOM_STACK:
-        openType = 'ops-bottomstack';
-        break;
-      default:
-        openType = 'ops-normal';
-        break;
+  const onOverlayClick = (evt: MouseEvent) => {
+    if (overlayClose) {
+      modalRef.close();
     }
-    return [
-      openType,
-      {
-        'is-opening': openState.opening,
-        'is-opened': openState.opened,
-        'is-closing': openState.closing,
-        'floating-mode': floatingMode,
-        'full-height': fullHeight,
-        shadow: !disableShadow
-      }
-    ];
-  });
-
-  const styles = computed(() => {
-    const timingOpacity = safeTiming * 0.85;
-    const modalStyle = {
-      transition: `background-color ${safeTiming}ms`
-    };
-    const panelPivotStyle = {
-      ...(() => {
-        if (openStrategy === ModalOpenStrategy.BOTTOM_STACK) {
-          return {
-            marginTop: '12px'
-          };
-        }
-      })(),
-      ...panelStyle,
-      transition: `transform ${safeTiming}ms cubic-bezier(0.4, 0, 0.2, 1), opacity ${timingOpacity}ms`
-    };
-    return {
-      modal: modalStyle,
-      pivot: panelPivotStyle
-    };
-  });
+  };
 
   let hashTouched = false;
   const historyHashId = createHashId(modalRef.id);
@@ -239,6 +243,12 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   };
 
   const mounted = () => {
+    const observeModalState = modalService.observeModalState().subscribe(onChangeModalState);
+    const observeOpener = modalRef.observeOpener().subscribe(onChangeOpener);
+    listener = new Subscription();
+    listener.add(observeModalState);
+    listener.add(observeOpener);
+
     modalRef.opener.next({
       type: ModalEventType.OPEN,
       modalRef
@@ -248,7 +258,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
 
   const unmounted = () => {
     clearTimeout(animateTimer);
-    observeOpener.unsubscribe();
+    listener.unsubscribe();
   };
 
   return {
@@ -272,7 +282,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
 <br class="clear">
 
 <footer>
-    Documentation generated at Mon May 24 2021 08:39:33 GMT+0000 (Coordinated Universal Time)
+    Documentation generated at Mon Jun 07 2021 10:19:49 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script>prettyPrint();</script>
