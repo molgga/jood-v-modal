@@ -34,6 +34,7 @@ interface JdModalEntrySetupConfig {
 interface JdModalEntrySetupHook {
   mounted(): void;
   unmounted(): void;
+  setIndex(index: number): void;
   onOverlayClick(evt: MouseEvent): void;
   refModalContainer: Ref<HTMLElement | null>;
   classes: any;
@@ -61,7 +62,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   const usedLocationHash = modalService.usedLocationHash;
   const refModalContainer: Ref<HTMLElement | null> = shallowRef(null);
   const safeTiming = isNaN(duration) || duration < 0 ? 240 : duration;
-  const openState = reactive({
+  const state = reactive({
     opening: false,
     opened: false,
     closing: false,
@@ -73,9 +74,9 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
 
   const classes = computed(() => {
     return {
-      'is-opening': openState.opening,
-      'is-opened': openState.opened,
-      'is-closing': openState.closing,
+      'is-opening': state.opening,
+      'is-opened': state.opened,
+      'is-closing': state.closing,
       'floating-mode': floatingMode,
       'full-height': fullHeight,
       shadow: !disableShadow
@@ -83,7 +84,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   });
 
   const styles = computed(() => {
-    const { opening, opened, closing, index, modalLength } = openState;
+    const { opening, opened, closing, index, modalLength } = state;
     const styleSet: any = openStrategy.base(safeTiming);
     if (panelStyle) {
       mergeStyle(styleSet, { pivot: panelStyle });
@@ -119,9 +120,13 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     }
   };
 
+  const setIndex = (index: number) => {
+    state.index = index;
+  };
+
   const onChangeModalState = (modalState: ModalState) => {
     const { modals } = modalState;
-    openState.modalLength = modals.length;
+    state.modalLength = modals.length;
   };
 
   const onChangeOpener = (evt: ModalEvent) => {
@@ -133,9 +138,9 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
       if (usedLocationHash) {
         popLocationHash();
       }
-      openState.opening = false;
-      openState.opened = false;
-      openState.closing = true;
+      state.opening = false;
+      state.opened = false;
+      state.closing = true;
       animateTimer = setTimeout(() => {
         modalRef.closed();
       }, safeTiming);
@@ -185,7 +190,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   };
 
   const mountedOpening = () => {
-    openState.opening = true;
+    state.opening = true;
     animateTimer = setTimeout(mountedOpened, safeTiming);
   };
 
@@ -193,7 +198,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     if (usedLocationHash) {
       touchLocationHash();
     }
-    openState.opened = true;
+    state.opened = true;
     modalRef.opener.next({
       type: ModalEventType.OPENED,
       modalRef
@@ -222,6 +227,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   return {
     mounted,
     unmounted,
+    setIndex,
     onOverlayClick,
     refModalContainer,
     classes,

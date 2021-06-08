@@ -44,6 +44,7 @@ export default defineComponent({
       mounted,
       unmounted,
       onOverlayClick,
+      setIndex,
       refModalContainer,
       classes,
       styles
@@ -51,6 +52,11 @@ export default defineComponent({
       index: props.index,
       modalRef: props.modalRef
     });
+
+    watch(
+      () => props.index,
+      newIndex => setIndex(newIndex)
+    );
 
     onMounted(() => {
       mounted();

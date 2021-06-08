@@ -55,7 +55,8 @@ export default defineComponent({
   max-width: 100vw;
   box-sizing: border-box;
   color: #ffffff;
-  background-color: #2a9e64;
+  border-radius: 10px;
+  background-color: #2e86b5;
   .test-box {
     margin: 10px;
     padding: 50px;
