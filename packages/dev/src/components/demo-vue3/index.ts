@@ -42,6 +42,13 @@ export const DemoList = [
     )
   },
   {
+    key: 'default-entry-modal',
+    label: 'Default entryComponent',
+    component: defineAsyncComponent(() =>
+      import('@/components/demo-vue3/demo-default-entry/DemoApp.vue')
+    )
+  },
+  {
     key: 'custom-entry-modal',
     label: 'Custom entryComponent',
     component: defineAsyncComponent(() =>
