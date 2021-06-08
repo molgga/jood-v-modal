@@ -1,8 +1,8 @@
 <template>
   <div>
-    <demo-panel title="open entryComponent">
-      <demo-button @click="onOpen1">open1 - custom entry</demo-button> |
-      <demo-button @click="onOpen2">open2 - default entry</demo-button>
+    <demo-panel title="Modal defaultEntryComponent">
+      <demo-button @click="onOpen1">open1</demo-button> |
+      <demo-button @click="onOpen2">open2</demo-button>
       <br />
       <br />
       <a
@@ -14,14 +14,16 @@
 
     <demo-panel-devider />
 
-    <demo-panel title="open entryComponent">
-      <demo-preview-code v-bind="Codes.Open" />
+    <demo-panel title="setting default entryComponent">
+      <demo-preview-code v-bind="Codes.ConfigSet" />
+      <br />or<br />
+      <demo-preview-code v-bind="Codes.DefaultSet" />
     </demo-panel>
 
     <demo-panel-devider />
 
-    <demo-panel title="sample CustomEntry.vue">
-      <demo-preview-code v-bind="Codes.CustomSample" />
+    <demo-panel title="open">
+      <demo-preview-code v-bind="Codes.Open" />
     </demo-panel>
   </div>
 </template>
@@ -30,7 +32,7 @@
 import { Subscription } from 'rxjs';
 import { defineComponent, onUnmounted } from 'vue';
 import { useJdModalService } from '@jood/v-modal';
-import Codes from '../../../codes/entry-modal';
+import Codes from '../../../codes/default-entry';
 import CustomModalEntry from './CustomModalEntry.vue';
 import SampleModal1 from './SampleModal1.vue';
 import SampleModal2 from './SampleModal2.vue';
@@ -38,11 +40,16 @@ import SampleModal2 from './SampleModal2.vue';
 export default defineComponent({
   setup() {
     const modalService = useJdModalService();
+
+    // # set your design component
+    modalService.setDefaultEntryComponent(CustomModalEntry);
+    // # reset default
+    // modalService.resetDefaultEntryComponent();
+
     const listener = new Subscription();
 
     const onOpen1 = () => {
       modalService.open({
-        entryComponent: CustomModalEntry,
         component: SampleModal1,
         data: { title: 'Hello modal ~' },
         overlayClose: true
@@ -52,6 +59,7 @@ export default defineComponent({
     const onOpen2 = () => {
       modalService.open({
         component: SampleModal2,
+        data: { title: 'Hello modal !' },
         overlayClose: true
       });
     };

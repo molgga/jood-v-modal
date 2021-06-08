@@ -1,4 +1,37 @@
-<template>
+export default {
+  Open: {
+    title: '',
+    description: '',
+    lang: 'typescript',
+    code: `export default defineComponent({
+  setup() {
+    const modalService = useJdModalService();
+
+    const onOpen1 = () => {
+      modalService.open({
+        entryComponent: CustomModalEntry, // 
+        component: SampleModal1,
+        overlayClose: true
+      });
+    };
+
+    const onOpen2 = () => {
+      modalService.open({
+        component: SampleModal2,
+        overlayClose: true
+      });
+    };
+
+    return { onOpen1, onOpen2 }
+  }
+});
+    `
+  },
+  CustomSample: {
+    title: '',
+    description: '',
+    lang: 'typescript',
+    code: `<template>
   <div
     ref="refModalContainer"
     class="custom-modal-entry"
@@ -149,3 +182,6 @@ export default defineComponent({
   }
 }
 </style>
+`
+  }
+};
