@@ -6,7 +6,12 @@
     :style="styles.styleSet.modal"
     tabindex="0"
   >
-    <div class="overlay" :style="styles.styleSet.overlay" @click="onOverlayClick"></div>
+    <div
+      class="overlay"
+      :style="styles.styleSet.overlay"
+      @touchmove="onOverlayTouchMove"
+      @click="onOverlayClick"
+    ></div>
     <div class="panel" :style="styles.styleSet.panel">
       <div class="pivot" :style="styles.styleSet.pivot">
         <div class="content">
@@ -44,6 +49,7 @@ export default defineComponent({
       mounted,
       unmounted,
       onOverlayClick,
+      onOverlayTouchMove,
       setIndex,
       refModalContainer,
       classes,
@@ -67,6 +73,7 @@ export default defineComponent({
     return {
       refModalContainer,
       onOverlayClick,
+      onOverlayTouchMove,
       classes,
       styles
     };
