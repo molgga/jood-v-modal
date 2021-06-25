@@ -28,7 +28,7 @@ export class JdModalRef<R = any, D = any, C = any> {
   protected attachedBeforeLeave = false;
 
   constructor() {
-    this.modalOpenStrategy = new StackNormal() as any;
+    this.modalOpenStrategy = new StackNormal();
   }
 
   /**
