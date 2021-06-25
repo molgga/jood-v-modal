@@ -12,7 +12,7 @@
       @touchmove="onOverlayTouchMove"
       @click="onOverlayClick"
     ></div>
-    <div class="panel" :style="styles.panel">
+    <div ref="refModalPanel" class="panel" :style="styles.panel">
       <div class="pivot" :style="styles.pivot">
         <div class="content">
           <component :is="modalRef.component"></component>
@@ -48,10 +48,11 @@ export default defineComponent({
     const {
       mounted,
       unmounted,
+      setIndex,
       onOverlayClick,
       onOverlayTouchMove,
-      setIndex,
       refModalContainer,
+      refModalPanel,
       classes,
       styles
     } = useJdModalEntrySetup({
@@ -71,9 +72,10 @@ export default defineComponent({
       unmounted();
     });
     return {
-      refModalContainer,
       onOverlayClick,
       onOverlayTouchMove,
+      refModalContainer,
+      refModalPanel,
       classes,
       styles
     };
