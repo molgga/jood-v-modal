@@ -26,6 +26,7 @@ export class JdModalRef<R = any, D = any, C = any> {
   protected openerSubject: Subject<ModalEvent> = new Subject();
   protected closedSubject: Subject<R> = new Subject();
   protected attachedBeforeLeave = false;
+  protected modalPanelElement!: HTMLElement;
 
   constructor() {
     this.modalOpenStrategy = new StackNormal();
@@ -126,6 +127,15 @@ export class JdModalRef<R = any, D = any, C = any> {
   }
 
   /**
+   * 모달의 패널(DOM)
+   * @readonly
+   * @type {HTMLElement}
+   */
+  get panelElement(): HTMLElement {
+    return this.modalPanelElement;
+  }
+
+  /**
    * 모달 오픈 상태 알리미
    * @readonly
    * @type {Subject<ModalEvent>}
@@ -192,6 +202,10 @@ export class JdModalRef<R = any, D = any, C = any> {
 
   setFullHeight(is: boolean): void {
     this.modalFullHeight = is;
+  }
+
+  setPanelElement(element: HTMLElement) {
+    this.modalPanelElement = element;
   }
 
   attachBeforeLeave() {
