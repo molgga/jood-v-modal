@@ -65,6 +65,15 @@ export class JdModalService {
   }
 
   /**
+   * body 스크롤 block 여부
+   * @readonly
+   * @type {boolean}
+   */
+  get usedBlockBodyScroll(): boolean {
+    return this.useBlockBodyScroll;
+  }
+
+  /**
    * 로케이션 hash 사용 여부 지정
    * @param {boolean} is
    */

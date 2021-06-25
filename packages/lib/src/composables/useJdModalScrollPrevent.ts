@@ -1,0 +1,16 @@
+/**
+ * @interface
+ * @property onPreventTouchMove {Function} touchmove 시 body 스크롤 되는 문제 제어
+ */
+interface JdModalScrollPreventHook {
+  onPreventTouchMove(evt: TouchEvent): void;
+}
+
+export const useJdModalScrollPrevent = (): JdModalScrollPreventHook => {
+  const onPreventTouchMove = (evt: TouchEvent) => {
+    evt.preventDefault();
+  };
+  return {
+    onPreventTouchMove
+  };
+};

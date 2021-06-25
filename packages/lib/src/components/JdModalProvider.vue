@@ -13,9 +13,7 @@
 </template>
 
 <script lang="ts">
-import { Subscription } from 'rxjs';
 import { onUnmounted, onMounted } from 'vue';
-import { useJdModalService, JdModalRef } from '../modules';
 import { useJdModalProviderSetup } from '../composables';
 
 export default {
