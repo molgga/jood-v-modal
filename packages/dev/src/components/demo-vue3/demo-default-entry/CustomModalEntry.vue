@@ -3,12 +3,12 @@
     ref="refModalContainer"
     class="custom-modal-entry"
     :class="classes"
-    :style="styles.styleSet.modal"
+    :style="styles.modal"
     tabindex="0"
   >
-    <div class="overlay" :style="styles.styleSet.overlay" @click="onOverlayClick"></div>
-    <div class="panel" :style="styles.styleSet.panel">
-      <div class="pivot" :style="styles.styleSet.pivot">
+    <div class="overlay" :style="styles.overlay" @click="onOverlayClick"></div>
+    <div class="panel" :style="styles.panel">
+      <div class="pivot" :style="styles.pivot">
         <div class="def-head">
           <h2 class="tit">{{ state.title }}</h2>
           <button class="action-close" @click="onClose">X</button>

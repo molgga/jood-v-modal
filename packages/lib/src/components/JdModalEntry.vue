@@ -3,17 +3,17 @@
     ref="refModalContainer"
     class="jd-modal-entry"
     :class="classes"
-    :style="styles.styleSet.modal"
+    :style="styles.modal"
     tabindex="0"
   >
     <div
       class="overlay"
-      :style="styles.styleSet.overlay"
+      :style="styles.overlay"
       @touchmove="onOverlayTouchMove"
       @click="onOverlayClick"
     ></div>
-    <div class="panel" :style="styles.styleSet.panel">
-      <div class="pivot" :style="styles.styleSet.pivot">
+    <div class="panel" :style="styles.panel">
+      <div class="pivot" :style="styles.pivot">
         <div class="content">
           <component :is="modalRef.component"></component>
         </div>
