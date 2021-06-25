@@ -28,7 +28,8 @@ interface JdModalEntrySetupConfig {
  * @property unmounted {Function} 언마운트시 호출되어야 할 함수
  * @property onOverlayClick {Function} overlay 영역 클릭시 호출되어야 할 함수
  * @property onOverlayTouchMove {Function} service 의 usedBlockBodyScroll 사용시 overlay 영역 touchmove 시 body 스크롤 되는 문제 제어(iOS 에서만 있는 문제)
- * @property refModalContainer {Ref<HTMLElement | null>} 모달 컨테이너 html element
+ * @property refModalContainer {Ref<HTMLElement | null>} 모달 container element
+ * @property refModalPanel {Ref<HTMLElement | null>} 모달 panel element
  * @property classes {any} 모달 컨테이너에 필요한 html class 세트
  * @property styles {any} 모달에 필요한 html style 세트
  */
@@ -39,6 +40,7 @@ interface JdModalEntrySetupHook {
   onOverlayClick(evt: MouseEvent): void;
   onOverlayTouchMove(evt: TouchEvent): void;
   refModalContainer: Ref<HTMLElement | null>;
+  refModalPanel: Ref<HTMLElement | null>;
   classes: any;
   styles: any;
 }
@@ -64,6 +66,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   const usedLocationHash = modalService.usedLocationHash;
   const usedBlockBodyScroll = modalService.usedBlockBodyScroll;
   const refModalContainer: Ref<HTMLElement | null> = shallowRef(null);
+  const refModalPanel: Ref<HTMLElement | null> = shallowRef(null);
   const safeTiming = isNaN(duration) || duration < 0 ? 240 : duration;
   const state = reactive({
     opening: false,
@@ -215,6 +218,9 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   };
 
   const mounted = () => {
+    if (refModalPanel.value) {
+      modalRef.setPanelElement(refModalPanel.value);
+    }
     const observeModalState = modalService.observeModalState().subscribe(onChangeModalState);
     const observeOpener = modalRef.observeOpener().subscribe(onChangeOpener);
     listener = new Subscription();
@@ -240,6 +246,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     onOverlayClick,
     onOverlayTouchMove,
     refModalContainer,
+    refModalPanel,
     classes,
     styles
   };
