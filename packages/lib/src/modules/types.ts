@@ -1,4 +1,4 @@
-import { Component } from 'vue';
+import { Component } from 'vue-demi';
 import { JdModalRef } from './JdModalRef';
 import { OpenStrategy } from './open-strategy';
 

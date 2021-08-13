@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { onUnmounted, onMounted } from 'vue';
+import { onUnmounted, onMounted } from 'vue-demi';
 import { useJdModalProviderSetup } from '../composables';
 
 export default {
