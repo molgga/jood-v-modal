@@ -1,8 +1,7 @@
-import { Component } from 'vue-demi';
 import { JdModalRef } from './JdModalRef';
 import { OpenStrategy } from './open-strategy';
 
-export type EntryComponentType = Component | any;
+export type EntryComponentType = any;
 
 /**
  * 모달 서비스 config
