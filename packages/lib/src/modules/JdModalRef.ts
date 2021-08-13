@@ -24,7 +24,7 @@ export class JdModalRef<R = any, D = any, C = any> {
   protected modalDisableShadow = false;
   protected modalFullHeight = false;
   protected openerSubject: Subject<ModalEvent> = new Subject();
-  protected closedSubject: Subject<R> = new Subject();
+  protected closedSubject: Subject<R | undefined> = new Subject();
   protected attachedBeforeLeave = false;
   protected modalPanelElement!: HTMLElement;
 
@@ -256,7 +256,7 @@ export class JdModalRef<R = any, D = any, C = any> {
    * 보통은 모달에서 전달하는 값을 받아야 하는 경우 사용
    * @returns {Observable<R>}
    */
-  observeClosed(): Observable<R> {
+  observeClosed(): Observable<R | undefined> {
     return this.closedSubject.asObservable();
   }
 
