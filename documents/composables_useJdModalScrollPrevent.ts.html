@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>ModalEvent - Documentation</title>
+    <title>composables/useJdModalScrollPrevent.ts - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -30,100 +30,35 @@
 
 <div id="main">
     
-    <h1 class="page-title">ModalEvent</h1>
+    <h1 class="page-title">composables/useJdModalScrollPrevent.ts</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-        ModalEvent
-        </h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @interface
+ * @property onPreventTouchMove {Function} touchmove 시 body 스크롤 되는 문제 제어
+ */
+interface JdModalScrollPreventHook {
+  onPreventTouchMove(evt: TouchEvent): void;
+}
 
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">모달에서 발생하는 이벤트</div>
-        
-
-        
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="modules_types.ts.html">modules/types.ts</a>, <a href="modules_types.ts.html#line70">line 70</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+export const useJdModalScrollPrevent = (): JdModalScrollPreventHook => {
+  const onPreventTouchMove = (evt: TouchEvent) => {
+    evt.preventDefault();
+  };
+  return {
+    onPreventTouchMove
+  };
+};
+</code></pre>
+        </article>
+    </section>
 
 
 
