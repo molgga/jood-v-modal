@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted, watch } from 'vue-demi';
+import { defineComponent, onMounted, onUnmounted, watch } from 'vue';
 import { JdModalRef } from '../modules';
 import { useJdModalEntrySetup } from '../composables';
 

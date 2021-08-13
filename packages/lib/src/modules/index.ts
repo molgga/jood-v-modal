@@ -1,4 +1,4 @@
-import { provide, inject } from 'vue-demi';
+import { provide, inject } from 'vue';
 import { JdModalService } from './JdModalService';
 import { JdModalRef } from './JdModalRef';
 
