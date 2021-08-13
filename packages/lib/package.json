@@ -19,18 +19,8 @@
     "declaration": "tsc --p tsconfig.type.json",
     "generate": "npm run build && npm run declaration"
   },
-  "peerDependencies": {
-    "@vue/composition-api": "^1.0.0-rc.1",
-    "vue": "^2.0.0 || >=3.0.0"
-  },
-  "peerDependenciesMeta": {
-    "@vue/composition-api": {
-      "optional": true
-    }
-  },
   "dependencies": {
-    "rxjs": ">=6.5.5",
-    "vue-demi": "^0.11.2"
+    "rxjs": ">=6.5.5"
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",
@@ -64,7 +54,7 @@
     "tslib": "^2.1.0",
     "typescript": "^4.2.3",
     "vue-template-compiler": "^2.6.11",
-    "vue": "^2.6.14"
+    "vue": "^3.0.0"
   },
   "repository": {
     "type": "git",
@@ -79,7 +69,6 @@
     "javascript",
     "typescript",
     "vue",
-    "vue2",
     "vue3",
     "composition-api",
     "modal",
