@@ -1,7 +1,6 @@
 import { provide, inject } from 'vue-demi';
 import { JdModalService } from './JdModalService';
 import { JdModalRef } from './JdModalRef';
-import { ModalConfig } from './types';
 
 /**
  * 모달 서비스 provide, inject 토큰

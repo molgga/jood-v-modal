@@ -13,11 +13,10 @@
 </template>
 
 <script lang="ts">
-import { onUnmounted, onMounted } from 'vue-demi';
+import { defineComponent, onUnmounted, onMounted } from 'vue-demi';
 import { useJdModalProviderSetup } from '../composables';
 
-export default {
-  name: 'JdModalProvider',
+export default defineComponent({
   setup() {
     const { mounted, unmounted, classes, state } = useJdModalProviderSetup();
     onMounted(() => {
@@ -31,7 +30,7 @@ export default {
       state
     };
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>
