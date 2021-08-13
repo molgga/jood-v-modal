@@ -1,6 +1,6 @@
 {
   "name": "@jood/v-modal",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "main": "dist/v-modal.common.js",
   "types": "dist/types/index.d.ts",
   "module": "src/index.ts",
@@ -45,6 +45,7 @@
     "@vue/cli-plugin-unit-jest": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0-0",
+    "@vue/composition-api": "^1.1.0",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^5.0.2",
     "@vue/test-utils": "^1.0.3",
@@ -62,7 +63,8 @@
     "ts-jest": "^26.1.2",
     "tslib": "^2.1.0",
     "typescript": "^4.2.3",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "vue": "^2.6.14"
   },
   "repository": {
     "type": "git",
