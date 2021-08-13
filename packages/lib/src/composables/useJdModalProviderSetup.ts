@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { computed, shallowReactive } from 'vue';
+import { computed, shallowReactive } from 'vue-demi';
 import { useJdModalService, JdModalRef } from '../modules';
 import { ModalState } from '../modules/types';
 

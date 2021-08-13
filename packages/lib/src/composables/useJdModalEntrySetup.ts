@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { Ref, computed, shallowRef, reactive, provide } from 'vue';
+import { Ref, computed, shallowRef, reactive, provide } from 'vue-demi';
 import {
   JD_MODAL_REF_TOKEN,
   ModalEventType,
@@ -117,7 +117,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     if (closing) {
       mergeStyle(styleSet, openStrategy.closing());
     }
-    return { styleSet };
+    return styleSet;
   });
 
   const mergeStyle = (styleSet: any, mergeTarget: any) => {
@@ -226,7 +226,6 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     listener = new Subscription();
     listener.add(observeModalState);
     listener.add(observeOpener);
-
     modalRef.opener.next({
       type: ModalEventType.OPEN,
       modalRef
