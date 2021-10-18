@@ -26,12 +26,10 @@
 import { defineComponent, onMounted, onUnmounted, watch } from 'vue';
 import { JdModalRef } from '../modules';
 import { useJdModalEntrySetup } from '../composables';
-
 interface IProps {
   index: number;
   modalRef: JdModalRef;
 }
-
 export default defineComponent({
   name: 'JdModalEntry',
   props: {
@@ -59,12 +57,10 @@ export default defineComponent({
       index: props.index,
       modalRef: props.modalRef
     });
-
     watch(
       () => props.index,
       newIndex => setIndex(newIndex)
     );
-
     onMounted(() => {
       mounted();
     });

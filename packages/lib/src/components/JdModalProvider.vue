@@ -15,7 +15,6 @@
 <script lang="ts">
 import { defineComponent, onUnmounted, onMounted } from 'vue';
 import { useJdModalProviderSetup } from '../composables';
-
 export default defineComponent({
   setup() {
     const { mounted, unmounted, classes, state } = useJdModalProviderSetup();
@@ -42,11 +41,9 @@ export default defineComponent({
   height: 100%;
   pointer-events: none;
   z-index: 1100;
-
   &.is-emptied {
     display: none;
   }
-
   > .appender {
     position: absolute;
     top: 0;

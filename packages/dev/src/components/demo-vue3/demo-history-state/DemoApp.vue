@@ -1,7 +1,9 @@
 <template>
   <div>
-    <demo-panel title="location hash">
+    <demo-panel title="history state">
       <demo-button @click="onOpen">open</demo-button>
+
+      <span> {{ testState }}</span>
 
       <br />
       <br />
@@ -22,16 +24,17 @@
             v-model="state.useLocationHash"
             @change="onChangeUseLocationHash"
           />
-          <span class="label">use location hash</span>
+          <span class="label">useHistoryState</span>
         </label>
       </div>
       <div>
         <template v-if="state.useLocationHash">
           <ul class="text-list">
-            <li>location.hash change = https://...#jd-modal={modal-id} (add history stack)</li>
+            <li>modal open = history.pushState(...)</li>
             <li>history.back = modal close (can use beforeLeave)</li>
-            <li class="warn">warning: router mode hash = router conflict</li>
-            <li class="warn">warning: opened modal + browser refresh = url garbage</li>
+            <li class="warn">warning: GA, page-view tracker</li>
+            <li class="warn">warning: router.beforeRoute</li>
+            <li class="warn">warning: url garbage</li>
           </ul>
         </template>
         <template v-if="!state.useLocationHash">
@@ -45,7 +48,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onUnmounted } from 'vue';
+import { defineComponent, reactive, onUnmounted, onMounted } from 'vue';
 import { useJdModalService } from '@jood/v-modal';
 import SampleNestedModal1 from './SampleNestedModal1.vue';
 
@@ -57,7 +60,7 @@ export default defineComponent({
     });
 
     const onChangeUseLocationHash = () => {
-      modalService.setUseLocationHash(state.useLocationHash);
+      modalService.setUseHistoryState(state.useLocationHash);
     };
 
     const onOpen = () => {
@@ -68,15 +71,42 @@ export default defineComponent({
       });
     };
 
+    let listener: any;
+    const testState = reactive({
+      historyState: {}
+    });
+    const checkHistoryState = (lazy = true) => {
+      if (lazy) {
+        setTimeout(() => {
+          testState.historyState = { ...history.state };
+        }, 300);
+      } else {
+        testState.historyState = { ...history.state };
+      }
+    };
+    const onModalChange = () => {
+      checkHistoryState();
+    };
+
+    onMounted(() => {
+      checkHistoryState(false);
+      listener = modalService.observeModalState().subscribe(onModalChange);
+    });
+
     onUnmounted(() => {
+      if (listener) {
+        listener.unsubscribe();
+        listener = null;
+      }
       modalService.closeAll();
-      modalService.setUseLocationHash(true);
+      modalService.setUseHistoryState(true);
     });
 
     return {
       state,
       onChangeUseLocationHash,
-      onOpen
+      onOpen,
+      testState
     };
   }
 });

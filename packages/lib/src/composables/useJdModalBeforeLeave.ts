@@ -1,9 +1,4 @@
-import {
-  useJdModalRef,
-  useJdModalService,
-  ModalHashChangeEvent,
-  isCloseTargetByHashId
-} from '../modules';
+import { useJdModalRef, useJdModalService, ModalPopStateEvent, historyState } from '../modules';
 
 type CastFunction<T> = () => T | Promise<T>;
 
@@ -29,19 +24,20 @@ interface JdModalBeforeLeaveHook {
 export const useJdModalBeforeLeave = (): JdModalBeforeLeaveHook => {
   const modalService = useJdModalService();
   const modalRef = useJdModalRef();
-  const usedLocationHash = modalService.usedLocationHash;
+  const usedHistoryState = modalService.usedHistoryState;
   let holdBeforeLeave = false;
   let fnConfirm: CastFunction<boolean> = async () => Promise.resolve(true);
   let fnValidate: CastFunction<boolean> = async () => Promise.resolve(true);
 
   const attachBeforeLeave = () => {
-    window.addEventListener('hashchange', beforeLeaveHandle);
+    if (modalRef.isAttachedBeforeLeave) return;
+    window.addEventListener('popstate', beforeLeaveHandle);
     modalRef.attachBeforeLeave();
   };
 
   const detachBeforeLeave = () => {
     modalRef.detachBeforeLeave();
-    window.removeEventListener('hashchange', beforeLeaveHandle);
+    window.removeEventListener('popstate', beforeLeaveHandle);
   };
 
   const setBeforeLeaveConfirm = (fn: CastFunction<boolean>) => {
@@ -52,29 +48,35 @@ export const useJdModalBeforeLeave = (): JdModalBeforeLeaveHook => {
     fnValidate = fn;
   };
 
-  const beforeLeaveHandle = async (evt: ModalHashChangeEvent) => {
-    // 로케이션 hash 사용하지 않음
-    if (!usedLocationHash) return;
-    // 내 모달 보다 위에 열린 모달이 있다면 닫힘 대상 아님
-    if (modalService.hasModalRefNext(modalRef.id)) return;
-    // 모달 id(버전)으로 닫힘 대상인지 확인
-    if (!isCloseTargetByHashId(modalRef.id, evt.oldURL, evt.newURL)) return;
-    // 컨펌창 때문에 hold 체크, 에디터 변경사항 체크
-    if (!holdBeforeLeave && !fnValidate()) {
-      holdBeforeLeave = true;
-      evt._preventModalClose = true;
-      history.forward(); // 브라우저는 이미 뒤로가기가 되어서 다시 forwad 시킴.
-      await new Promise(resolve => {
-        setTimeout(() => resolve(false), 10);
-      });
+  const beforeLeaveHandle: any = async (evt: ModalPopStateEvent) => {
+    const { current: modalCurrentId } = historyState.getStateOfEvent(modalService.id, evt);
+    const isTop = modalService.isModalRefTop(modalRef.id);
+    // history state 사용하지 않음
+    if (!usedHistoryState) return;
+    if (!isTop) return;
+    if (modalCurrentId === modalRef.id) return;
 
-      const confirm = await fnConfirm();
-      if (!confirm) {
-        holdBeforeLeave = false;
-      } else {
+    const validate = fnValidate();
+    // 컨펌창 때문에 hold 체크, 에디터 변경사항 체크
+    if (!holdBeforeLeave) {
+      if (validate) {
         detachBeforeLeave();
         modalRef.close();
-        // history.back();
+      } else {
+        holdBeforeLeave = true;
+        evt._preventModalClose = true;
+        history.forward(); // 브라우저는 이미 뒤로가기가 되어서 다시 forwad 시킴.
+        await new Promise(resolve => {
+          setTimeout(() => resolve(false), 10);
+        });
+        const confirm = await fnConfirm();
+        if (!confirm) {
+          holdBeforeLeave = false;
+        } else {
+          detachBeforeLeave();
+          modalRef.close();
+          // history.back();
+        }
       }
     }
   };

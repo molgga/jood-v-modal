@@ -43,7 +43,7 @@ import SampleNestedModal1 from './SampleNestedModal1.vue';
 export default defineComponent({
   setup() {
     const modalService = useJdModalService();
-    modalService.setUseLocationHash(false);
+    modalService.setUseHistoryState(false);
 
     const listener = new Subscription();
     const state = reactive({
