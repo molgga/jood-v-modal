@@ -1,16 +1,14 @@
 import { Subscription } from 'rxjs';
 import { Ref, computed, shallowRef, reactive, provide } from 'vue';
+import { ModalPopStateEvent } from '../modules/types';
 import {
   JD_MODAL_REF_TOKEN,
   ModalEventType,
-  ModalHashChangeEvent,
   ModalEvent,
   ModalState,
   JdModalRef,
   useJdModalService,
-  createHashId,
-  createHashIdReg,
-  extractHashId
+  historyState
 } from '../modules';
 
 /**
@@ -63,7 +61,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     disableShadow = false,
     fullHeight = false
   } = modalRef;
-  const usedLocationHash = modalService.usedLocationHash;
+  const usedHistoryState = modalService.usedHistoryState;
   const usedBlockBodyScroll = modalService.usedBlockBodyScroll;
   const refModalContainer: Ref<HTMLElement | null> = shallowRef(null);
   const refModalPanel: Ref<HTMLElement | null> = shallowRef(null);
@@ -141,8 +139,8 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
         refModalContainer.value.focus();
       }
     } else if (evt.type === ModalEventType.CLOSE) {
-      if (usedLocationHash) {
-        popLocationHash();
+      if (usedHistoryState) {
+        popHistoryState();
       }
       state.opening = false;
       state.opened = false;
@@ -165,27 +163,22 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     }
   };
 
-  let hashTouched = false;
-  const historyHashId = createHashId(modalRef.id);
-  const historyHashIdReg = createHashIdReg(historyHashId);
-  const touchLocationHash = () => {
-    location.hash = historyHashId;
-    hashTouched = true;
-    window.addEventListener('hashchange', handleLocationHash);
+  let historyTouched = false;
+
+  const touchHistoryState = () => {
+    historyState.touch(modalService.id, modalRef.id);
+    historyTouched = true;
+    window.addEventListener('popstate', handleLocationHash);
   };
 
-  const handleLocationHash = (evt: ModalHashChangeEvent) => {
+  const handleLocationHash = (evt: ModalPopStateEvent) => {
     if (evt._preventModalClose) return;
-    if (!hashTouched) return;
-    if (!historyHashIdReg.test(evt.oldURL)) return;
-    const oldVer = extractHashId(evt.oldURL);
-    const newVer = extractHashId(evt.newURL);
+    if (!historyTouched) return;
+    const isTop = modalService.isModalRefTop(modalRef.id);
+    const { current } = historyState.getStateOfHistory(modalService.id);
+    if (!isTop) return;
     let useClose = false;
-    if (newVer === null) {
-      useClose = true;
-    } else if (oldVer === null) {
-      useClose = false;
-    } else if (newVer < oldVer) {
+    if (current < modalRef.id) {
       useClose = true;
     }
     if (useClose) {
@@ -193,10 +186,12 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     }
   };
 
-  const popLocationHash = () => {
-    window.removeEventListener('hashchange', handleLocationHash);
-    if (!hashTouched) return;
-    if (historyHashIdReg.test(location.hash)) {
+  const popHistoryState = () => {
+    window.removeEventListener('popstate', handleLocationHash);
+    if (!historyTouched) return;
+    const { before, current } = historyState.getStateOfHistory(modalService.id);
+    if (current === modalRef.id) {
+      // if (current === modalRef.id || (before === null && current === null)) {
       history.back();
     }
   };
@@ -207,8 +202,8 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   };
 
   const mountedOpened = () => {
-    if (usedLocationHash) {
-      touchLocationHash();
+    if (usedHistoryState) {
+      touchHistoryState();
     }
     state.opened = true;
     modalRef.opener.next({

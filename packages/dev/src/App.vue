@@ -7,9 +7,12 @@
       @goNpm="onGoNpm"
       @goDoc="onGoDocument"
     >
-      <template #menu>
+      <template #menu="layoutScope">
         <nav class="menu-wrap">
-          <demo-menu :menuList="menuList" />
+          <demo-menu
+            :menuList="menuList"
+            @menuClick="() => (layoutScope.layoutState.asideOpen = false)"
+          />
         </nav>
       </template>
       <router-view class="app-body" />
@@ -28,7 +31,7 @@ export default {
   },
   setup() {
     const modalService = provideJdModalService();
-    modalService.setUseLocationHash(true);
+    modalService.setUseHistoryState(true);
     modalService.init();
 
     const onGoDocument = () => {

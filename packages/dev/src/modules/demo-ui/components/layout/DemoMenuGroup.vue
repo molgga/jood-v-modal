@@ -5,15 +5,17 @@
         <demo-menu-group :menuList="menu.children" />
       </template>
       <template v-else>
-        <demo-menu-item :menu="menu" />
+        <demo-menu-item :menu="menu" @itemClick="$emit('menuClick')" />
       </template>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue';
 import DemoMenuItem from './DemoMenuItem.vue';
-export default {
+
+export default defineComponent({
   name: 'DemoMenuGroup',
   components: {
     DemoMenuItem
@@ -27,7 +29,7 @@ export default {
   setup() {
     return {};
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

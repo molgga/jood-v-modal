@@ -28,17 +28,17 @@ export const DemoList = [
     )
   },
   {
-    key: 'before-leave',
-    label: 'before leave',
+    key: 'history-state',
+    label: 'History state',
     component: defineAsyncComponent(() =>
-      import('@/components/demo-vue3/demo-before-leave/DemoApp.vue')
+      import('@/components/demo-vue3/demo-history-state/DemoApp.vue')
     )
   },
   {
-    key: 'location-hash',
-    label: 'Location hash',
+    key: 'before-leave',
+    label: 'Before leave',
     component: defineAsyncComponent(() =>
-      import('@/components/demo-vue3/demo-location-hash/DemoApp.vue')
+      import('@/components/demo-vue3/demo-before-leave/DemoApp.vue')
     )
   },
   {

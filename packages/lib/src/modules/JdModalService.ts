@@ -16,12 +16,13 @@ import { JdModalEntry } from '../components';
  * @class JdModalService
  */
 export class JdModalService {
+  protected serviceId = 0;
   protected modalUid = 0;
   protected modalRefMap: Map<number, JdModalRef> = new Map();
   protected modalsSubject: Subject<ModalState> = new Subject();
   protected listener: Subscription = new Subscription();
   protected defaultEntryComponent: EntryComponentType = JdModalEntry;
-  protected useLocationHash: boolean = true;
+  protected useHistoryState: boolean = true;
   protected useBlockBodyScroll: boolean = false;
   protected blockBodyStyleBefore: any = null;
 
@@ -35,6 +36,11 @@ export class JdModalService {
     }
     const observeState = this.observeModalState().subscribe(this.onChangeModalState.bind(this));
     this.listener.add(observeState);
+    this.serviceId = Date.now();
+  }
+
+  get id() {
+    return this.serviceId;
   }
 
   /**
@@ -56,12 +62,12 @@ export class JdModalService {
   }
 
   /**
-   * 로케이션 hash 사용여부
+   * history state 사용여부
    * @readonly
    * @type {boolean}
    */
-  get usedLocationHash(): boolean {
-    return this.useLocationHash;
+  get usedHistoryState(): boolean {
+    return this.useHistoryState;
   }
 
   /**
@@ -77,8 +83,8 @@ export class JdModalService {
    * 로케이션 hash 사용 여부 지정
    * @param {boolean} is
    */
-  setUseLocationHash(is: boolean): void {
-    this.useLocationHash = is;
+  setUseHistoryState(is: boolean): void {
+    this.useHistoryState = is;
   }
 
   /**
@@ -185,6 +191,16 @@ export class JdModalService {
       }
     }
     return is;
+  }
+
+  /**
+   * id 기준 가장 상위 모달인지 여부 확인
+   * @param {number} id
+   * @returns {boolean}
+   */
+  isModalRefTop(modalId: number): boolean {
+    const arr = Array.from(this.modalRefMap.keys()).reverse();
+    return arr.indexOf(modalId) === 0;
   }
 
   /**

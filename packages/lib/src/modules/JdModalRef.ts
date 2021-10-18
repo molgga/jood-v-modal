@@ -144,6 +144,10 @@ export class JdModalRef<R = any, D = any, C = any> {
     return this.openerSubject;
   }
 
+  get isAttachedBeforeLeave() {
+    return this.attachedBeforeLeave;
+  }
+
   assignModalData(data: ModalData<D>) {
     this.setComponent(data.component);
     this.setOpenStrategy(data.openStrategy || new StackNormal());

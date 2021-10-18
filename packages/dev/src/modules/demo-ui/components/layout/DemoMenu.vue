@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-menu-group :menuList="menuList" />
+    <demo-menu-group :menuList="menuList" @menuClick="$emit('menuClick')" />
     <div class="foot-desc">
       <div class="desc-box">
         <i class="icon material-icons">tag_faces</i>

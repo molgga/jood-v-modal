@@ -1,6 +1,6 @@
 <template>
   <div class="demo-menu-item">
-    <router-link :to="menu.to" class="menu-action">
+    <router-link :to="menu.to" class="menu-action" @click="$emit('itemClick')">
       <span class="tit">{{ menu.label }}</span>
       <span class="desc">{{ menu.description }}</span>
     </router-link>
@@ -8,7 +8,9 @@
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue';
+
+export default defineComponent({
   name: 'DemoMenuItem',
   props: {
     menu: {
@@ -19,7 +21,7 @@ export default {
   setup() {
     return {};
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

@@ -24,10 +24,11 @@ export interface ModalState {
 /**
  * 모달 window hash change 이벤트
  * @export
- * @interface ModalHashChangeEvent
+ * @interface ModalPopStateEvent
  * @extends {HashChangeEvent}
  */
-export interface ModalHashChangeEvent extends HashChangeEvent {
+export interface ModalPopStateEvent extends PopStateEvent {
+  // @hash  HashChangeEvent
   _preventModalClose?: boolean;
 }
 

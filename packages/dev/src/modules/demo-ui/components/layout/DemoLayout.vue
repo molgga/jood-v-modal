@@ -15,23 +15,26 @@
           class="out-link material-icons"
           @click="onOutlink('goGithub')"
           title="Github"
-        >code</i>
+          >code</i
+        >
         <i
           v-if="outNpm"
           class="out-link material-icons"
           @click="onOutlink('goNpm')"
           title="NPM package"
-        >move_to_inbox</i>
+          >move_to_inbox</i
+        >
         <i
           v-if="outDoc"
           class="out-link material-icons"
           @click="onOutlink('goDoc')"
           title="Documentaion"
-        >library_books</i>
+          >library_books</i
+        >
       </div>
     </div>
     <div class="ly-aside" :style="asideStyle">
-      <slot name="menu"></slot>
+      <slot name="menu" :layoutState="layoutState"></slot>
     </div>
     <div class="ly-body" :style="bodyStyle">
       <div class="ly-content">

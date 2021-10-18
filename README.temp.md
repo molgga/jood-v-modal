@@ -144,7 +144,7 @@ export default defineComponent({
 - observeModalState(): (rxjs)Observable
   - changed modalService state (ex: opened modals.length)
 
-- setUseLocationHash()
+- setUseHistoryState()
   - use location hash change(history stack)
   - modal open = history push
   - modal close = history pop 
