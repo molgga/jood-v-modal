@@ -1,6 +1,6 @@
 {
   "name": "@jood/v-modal",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "main": "dist/v-modal.umd.js",
   "module": "dist/v-modal.umd.js",
   "types": "dist/types/index.d.ts",
