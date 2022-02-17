@@ -1,9 +1,9 @@
 {
   "name": "@jood/v-modal",
   "version": "0.6.1",
-  "main": "dist/v-modal.common.js",
+  "main": "dist/v-modal.umd.js",
+  "module": "dist/v-modal.umd.js",
   "types": "dist/types/index.d.ts",
-  "module": "src/index.ts",
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"
