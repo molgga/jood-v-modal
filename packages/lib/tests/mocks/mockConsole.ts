@@ -1,10 +1,11 @@
+//@ts-ignore
 const originConsole: any = global.console;
 
 const spySwitch: any = {
   log: null,
   info: null,
   warn: null,
-  error: null
+  error: null,
 };
 
 export interface Options {
@@ -49,6 +50,6 @@ export const mockConsole = (options: Options = {}) => {
   }
 };
 
-export default function(options: Options) {
+export default function (options: Options) {
   mockConsole(options);
 }
