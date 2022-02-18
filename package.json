@@ -8,7 +8,7 @@
     "bootstrap": "yarn install --production=false && npm run generate && npm run symlink",
     "symlink": "cd ./packages/lib && yarn link && cd ../../packages/dev && yarn link @jood/v-modal && cd ../../",
     "generate": "yarn workspace @jood/v-modal generate",
-    "page:example-dist": "yarn workspace dev build",
+    "page:example-dist": "yarn workspace dev demo:build",
     "page:example-make": "copyfiles -u 3 ./packages/dev/dist-example/* ./packages/dev/dist-example/**/* ./docs",
     "page:document-dist": "jsdoc -c jsdoc.json -r -d docs/documents",
     "page:clear": "rm -rf docs",
@@ -29,5 +29,6 @@
     "confirm",
     "actionsheet",
     "dialog"
-  ]
+  ],
+  "dependencies": {}
 }
