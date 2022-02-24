@@ -1,10 +1,5 @@
-import {
-  useJdModalRef,
-  useJdModalService,
-  ModalPopStateEvent,
-  historyState,
-  sleep,
-} from '../modules';
+import { useJdModalRef, useJdModalService, ModalPopStateEvent, historyState } from '../modules';
+import { sleep } from '../utils';
 
 type CastFunction<T> = () => T | Promise<T>;
 
