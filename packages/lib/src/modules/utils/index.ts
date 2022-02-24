@@ -49,3 +49,14 @@ export const isCloseTargetByHashId = (id: number, oldURL: string, newURL: string
   if (oldVer === null || newVer === id) is = false;
   return is;
 };
+
+/**
+ * 잠시 대기
+ * @param {number} delay
+ * @returns {Promise}
+ */
+export const sleep = async (delay: number) => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(true), delay);
+  });
+};
