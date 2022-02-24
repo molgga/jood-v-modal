@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="ly-aside" :style="asideStyle">
-      <slot name="menu" :layoutState="layoutState"></slot>
+      <slot name="menu" :layoutState="layoutState" :onMenuToggle="onMenuToggle"></slot>
     </div>
     <div class="ly-body" :style="bodyStyle">
       <div class="ly-content">
@@ -52,28 +52,28 @@ export default defineComponent({
   props: {
     title: {
       type: String,
-      default: 'foo'
+      default: 'foo',
     },
     sizeTop: {
       type: Number,
-      default: 60
+      default: 60,
     },
     sizeAside: {
       type: Number,
-      default: 240
+      default: 240,
     },
     outGithub: {
       type: Boolean,
-      default: true
+      default: true,
     },
     outNpm: {
       type: Boolean,
-      default: true
+      default: true,
     },
     outDoc: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   setup(props, context) {
     const { emit } = context;
@@ -83,7 +83,7 @@ export default defineComponent({
       top: props.sizeTop,
       left: props.sizeAside,
       right: 0,
-      bottom: 0
+      bottom: 0,
     });
     const padState = computed(() => {
       const { asideOpen, top: sizeTop, left: sizeLeft } = layoutState;
@@ -93,13 +93,13 @@ export default defineComponent({
         top,
         left,
         right: 0,
-        bottom: 0
+        bottom: 0,
       };
     });
     const headStyle = computed(() => {
       const { top } = padState.value;
       return {
-        height: top
+        height: top,
       };
     });
     const asideStyle = computed(() => {
@@ -110,19 +110,19 @@ export default defineComponent({
       return {
         top: top,
         width: `${sizeAside}px`,
-        transform: `translateX(${transX}px)`
+        transform: `translateX(${transX}px)`,
       };
     });
     const bodyStyle = computed(() => {
       const { top, right, bottom, left } = padState.value;
       return {
-        padding: `${top} ${right} ${bottom} ${left}`
+        padding: `${top} ${right} ${bottom} ${left}`,
       };
     });
     const classes = computed(() => {
       const { asideOpen } = layoutState;
       return {
-        'need-overlay': asideOpen && !isWide()
+        'need-overlay': asideOpen && !isWide(),
       };
     });
 
@@ -134,7 +134,9 @@ export default defineComponent({
     };
     const asideToggle = () => {
       if (layoutState.asideOpen) {
-        asideClose();
+        if (!isWide()) {
+          asideClose();
+        }
       } else {
         asideOpen();
       }
@@ -155,9 +157,9 @@ export default defineComponent({
       asideStyle,
       bodyStyle,
       onMenuToggle,
-      onOutlink
+      onOutlink,
     };
-  }
+  },
 });
 </script>
 

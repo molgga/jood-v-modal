@@ -9,10 +9,7 @@
     >
       <template #menu="layoutScope">
         <nav class="menu-wrap">
-          <demo-menu
-            :menuList="menuList"
-            @menuClick="() => (layoutScope.layoutState.asideOpen = false)"
-          />
+          <demo-menu :menuList="menuList" @menuClick="layoutScope.onMenuToggle()" />
         </nav>
       </template>
       <router-view class="app-body" />
@@ -25,9 +22,9 @@ import { defineComponent } from 'vue';
 import { demoLinks } from '@/components/demo-vue3';
 import { provideJdModalService, JdModalProvider } from '@jood/v-modal';
 
-export default {
+export default defineComponent({
   components: {
-    JdModalProvider
+    JdModalProvider,
   },
   setup() {
     const modalService = provideJdModalService();
@@ -53,9 +50,9 @@ export default {
     const menuList = [
       {
         to: '/',
-        label: 'Getting started'
+        label: 'Getting started',
       },
-      ...demoLinks
+      ...demoLinks,
     ];
 
     return {
@@ -63,10 +60,10 @@ export default {
       demoLinks,
       onGoGithub,
       onGoNpm,
-      onGoDocument
+      onGoDocument,
     };
-  }
-};
+  },
+});
 </script>
 <style>
 html,
