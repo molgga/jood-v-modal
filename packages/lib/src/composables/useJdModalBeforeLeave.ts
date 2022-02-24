@@ -1,4 +1,10 @@
-import { useJdModalRef, useJdModalService, ModalPopStateEvent, historyState } from '../modules';
+import {
+  useJdModalRef,
+  useJdModalService,
+  ModalPopStateEvent,
+  historyState,
+  sleep,
+} from '../modules';
 
 type CastFunction<T> = () => T | Promise<T>;
 
@@ -66,9 +72,7 @@ export const useJdModalBeforeLeave = (): JdModalBeforeLeaveHook => {
         holdBeforeLeave = true;
         evt._preventModalClose = true;
         history.forward(); // 브라우저는 이미 뒤로가기가 되어서 다시 forwad 시킴.
-        await new Promise(resolve => {
-          setTimeout(() => resolve(false), 10);
-        });
+        await sleep(100);
         const confirm = await fnConfirm();
         if (!confirm) {
           holdBeforeLeave = false;
@@ -85,6 +89,6 @@ export const useJdModalBeforeLeave = (): JdModalBeforeLeaveHook => {
     setBeforeLeaveConfirm,
     setBeforeLeaveValidate,
     attachBeforeLeave,
-    detachBeforeLeave
+    detachBeforeLeave,
   };
 };
