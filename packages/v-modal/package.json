@@ -1,0 +1,86 @@
+{
+  "name": "@jood/v-modal",
+  "version": "0.6.3",
+  "main": "dist/v-modal.umd.js",
+  "module": "dist/v-modal.umd.js",
+  "types": "dist/types/index.d.ts",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "test": "jest --config ./jest.config.js",
+    "lint": "vue-cli-service lint",
+    "build": "vue-cli-service build --mode production --target lib ./src/index.ts",
+    "declaration": "tsc --p tsconfig.type.json",
+    "generate": "npm run build && npm run declaration"
+  },
+  "dependencies": {
+    "rxjs": ">=6.5.5",
+    "vue-demi": "latest"
+  },
+  "peerDependencies": {
+    "@vue/composition-api": "^1.0.0-rc.1",
+    "vue": "^2.0.0 || >=3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@vue/composition-api": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@babel/core": "^7.19.3",
+    "@babel/parser": "^7.19.3",
+    "@types/jest": "^28.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-plugin-unit-jest": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "@vue/compiler-sfc": "^3.2.0",
+    "@vue/composition-api": "^1.1.0",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "@vue/eslint-config-typescript": "^11.0.0",
+    "@vue/test-utils": "^1.0.3",
+    "@vue/vue3-jest": "^27.0.0-alpha.4",
+    "core-js": "^3.25.5",
+    "csstype": "^3.0.8",
+    "eslint": "^8.24.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.6.0",
+    "jest": "^28.0.0",
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2",
+    "ts-jest": "^28.0.0",
+    "tslib": "^2.1.0",
+    "typescript": "^4.8.4",
+    "vue": "^3.0.0",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/molgga/jood-v-modal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/molgga/jood-v-modal/issues",
+    "email": "molgga84@gmail.com"
+  },
+  "homepage": "https://molgga.github.io/jood-v-modal",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "vue",
+    "vue3",
+    "composition-api",
+    "modal",
+    "confirm",
+    "actionsheet",
+    "dialog"
+  ]
+}

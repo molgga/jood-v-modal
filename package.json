@@ -2,33 +2,32 @@
   "name": "jood-v-modal",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "document"
   ],
+  "description": "",
+  "license": "MIT",
   "scripts": {
-    "bootstrap": "yarn install --production=false && npm run generate && npm run symlink",
-    "symlink": "cd ./packages/lib && yarn link && cd ../../packages/dev && yarn link @jood/v-modal && cd ../../",
-    "generate": "yarn workspace @jood/v-modal generate",
-    "page:example-dist": "yarn workspace dev demo:build",
-    "page:example-make": "copyfiles -u 3 ./packages/dev/dist-example/* ./packages/dev/dist-example/**/* ./docs",
-    "page:document-dist": "jsdoc -c jsdoc.json -r -d docs/documents",
-    "page:clear": "rm -rf docs",
-    "page:expose": "npm run page:example-dist && npm run page:example-make && npm run page:document-dist",
-    "ci:bootstrap": "yarn install --production=false",
-    "ci:test": "yarn workspace @jood/v-modal test",
-    "ci:build": "npm run generate",
-    "ci:deploy-before": "npm run ci:build && npm run symlink && npm run page:clear && npm run page:expose",
-    "ci:deploy-pre-test": "npm run ci:test && npm run ci:deploy-before"
+    "bootstrap": "yarn run bootstrap:install && yarn run package:build",
+    "bootstrap:install": "yarn install --production=false",
+    "package:build": "yarn run v-modal:build",
+    "package:test:unit": "yarn run v-modal:test",
+    "v-modal:build": "yarn workspace @jood/v-modal build",
+    "v-modal:test": "yarn workspace @jood/v-modal test",
+    "docs:build": "yarn workspace document docs:build"
   },
-  "keywords": [
-    "javascript",
-    "typescript",
-    "vue",
-    "vue3",
-    "composition-api",
-    "modal",
-    "confirm",
-    "actionsheet",
-    "dialog"
-  ],
-  "dependencies": {}
+  "keywords": [],
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^8.3.4",
+    "@types/jest": "^28.1.6",
+    "esbuild": "^0.14.51",
+    "jest": "^28.1.3",
+    "jest-environment-jsdom": "^28.1.3",
+    "jsdom-testing-mocks": "^1.4.0",
+    "rollup": "^2.77.2",
+    "rollup-plugin-dts": "^4.2.2",
+    "rollup-plugin-esbuild": "^4.9.1",
+    "ts-jest": "^28.0.7",
+    "typescript": "^4.7.4"
+  }
 }
