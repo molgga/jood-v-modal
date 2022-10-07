@@ -1,6 +1,6 @@
-.nuxt/
 node_modules/
 dist/
+**/*.md
 *.md
 *.yml
 *.sh

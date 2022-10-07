@@ -1,28 +1,35 @@
-name: Build & Test
+name: Build & Docs
 
 on:
-  #  push:
-  #    branches: [master]
-  pull_request:
-    branches: [master]
+  # pull_request:
+  #  branches: [main]
+  push:
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile # yarn 사용시 npm ci 와 같다 # run: npm ci
+        run: yarn run bootstrap:install
 
-      - name: Build & Test
-        run: |
-          npm run ci:build
-          npm run ci:test
-      # - uses: codecov/codecov-action@v1
-      #   with:
-      #     directory: ./coverage
+      - name: Build
+        run: yarn run package:build
+
+      - name: Test
+        run: yarn run package:test:unit
+
+      - name: Docs:build
+        run: yarn run docs:build
+
+      - name: Docs:deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: './document/docs/.vitepress/dist'
