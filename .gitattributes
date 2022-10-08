@@ -1,5 +1,8 @@
-packages/demo/** linguist-vendored
+document/** linguist-vendored
+.github/** linguist-vendored
 .eslintignore linguist-vendored
 .eslintrc.js linguist-vendored
+.prettierignore linguist-vendored
+.prettierrc linguist-vendored
 *.config.js linguist-vendored
 *.json linguist-vendored
