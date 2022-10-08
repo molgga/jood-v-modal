@@ -4,13 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "bootstrap:install": "yarn install --production=false",
     "docs:dev": "vitepress dev docs --port 8081",
     "docs:build": "BUILD=1 vitepress build ./docs",
     "docs:serve": "BUILD=1 vitepress serve ./docs --port 3000"
   },
   "devDependencies": {
     "sass": "^1.54.4",
-    "vitepress": "^1.0.0-alpha.4",
+    "vitepress": "^1.0.0-alpha.8",
     "vue": "^3.2.37"
   },
   "dependencies": {

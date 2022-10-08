@@ -1,6 +1,6 @@
 {
   "name": "@jood/v-modal",
-  "version": "0.6.3",
+  "version": "0.0.0-alpha.1",
   "main": "dist/v-modal.umd.js",
   "module": "dist/v-modal.umd.js",
   "types": "dist/types/index.d.ts",
@@ -16,8 +16,8 @@
     "test": "jest --config ./jest.config.js",
     "lint": "vue-cli-service lint",
     "build": "vue-cli-service build --mode production --target lib ./src/index.ts",
-    "declaration": "tsc --p tsconfig.type.json",
-    "generate": "npm run build && npm run declaration"
+    "build:declare": "tsc --p tsconfig.type.json",
+    "build:generate": "npm run build && npm run build:declare"
   },
   "dependencies": {
     "rxjs": ">=6.5.5",
