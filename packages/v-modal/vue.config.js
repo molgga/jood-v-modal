@@ -1,5 +1,5 @@
 module.exports = {
   configureWebpack: {
-    externals: [],
+    externals: ['vue-demi'],
   },
 };
