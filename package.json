@@ -10,11 +10,12 @@
   "scripts": {
     "bootstrap": "yarn run bootstrap:install && yarn run package:build",
     "bootstrap:install": "yarn install --production=false",
-    "package:build": "yarn run v-modal:build",
-    "package:test:unit": "yarn run v-modal:test",
-    "v-modal:build": "yarn workspace @jood/v-modal build",
+    "v-modal:build": "yarn workspace @jood/v-modal build:generate",
     "v-modal:test": "yarn workspace @jood/v-modal test",
-    "docs:build": "yarn workspace document docs:build"
+    "docs:build": "yarn workspace document docs:build",
+    "package:test": "yarn run v-modal:test",
+    "package:build": "yarn run v-modal:build",
+    "package:deploy:build": "yarn run package:build && yarn run docs:build"
   },
   "keywords": [],
   "devDependencies": {

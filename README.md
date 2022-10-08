@@ -1,3 +1,3 @@
-# jood-helpdesk
+# @jood/v-modal
 
 @TODO

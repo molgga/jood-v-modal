@@ -1,5 +1,7 @@
 # @jood/v-modal
 
+...재작성중...
+
 Dynamic component UI configurations such as modal, confirm, and action sheets \
 The goal is to provide a foundation for data communication and progressive control between components.
 
@@ -8,20 +10,16 @@ This is a dedicated package for Vue. \
 - \>=0.3.x : with Vue3
 - ~~^0.2.x : with @vue/composition-api~~
 
-> __[Demo](https://molgga.github.io/jood-v-modal)__
-| __[Demo source code](https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/demo)__
-| __[Documentation](https://molgga.github.io/jood-v-modal/documents)__
-| __[Github](https://github.com/molgga/jood-v-modal)__
-| __[NPM](https://www.npmjs.com/package/@jood/v-modal)__
-\
-\
-![Vue](https://img.shields.io/static/v1.svg?label=&style=flat-square&logoColor=white&color=4fc08d&logo=vue.js&message=Vue)
-![Typescript](https://img.shields.io/static/v1.svg?label=&style=flat-square&logoColor=white&color=3178c6&logo=typescript&message=Typescript)
-![TRAVIS](https://travis-ci.org/molgga/jood-v-modal.svg?branch=master)
-![NPM version](https://img.shields.io/npm/v/@jood/v-modal.svg)
-![NPM license](https://img.shields.io/npm/l/@jood/v-modal)
-![NPM download](https://img.shields.io/npm/dt/@jood/v-modal)
-![NPM bundle size](https://img.shields.io/bundlephobia/min/@jood/v-modal)
+> **[Demo](https://molgga.github.io/jood-v-modal)** |
+> **[Demo source code](https://github.com/molgga/jood-v-modal/tree/master/packages/dev/src/components/demo)** |
+> **[Documentation](https://molgga.github.io/jood-v-modal/documents)** | **[Github](https://github.com/molgga/jood-v-modal)** |
+> **[NPM](https://www.npmjs.com/package/@jood/v-modal)** \
+> \
+> ![Vue](https://img.shields.io/static/v1.svg?label=&style=flat-square&logoColor=white&color=4fc08d&logo=vue.js&message=Vue)
+> ![Typescript](https://img.shields.io/static/v1.svg?label=&style=flat-square&logoColor=white&color=3178c6&logo=typescript&message=Typescript)
+> ![TRAVIS](https://travis-ci.org/molgga/jood-v-modal.svg?branch=master) ![NPM version](https://img.shields.io/npm/v/@jood/v-modal.svg)
+> ![NPM license](https://img.shields.io/npm/l/@jood/v-modal) ![NPM download](https://img.shields.io/npm/dt/@jood/v-modal)
+> ![NPM bundle size](https://img.shields.io/bundlephobia/min/@jood/v-modal)
 
 <table style="table-layout: fixed; overflow-wrap: break-word;">
   <tbody>

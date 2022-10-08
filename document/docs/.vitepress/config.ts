@@ -9,9 +9,7 @@ const sidebar = [
   },
   {
     text: 'test1',
-    items: [
-      { text: 'test-doc', link: '/test1/test-doc1' },
-    ],
+    items: [{ text: 'test-doc', link: '/test1/test-doc1' }],
   },
 ];
 
@@ -19,20 +17,16 @@ export default {
   vite: {
     resolve: {
       alias: {
-        '@jood/helpdesk-core': path.resolve(__dirname, '../../../packages/helpdesk-core/src'),
-        '@jood/helpdesk-date': path.resolve(__dirname, '../../../packages/helpdesk-date/src'),
-        '@jood/helpdesk-storage': path.resolve(__dirname, '../../../packages/helpdesk-storage/src'),
-        '@jood/helpdesk-string': path.resolve(__dirname, '../../../packages/helpdesk-string/src'),
-        '@jood/helpdesk-timer': path.resolve(__dirname, '../../../packages/helpdesk-timer/src'),
+        '@jood/v-modal': path.resolve(__dirname, '../../../packages/v-modal/src'),
       },
     },
   },
-  base: IS_BUILD ? '/jood-helpdesk' : '', // https://molgga.github.io/jood-helpdesk/,
+  base: IS_BUILD ? '/jood-v-modal' : '', // https://molgga.github.io/jood-v-modal/,
   themeConfig: {
-    siteTitle: 'jood-helpdesk',
+    siteTitle: 'jood-v-modal',
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Github', link: 'https://github.com/molgga/jood-helpdesk' },
+      { text: 'Github', link: 'https://github.com/molgga/jood-v-modal' },
     ],
     sidebar,
   },
