@@ -1,6 +1,6 @@
 {
   "name": "@jood/v-modal",
-  "version": "0.7.0-alpha.3",
+  "version": "0.7.0-alpha.4",
   "main": "dist/v-modal.umd.js",
   "module": "dist/v-modal.umd.js",
   "types": "dist/types/index.d.ts",
@@ -23,13 +23,7 @@
     "rxjs": ">=6.5.5"
   },
   "peerDependencies": {
-    "@vue/composition-api": "^1.0.0-rc.1",
-    "vue": "^2.0.0 || >=3.0.0"
-  },
-  "peerDependenciesMeta": {
-    "@vue/composition-api": {
-      "optional": true
-    }
+    "vue": "^2.7.0 || >=3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
