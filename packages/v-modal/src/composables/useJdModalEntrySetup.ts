@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { Ref, computed, shallowRef, reactive, provide } from 'vue-demi';
+import { Ref, computed, shallowRef, reactive, provide } from 'vue';
 import { ModalPopStateEvent } from '../modules/types';
 import { JD_MODAL_REF_TOKEN, ModalEventType, ModalEvent, ModalState, JdModalRef, useJdModalService, historyState } from '../modules';
 

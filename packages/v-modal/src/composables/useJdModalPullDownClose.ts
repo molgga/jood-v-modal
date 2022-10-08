@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { onMounted, onUnmounted, reactive, shallowRef, watch } from 'vue-demi';
+import { onMounted, onUnmounted, reactive, shallowRef, watch } from 'vue';
 import { useJdModalRef, useJdModalService } from '../';
 
 interface DragConfig {

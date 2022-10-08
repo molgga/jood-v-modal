@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted, watch } from 'vue-demi';
+import { defineComponent, onMounted, onUnmounted, watch } from 'vue';
 import { JdModalRef } from '../modules';
 import { useJdModalEntrySetup } from '../composables';
 interface IProps {
@@ -32,11 +32,20 @@ export default defineComponent({
     },
   },
   setup(props: IProps) {
-    const { mounted, unmounted, setIndex, onOverlayClick, onOverlayTouchMove, refModalContainer, refModalPanel, classes, styles } =
-      useJdModalEntrySetup({
-        index: props.index,
-        modalRef: props.modalRef,
-      });
+    const {
+      mounted,
+      unmounted,
+      setIndex,
+      onOverlayClick,
+      onOverlayTouchMove,
+      refModalContainer,
+      refModalPanel,
+      classes,
+      styles,
+    } = useJdModalEntrySetup({
+      index: props.index,
+      modalRef: props.modalRef,
+    });
     watch(
       () => props.index,
       (newIndex) => setIndex(newIndex)

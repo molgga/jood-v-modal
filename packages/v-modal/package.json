@@ -20,8 +20,7 @@
     "build:generate": "npm run build && npm run build:declare"
   },
   "dependencies": {
-    "rxjs": ">=6.5.5",
-    "vue-demi": "latest"
+    "rxjs": ">=6.5.5"
   },
   "peerDependencies": {
     "@vue/composition-api": "^1.0.0-rc.1",
