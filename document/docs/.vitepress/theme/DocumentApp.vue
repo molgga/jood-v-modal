@@ -1,0 +1,23 @@
+<template>
+  <DefaultThemeLayout />
+  <JdModalProvider />
+</template>
+
+<script lang="ts">
+import { JdModalProvider, provideJdModalService } from '@jood/v-modal';
+import { defineComponent } from 'vue';
+import DefaultTheme from 'vitepress/theme';
+
+export default defineComponent({
+  components: {
+    DefaultThemeLayout: DefaultTheme.Layout,
+    JdModalProvider,
+  },
+  setup() {
+    provideJdModalService();
+    return {};
+  },
+});
+</script>
+
+<style lang="scss" scoped></style>

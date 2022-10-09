@@ -1,17 +1,30 @@
 <template>
-  <div>Hello</div>
+  <div class="hello">
+    <button @click="onClick">onClick</button>
+  </div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from 'vue';
-// import { provideJdModalService } from '@jood/v-modal';
+import { StackBottom, useJdModalService } from '@jood/v-modal';
+import FooModal from './FooModal.vue';
 
 export default defineComponent({
+  components: {},
   setup() {
-    //
-    return {};
+    const modalService = useJdModalService();
+
+    const onClick = () => {
+      modalService.open({
+        overlayClose: true,
+        component: FooModal,
+        openStrategy: new StackBottom(),
+      });
+    };
+
+    return {
+      onClick,
+    };
   },
 });
 </script>
-
-<style lang="scss" scoped></style>
