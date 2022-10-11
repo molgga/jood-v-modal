@@ -20,4 +20,8 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+// :root:not(.dark) {
+//   --vp-code-block-bg: rgba(0, 0, 0, 0.04);
+// }
+</style>
