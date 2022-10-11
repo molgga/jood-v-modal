@@ -1,4 +1,5 @@
 import path from 'path';
+import { defineConfig } from 'vitepress';
 
 const IS_BUILD = process.env.BUILD;
 
@@ -6,7 +7,7 @@ const sidebar = [
   {
     text: 'Guide',
     items: [
-      { text: '소개', link: '/index' },
+      { text: '소개', link: '/pages/guide/intro.md' },
       { text: '시작하기', link: '/pages/guide/quick-started' },
       { text: '간단한 사용예', link: '/pages/guide/quick-use' },
     ],
@@ -51,7 +52,7 @@ const sidebar = [
   },
 ];
 
-export default {
+export default defineConfig({
   vite: {
     resolve: {
       alias: {
@@ -60,6 +61,8 @@ export default {
     },
   },
   base: IS_BUILD ? '/jood-v-modal' : '', // https://molgga.github.io/jood-v-modal/,
+  title: '@jood/v-modal',
+  description: 'Vue3 modal',
   themeConfig: {
     siteTitle: '@jood/v-modal',
     nav: [
@@ -68,4 +71,10 @@ export default {
     ],
     sidebar,
   },
-};
+  // markdown: {
+  //   theme: {
+  //     light: 'vitesse-light',
+  //     dark: 'vitesse-dark',
+  //   },
+  // },
+});
