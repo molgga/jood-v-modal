@@ -24,4 +24,8 @@ export default defineComponent({
 // :root:not(.dark) {
 //   --vp-code-block-bg: rgba(0, 0, 0, 0.04);
 // }
+.vp-doc h2 {
+  border-top: 0px;
+  margin-top: 10px;
+}
 </style>

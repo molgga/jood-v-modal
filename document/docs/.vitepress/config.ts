@@ -7,9 +7,8 @@ const sidebar = [
   {
     text: 'Guide',
     items: [
-      { text: '소개', link: '/pages/guide/intro.md' },
       { text: '시작하기', link: '/pages/guide/quick-started' },
-      { text: '간단한 사용예', link: '/pages/guide/quick-use' },
+      { text: '일반적인 사용법', link: '/pages/guide/general-usage' },
     ],
   },
   {
@@ -17,7 +16,7 @@ const sidebar = [
     items: [
       { text: '모달 열기', link: '/pages/practice/open' },
       { text: '모달과 데이터 주고 받기', link: '/pages/practice/data-pass' },
-      { text: '모달의 뒤로가기 처리', link: '/pages/practice/history-back' },
+      { text: '모달의 history.back', link: '/pages/practice/history-back' },
       {
         text: '모달 디자인',
         items: [
