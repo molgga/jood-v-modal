@@ -11,11 +11,11 @@ import { provideJdModalService, JdModalProvider } from '@jood/v-modal';
 
 export default defineComponent({
   components: {
-    JdModalProvider,
+    JdModalProvider
   },
   setup() {
     provideJdModalService(); // JdModalService 를 provide 합니다.
     return {};
-  },
+  }
 });
 </script>

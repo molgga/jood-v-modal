@@ -21,7 +21,7 @@ $ npm install @jood/v-modal
 <link rel="stylesheet" href="https://unpkg.com/@jood/v-modal/dist/v-modal.css" />
 ```
 
-***
+---
 
 ## 세팅하기
 
@@ -31,13 +31,13 @@ $ npm install @jood/v-modal
 
 - 기본 스타일을 위한 CSS 파일을 import 합니다.
 
-<<< @/pages/guide/quick-started/codes/main.ts{3}
+<<< @/pages/guide/codes/main.ts{3}
 
 ### App.vue
 
 - `provideJdModalService` 로 JdModalService 를 주입해 줍니다.
 - `JdModalProvider` 컴포넌트를 적절한 위치에 배치해 합니다.
 
-<<< @/pages/guide/quick-started/codes/App.vue{4,10,17}
+<<< @/pages/guide/codes/App.vue{4,10,17}
 
 기본적인 세팅이 끝났습니다. 이제 `@jood/v-modal` 을 사용할 수 있습니다. 😎

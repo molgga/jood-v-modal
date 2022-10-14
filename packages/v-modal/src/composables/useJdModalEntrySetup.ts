@@ -51,7 +51,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     overlayClose = false,
     floatingMode = false,
     disableShadow = false,
-    fullHeight = false,
+    fullHeight = false
   } = modalRef;
   const usedHistoryState = modalService.usedHistoryState;
   const usedBlockBodyScroll = modalService.usedBlockBodyScroll;
@@ -63,7 +63,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     opened: false,
     closing: false,
     index: setup.index || 0,
-    modalLength: modalService.modals.length,
+    modalLength: modalService.modals.length
   });
   let listener: Subscription;
   let animateTimer: any = null;
@@ -75,7 +75,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
       'is-closing': state.closing,
       'floating-mode': floatingMode,
       'full-height': fullHeight,
-      shadow: !disableShadow,
+      shadow: !disableShadow
     };
   });
 
@@ -197,7 +197,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     state.opened = true;
     modalRef.opener.next({
       type: ModalEventType.OPENED,
-      modalRef,
+      modalRef
     });
   };
 
@@ -212,7 +212,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     listener.add(observeOpener);
     modalRef.opener.next({
       type: ModalEventType.OPEN,
-      modalRef,
+      modalRef
     });
     animateTimer = setTimeout(mountedOpening, 15);
   };
@@ -231,6 +231,6 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     refModalContainer,
     refModalPanel,
     classes,
-    styles,
+    styles
   };
 };
