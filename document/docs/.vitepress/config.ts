@@ -15,6 +15,7 @@ const sidebar = [
     text: '예제로 배우는 사용방법',
     items: [
       { text: '모달 열기', link: '/pages/practice/open' },
+      { text: '모달 닫기', link: '/pages/practice/close' },
       { text: '모달과 데이터 주고 받기', link: '/pages/practice/data-pass' },
       { text: '모달의 history.back', link: '/pages/practice/history-back' },
       {
