@@ -5,7 +5,6 @@
     </div>
     <div class="body-panel">
       @jood/v-modal 입니다.
-      <br />예제를 만드는건 어렵군요.
       <div>
         <img src="./bangw.jpg" />
       </div>
