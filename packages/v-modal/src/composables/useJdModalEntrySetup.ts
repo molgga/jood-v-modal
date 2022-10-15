@@ -1,8 +1,6 @@
 import { Subscription } from 'rxjs';
 import { Ref, computed, shallowRef, reactive, provide } from 'vue';
 import { JD_MODAL_REF_TOKEN, ModalEventType, ModalEvent, ModalState, JdModalRef, useJdModalService } from '../modules';
-import { useHistoryStateMode } from './useHistoryStateMode';
-import { useHistoryHashMode } from './useHistoryHashMode';
 
 /**
  * @interface
@@ -54,9 +52,9 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     disableShadow = false,
     fullHeight = false
   } = modalRef;
-  const usedHistoryState = modalService.usedHistoryState;
+  const usedHistoryStrategy = modalService.usedHistoryStrategy;
   const usedBlockBodyScroll = modalService.usedBlockBodyScroll;
-  const historyMode = modalService.historyMode === 'hash' ? useHistoryHashMode({ modalRef }) : useHistoryStateMode({ modalRef });
+  const historyStrategy = modalService.historyStrategy.createEntry({ modalRef });
   const refModalContainer: Ref<HTMLElement | null> = shallowRef(null);
   const refModalPanel: Ref<HTMLElement | null> = shallowRef(null);
   const safeTiming = isNaN(duration) || duration < 0 ? 240 : duration;
@@ -130,8 +128,8 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
         refModalContainer.value.focus();
       }
     } else if (evt.type === ModalEventType.CLOSE) {
-      if (usedHistoryState) {
-        historyMode.pop();
+      if (usedHistoryStrategy) {
+        historyStrategy.pop();
       }
       state.opening = false;
       state.opened = false;
@@ -160,8 +158,8 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   };
 
   const mountedOpened = () => {
-    if (usedHistoryState) {
-      historyMode.touch();
+    if (usedHistoryStrategy) {
+      historyStrategy.touch();
     }
     state.opened = true;
     modalRef.opener.next({

@@ -1,7 +1,13 @@
-import { ModalPopStateEvent } from '../modules/types';
-import { JdModalRef, useJdModalService, historyState } from '..';
+import { useJdModalService, historyState } from '..';
+import { HistoryEntryConfig, HistoryEntryHook, HistoryStarategy, ModalPopStateEvent } from './types';
 
-export const useHistoryStateMode = ({ modalRef }: { modalRef: JdModalRef }) => {
+export class HistoryStateStrategy implements HistoryStarategy {
+  createEntry(config: HistoryEntryConfig) {
+    return useHistoryStateMode(config);
+  }
+}
+
+export const useHistoryStateMode = ({ modalRef }: HistoryEntryConfig): HistoryEntryHook => {
   const modalService = useJdModalService();
 
   let historyTouched = false;

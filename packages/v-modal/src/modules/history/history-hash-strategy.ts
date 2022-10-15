@@ -1,7 +1,13 @@
-import { ModalHashChangeEvent } from '../modules/types';
-import { JdModalRef, historyHash } from '..';
+import { historyHash } from '..';
+import { HistoryEntryConfig, HistoryEntryHook, HistoryEntrySetup, HistoryStarategy, ModalHashChangeEvent } from './types';
 
-export const useHistoryHashMode = ({ modalRef }: { modalRef: JdModalRef }) => {
+export class HistoryHashStrategy implements HistoryStarategy {
+  createEntry(config: HistoryEntryConfig) {
+    return useHistoryHashMode(config);
+  }
+}
+
+export const useHistoryHashMode: HistoryEntrySetup = ({ modalRef }: HistoryEntryConfig): HistoryEntryHook => {
   let hashTouched = false;
   const historyHashId = historyHash.createHashId(modalRef.id);
   const historyHashIdReg = historyHash.createHashIdReg(historyHashId);
