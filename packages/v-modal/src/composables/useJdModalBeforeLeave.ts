@@ -5,8 +5,6 @@ import { sleep } from '../utils';
 type CastFunction<T> = () => T | Promise<T>;
 
 /**
- * @deprecated
- * @TODO 지원 여부 고민중
  * @interface
  * @property setBeforeLeaveConfirm {Function} 컨펌이 호출 되어야 할 때 호출될 콜백 등록
  * @property setBeforeLeaveValidate {Function} 컨펌창 호출 여부를 결정하기 위한 콜백 등록
@@ -22,6 +20,8 @@ interface JdModalBeforeLeaveHook {
 
 /**
  * 모달의 beforeLeave 기능 훅.
+ * @deprecated
+ * @TODO 지원 여부 고민중
  * @export
  * @returns {JdModalBeforeLeaveHook}
  */
