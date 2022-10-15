@@ -1,11 +1,11 @@
 <template>
   <div class="example">
     <div class="actions">
-      <el-button type="primary" @click="onOpen()">StackNormal</el-button>
-      <el-button type="primary" @click="onOpen('StackTop')">StackTop</el-button>
-      <el-button type="primary" @click="onOpen('StackBottom')">StackBottom</el-button>
-      <el-button type="primary" @click="onOpen('StackLeft')">StackLeft</el-button>
-      <el-button type="primary" @click="onOpen('StackRight')">StackRight</el-button>
+      <el-button class="action" type="primary" @click="onOpen()">StackNormal</el-button>
+      <el-button class="action" type="primary" @click="onOpen('StackTop')">StackTop</el-button>
+      <el-button class="action" type="primary" @click="onOpen('StackBottom')">StackBottom</el-button>
+      <el-button class="action" type="primary" @click="onOpen('StackLeft')">StackLeft</el-button>
+      <el-button class="action" type="primary" @click="onOpen('StackRight')">StackRight</el-button>
     </div>
   </div>
 </template>
@@ -58,4 +58,13 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.example {
+  .actions {
+    margin: -3px;
+    .action {
+      margin: 3px;
+    }
+  }
+}
+</style>

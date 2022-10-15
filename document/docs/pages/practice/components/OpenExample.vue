@@ -83,13 +83,16 @@ export default defineComponent({
       padding: 4px 10px;
       border: 1px solid rgba(0, 0, 0, 0.1);
       &.dt {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         font-weight: 500;
         white-space: nowrap;
         background: rgba(0, 0, 0, 0.03);
       }
       &.dd {
         width: 90%;
+      }
+      .el-checkbox {
+        white-space: initial;
       }
       .info {
         margin: 10px 0;

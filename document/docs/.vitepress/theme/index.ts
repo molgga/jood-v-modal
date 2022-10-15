@@ -9,7 +9,6 @@ const theme: Theme = {
   NotFound: DefaultTheme.NotFound,
   Layout: DocumentApp,
   enhanceApp({ app, router }) {
-    console.log({ ...router });
     app.use(ElementPlus);
   }
 };
