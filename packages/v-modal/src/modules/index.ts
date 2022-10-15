@@ -44,5 +44,6 @@ export const useJdModalRef = <R, D = any, C = any>(): JdModalRef<R, D, C> => {
 
 export * from './types';
 export * from './open-strategy';
-export * as historyState from './history-state';
+export * as historyState from './history/history-state';
+export * as historyHash from './history/history-hash';
 export { JdModalService, JdModalRef };

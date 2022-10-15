@@ -10,6 +10,8 @@ interface DragConfig {
 }
 
 /**
+ * @deprecated
+ * @TODO 재작성중
  * 모달 아래로 드래그 해서 닫기
  */
 export const useJdModalPullDownClose = (config: DragConfig = {}) => {
@@ -29,7 +31,7 @@ export const useJdModalPullDownClose = (config: DragConfig = {}) => {
     checkMoveY: 0,
     moveIntercepCount: 0,
     moveY: 0,
-    holding: false,
+    holding: false
   });
 
   // document touchstart
@@ -192,6 +194,6 @@ export const useJdModalPullDownClose = (config: DragConfig = {}) => {
     refScrollContainer,
     init,
     destroy,
-    changeScrollContainer,
+    changeScrollContainer
   };
 };

@@ -1,19 +1,10 @@
 import { Subject, Observable, Subscription } from 'rxjs';
-import {
-  ModalEvent,
-  ModalEventType,
-  ModalData,
-  ModalConfig,
-  EntryComponentType,
-  ModalState
-} from './types';
+import { ModalEvent, ModalEventType, ModalData, ModalConfig, EntryComponentType, ModalState, HistoryMode } from './types';
 import { JdModalRef } from './JdModalRef';
 import { JdModalEntry } from '../components';
 
 /**
  * 모달 서비스
- * @export
- * @class JdModalService
  */
 export class JdModalService {
   protected serviceId = 0;
@@ -23,12 +14,13 @@ export class JdModalService {
   protected listener: Subscription = new Subscription();
   protected defaultEntryComponent: EntryComponentType = JdModalEntry;
   protected useHistoryState: boolean = true;
+  protected historyHandleMode: HistoryMode = 'hash';
   protected useBlockBodyScroll: boolean = false;
   protected blockBodyStyleBefore: any = null;
 
   /**
    * 초기화
-   * @param {ModalConfig} [config]
+   * @param config
    */
   init(config?: ModalConfig) {
     if (config && config.defaultEntryComponent) {
@@ -45,8 +37,6 @@ export class JdModalService {
 
   /**
    * 현재 열려있는 모달의 수
-   * @readonly
-   * @type {JdModalRef[]}
    */
   get modals(): JdModalRef[] {
     return Array.from(this.modalRefMap.values());
@@ -54,8 +44,6 @@ export class JdModalService {
 
   /**
    * 현재 열려 있는 모달이 있는지 여부
-   * @readonly
-   * @type {boolean}
    */
   get hasModal(): boolean {
     return !!this.modalRefMap.size;
@@ -63,17 +51,20 @@ export class JdModalService {
 
   /**
    * history state 사용여부
-   * @readonly
-   * @type {boolean}
    */
   get usedHistoryState(): boolean {
     return this.useHistoryState;
   }
 
   /**
+   * history state 사용여부
+   */
+  get historyMode(): HistoryMode {
+    return this.historyHandleMode;
+  }
+
+  /**
    * body 스크롤 block 여부
-   * @readonly
-   * @type {boolean}
    */
   get usedBlockBodyScroll(): boolean {
     return this.useBlockBodyScroll;
@@ -81,15 +72,23 @@ export class JdModalService {
 
   /**
    * 로케이션 hash 사용 여부 지정
-   * @param {boolean} is
+   * @param is
    */
   setUseHistoryState(is: boolean): void {
     this.useHistoryState = is;
   }
 
   /**
+   * 히스토리 모드 지정
+   * @param mode
+   */
+  setHistoryMode(mode: HistoryMode): void {
+    this.historyHandleMode = mode;
+  }
+
+  /**
    * 모달의 갯수에 따라 body 의 style(overflow) 속성을 변경하여 scroll 을 막는다.
-   * @param {boolean} is
+   * @param is
    */
   setUseBlockBodyScroll(is: boolean): void {
     this.useBlockBodyScroll = is;
@@ -97,8 +96,7 @@ export class JdModalService {
 
   /**
    * 모달을 감싸는(모달 기능, 모션 처리) 컴포넌트
-   * @param {EntryComponentType} entryComponent
-   * @returns {void}
+   * @param entryComponent
    */
   setDefaultEntryComponent(entryComponent: EntryComponentType): void {
     this.defaultEntryComponent = entryComponent;
@@ -106,7 +104,6 @@ export class JdModalService {
 
   /**
    * 모달을 감싸는 컴포넌트 리셋
-   * @returns {void}
    */
   resetDefaultEntryComponent(): void {
     this.defaultEntryComponent = JdModalEntry;
@@ -116,7 +113,6 @@ export class JdModalService {
    * 모달의 갯 수 변경시 알림용 옵저버.
    * modals 만으로 외부에서 모달의 갯수 변경 사항을 알 수 있으면
    * 필요가 없으나 반응(상태 갱신) 처리가 자동으로 되지 않아 수동으로 변경사항을 알리고 알 수 있도록 추가함.
-   * @returns {Observable<ModalState[]>}
    */
   observeModalState(): Observable<ModalState> {
     return this.modalsSubject.asObservable();
@@ -124,7 +120,6 @@ export class JdModalService {
 
   /**
    * 모달의 갯 수 변경사항 알림.
-   * @protected
    */
   protected dispatchChangeState(): void {
     this.modalsSubject.next(this.getState());
@@ -141,7 +136,6 @@ export class JdModalService {
 
   /**
    * 핸들러: 모달 상태 변경
-   * @protected
    */
   protected onChangeModalState(): void {
     if (this.useBlockBodyScroll) {
@@ -166,26 +160,24 @@ export class JdModalService {
   }
 
   /**
-   * id 로 modalRef 가져오기
-   * @param {number} id
-   * @returns {(JdModalRef | undefined)}
+   * modalId 로 modalRef 가져오기
+   * @param modalId
    */
-  getModalRef(id: number): JdModalRef | undefined {
-    return this.modalRefMap.get(id);
+  getModalRef(modalId: number): JdModalRef | undefined {
+    return this.modalRefMap.get(modalId);
   }
 
   /**
    * id 기준 중첩되어 열린 모달이 있는지 여부 확인
-   * @param {number} id
-   * @returns {boolean}
+   * @param modalId
    */
-  hasModalRefNext(id: number): boolean {
+  hasModalRefNext(modalId: number): boolean {
     let is = false;
     const mapList = Array.from(this.modalRefMap.keys());
     const len = mapList.length;
     for (let i = 0; i < len; i++) {
       const compareId = mapList[i];
-      if (id < compareId) {
+      if (modalId < compareId) {
         is = true;
         break;
       }
@@ -195,8 +187,7 @@ export class JdModalService {
 
   /**
    * id 기준 가장 상위 모달인지 여부 확인
-   * @param {number} id
-   * @returns {boolean}
+   * @param modalId
    */
   isModalRefTop(modalId: number): boolean {
     const arr = Array.from(this.modalRefMap.keys()).reverse();
@@ -208,8 +199,7 @@ export class JdModalService {
    * @template R 모달의 결과 타입
    * @template D 모달로 전달되는 데이터 타입
    * @template C 모달로 열리는 컴포넌트 타입
-   * @param {ModalData} data
-   * @returns {JdModalRef<R, D, C>}
+   * @param data
    */
   open<R, D = any, C = any>(data: ModalData<D, C>): JdModalRef<R, D, C> {
     if (this.modalUid === 0) this.modalUid = Date.now();
@@ -234,11 +224,10 @@ export class JdModalService {
 
   /**
    * 모달 닫기. (modalRef 의 id 로)
-   * @param {number} id open 시 전달되는 modalRef 의 id 값
-   * @returns {void}
+   * @param modalId open 시 전달되는 modalRef 의 id 값
    */
-  close(id: number): void {
-    const modalRef = this.getModalRef(id);
+  close(modalId: number): void {
+    const modalRef = this.getModalRef(modalId);
     if (modalRef) {
       modalRef.close();
     }
@@ -247,8 +236,7 @@ export class JdModalService {
 
   /**
    * 모달 닫기. (modalRef 로)
-   * @param {JdModalRef} modalRef 오픈시 전달되거나 inject 해서 꺼낼 수 있는 modalRef
-   * @returns {void}
+   * @param modalRef 오픈시 전달되거나 inject 해서 꺼낼 수 있는 modalRef
    */
   closeByRef(modalRef: JdModalRef): void {
     const ref = this.getModalRef(modalRef.id);
@@ -259,8 +247,7 @@ export class JdModalService {
   }
   /**
    * 모달 닫기. (modalId 로)
-   * @param {JdModalRef} modalRef 오픈시 전달되거나 inject 해서 꺼낼 수 있는 modalRef 의 id 값
-   * @returns {void}
+   * @param modalId 오픈시 전달되거나 inject 해서 꺼낼 수 있는 modalRef 의 id 값
    */
   closeById(modalId: number): void {
     const ref = this.getModalRef(modalId);
@@ -272,9 +259,8 @@ export class JdModalService {
 
   /**
    * index 로 위치 스왑 하기
-   * @param {number} from
-   * @param {number} to
-   * @returns {void}
+   * @param from
+   * @param to
    */
   swapOrder(from: number, to: number): void {
     const size = this.modalRefMap.size;
@@ -290,8 +276,7 @@ export class JdModalService {
 
   /**
    * modalRef 기준으로 가장 앞에 있는 모달과 위치 스왑하기
-   * @param {JdModalRef} modalRef
-   * @returns {void}
+   * @param modalRef
    */
   swapOrderTopByRef(modalRef: JdModalRef): void {
     let from = -1;
@@ -309,8 +294,7 @@ export class JdModalService {
 
   /**
    * modalId 기준으로 가장 앞에 있는 모달과 위치 스왑하기
-   * @param {number} modalId
-   * @returns {void}
+   * @param modalId
    */
   swapOrderTopById(modalId: number): void {
     const modalRef = this.modalRefMap.get(modalId);
@@ -320,8 +304,7 @@ export class JdModalService {
 
   /**
    * modalRef 기준 가장 앞으로 넣고 나머지 뒤로 밀어내기
-   * @param {JdModalRef} modalRef
-   * @returns {void}
+   * @param modalRef
    */
   pushOrder(modalRef: JdModalRef): void {
     const from = this.modalRefMap.get(modalRef.id);
@@ -346,8 +329,7 @@ export class JdModalService {
 
   /**
    * modalId 기준 가장 앞으로 넣고 나머지 뒤로 밀어내기
-   * @param {number} modalId
-   * @returns {void}
+   * @param modalId
    */
   pushOrderById(modalId: number): void {
     const modalRef = this.modalRefMap.get(modalId);
@@ -357,12 +339,11 @@ export class JdModalService {
 
   /**
    * 해당 서비스를 통해 열린 모달을 모두 닫기
-   * @param {boolean} [useClosing=true]
-   * @returns {void}
+   * @param useClosing
    */
   closeAll(useClosing: boolean = true): void {
     const modals = this.modals || [];
-    modals.forEach(modalRef => {
+    modals.forEach((modalRef) => {
       if (useClosing) {
         modalRef.close();
       } else {
@@ -374,13 +355,12 @@ export class JdModalService {
 
   /**
    * 파기
-   * @returns {void}
    */
   destroy(): void {
     try {
       this.listener.unsubscribe();
       const modals = this.modals || [];
-      modals.forEach(modalRef => {
+      modals.forEach((modalRef) => {
         modalRef.destroy();
       });
     } catch (err) {
