@@ -3,8 +3,6 @@ import { OpenStrategy } from './open-strategy';
 
 export type EntryComponentType = any;
 
-export type HistoryMode = 'state' | 'hash';
-
 /**
  * 모달 서비스 config
  * @export
@@ -22,25 +20,6 @@ export interface ModalConfig {
 export interface ModalState {
   modals: JdModalRef[];
 }
-
-export interface ModalPopEvent {
-  _preventModalClose?: boolean;
-}
-/**
- * 모달 window popstate 이벤트
- * @export
- * @interface ModalPopStateEvent
- * @extends {PopStateEvent}
- */
-export interface ModalPopStateEvent extends PopStateEvent, ModalPopEvent {}
-
-/**
- * 모달 window hash change 이벤트
- * @export
- * @interface ModalHashChangeEvent
- * @extends {HashChangeEvent}
- */
-export interface ModalHashChangeEvent extends HashChangeEvent, ModalPopEvent {}
 
 /**
  * 모달 옵션

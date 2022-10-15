@@ -1,4 +1,5 @@
-import { useJdModalRef, useJdModalService, ModalPopStateEvent, historyState } from '../modules';
+import { useJdModalRef, useJdModalService, historyState } from '../modules';
+import { ModalPopStateEvent } from '../modules/history';
 import { sleep } from '../utils';
 
 type CastFunction<T> = () => T | Promise<T>;
@@ -27,7 +28,7 @@ interface JdModalBeforeLeaveHook {
 export const useJdModalBeforeLeave = (): JdModalBeforeLeaveHook => {
   const modalService = useJdModalService();
   const modalRef = useJdModalRef();
-  const usedHistoryState = modalService.usedHistoryState;
+  const usedHistoryStrategy = modalService.usedHistoryStrategy;
   let holdBeforeLeave = false;
   let fnConfirm: CastFunction<boolean> = async () => Promise.resolve(true);
   let fnValidate: CastFunction<boolean> = async () => Promise.resolve(true);
@@ -55,7 +56,7 @@ export const useJdModalBeforeLeave = (): JdModalBeforeLeaveHook => {
     const { current: modalCurrentId } = historyState.getStateOfEvent(modalService.id, evt);
     const isTop = modalService.isModalRefTop(modalRef.id);
     // history state 사용하지 않음
-    if (!usedHistoryState) return;
+    if (!usedHistoryStrategy) return;
     if (!isTop) return;
     if (modalCurrentId === modalRef.id) return;
 

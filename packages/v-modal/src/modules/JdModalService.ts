@@ -1,7 +1,9 @@
 import { Subject, Observable, Subscription } from 'rxjs';
-import { ModalEvent, ModalEventType, ModalData, ModalConfig, EntryComponentType, ModalState, HistoryMode } from './types';
+import { ModalEvent, ModalEventType, ModalData, ModalConfig, EntryComponentType, ModalState } from './types';
 import { JdModalRef } from './JdModalRef';
 import { JdModalEntry } from '../components';
+import { HistoryStarategy } from './history/types';
+import { HistoryStateStrategy } from './history';
 
 /**
  * 모달 서비스
@@ -13,10 +15,10 @@ export class JdModalService {
   protected modalsSubject: Subject<ModalState> = new Subject();
   protected listener: Subscription = new Subscription();
   protected defaultEntryComponent: EntryComponentType = JdModalEntry;
-  protected useHistoryState: boolean = true;
-  protected historyHandleMode: HistoryMode = 'hash';
+  protected useHistoryStrategy: boolean = true;
   protected useBlockBodyScroll: boolean = false;
   protected blockBodyStyleBefore: any = null;
+  protected bindedHistoryStrategy: HistoryStarategy = new HistoryStateStrategy();
 
   /**
    * 초기화
@@ -52,15 +54,15 @@ export class JdModalService {
   /**
    * history state 사용여부
    */
-  get usedHistoryState(): boolean {
-    return this.useHistoryState;
+  get usedHistoryStrategy(): boolean {
+    return this.useHistoryStrategy;
   }
 
   /**
-   * history state 사용여부
+   * history strategy 사용여부
    */
-  get historyMode(): HistoryMode {
-    return this.historyHandleMode;
+  get historyStrategy(): HistoryStarategy {
+    return this.bindedHistoryStrategy;
   }
 
   /**
@@ -74,16 +76,16 @@ export class JdModalService {
    * 로케이션 hash 사용 여부 지정
    * @param is
    */
-  setUseHistoryState(is: boolean): void {
-    this.useHistoryState = is;
+  setUseHistoryStrategy(is: boolean): void {
+    this.useHistoryStrategy = is;
   }
 
   /**
    * 히스토리 모드 지정
-   * @param mode
+   * @param strategy
    */
-  setHistoryMode(mode: HistoryMode): void {
-    this.historyHandleMode = mode;
+  setHistoryStrategy(strategy: HistoryStarategy): void {
+    this.bindedHistoryStrategy = strategy;
   }
 
   /**
