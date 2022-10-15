@@ -6,7 +6,7 @@
 <script lang="ts">
 import DefaultTheme from 'vitepress/theme';
 import { defineComponent } from 'vue';
-import { JdModalProvider, provideJdModalService, HistoryHashStrategy } from '@jood/v-modal';
+import { JdModalProvider, provideJdModalService, HistoryHashStrategy, HistoryStateStrategy } from '@jood/v-modal';
 
 export default defineComponent({
   components: {
@@ -15,8 +15,9 @@ export default defineComponent({
   },
   setup() {
     const modalService = provideJdModalService();
-    modalService.setUseHistoryStrategy(true);
-    modalService.setHistoryStrategy(new HistoryHashStrategy());
+    // modalService.setUseHistoryStrategy(false);
+    // modalService.setHistoryStrategy(new HistoryHashStrategy());
+    // modalService.setHistoryStrategy(new HistoryStateStrategy());
     return {};
   }
 });
