@@ -6,6 +6,10 @@ interface JdModalScrollPreventHook {
   onPreventTouchMove(evt: TouchEvent): void;
 }
 
+/**
+ * @deprecated
+ * @TODO 재작성중
+ */
 export const useJdModalScrollPrevent = (): JdModalScrollPreventHook => {
   const onPreventTouchMove = (evt: TouchEvent) => {
     evt.preventDefault();

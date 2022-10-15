@@ -1,7 +1,8 @@
 import { Subscription } from 'rxjs';
 import { Ref, computed, shallowRef, reactive, provide } from 'vue';
-import { ModalPopStateEvent } from '../modules/types';
-import { JD_MODAL_REF_TOKEN, ModalEventType, ModalEvent, ModalState, JdModalRef, useJdModalService, historyState } from '../modules';
+import { JD_MODAL_REF_TOKEN, ModalEventType, ModalEvent, ModalState, JdModalRef, useJdModalService } from '../modules';
+import { useHistoryStateMode } from './useHistoryStateMode';
+import { useHistoryHashMode } from './useHistoryHashMode';
 
 /**
  * @interface
@@ -55,6 +56,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   } = modalRef;
   const usedHistoryState = modalService.usedHistoryState;
   const usedBlockBodyScroll = modalService.usedBlockBodyScroll;
+  const historyMode = modalService.historyMode === 'hash' ? useHistoryHashMode({ modalRef }) : useHistoryStateMode({ modalRef });
   const refModalContainer: Ref<HTMLElement | null> = shallowRef(null);
   const refModalPanel: Ref<HTMLElement | null> = shallowRef(null);
   const safeTiming = isNaN(duration) || duration < 0 ? 240 : duration;
@@ -129,7 +131,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
       }
     } else if (evt.type === ModalEventType.CLOSE) {
       if (usedHistoryState) {
-        popHistoryState();
+        historyMode.pop();
       }
       state.opening = false;
       state.opened = false;
@@ -152,39 +154,6 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     }
   };
 
-  let historyTouched = false;
-
-  const touchHistoryState = () => {
-    historyState.touch(modalService.id, modalRef.id);
-    historyTouched = true;
-    window.addEventListener('popstate', handleLocationHash);
-  };
-
-  const handleLocationHash = (evt: ModalPopStateEvent) => {
-    if (evt._preventModalClose) return;
-    if (!historyTouched) return;
-    const isTop = modalService.isModalRefTop(modalRef.id);
-    const { current } = historyState.getStateOfHistory(modalService.id);
-    if (!isTop) return;
-    let useClose = false;
-    if (current < modalRef.id) {
-      useClose = true;
-    }
-    if (useClose) {
-      modalRef.close();
-    }
-  };
-
-  const popHistoryState = () => {
-    window.removeEventListener('popstate', handleLocationHash);
-    if (!historyTouched) return;
-    const { current } = historyState.getStateOfHistory(modalService.id);
-    if (current === modalRef.id) {
-      // if (current === modalRef.id || (before === null && current === null)) {
-      history.back();
-    }
-  };
-
   const mountedOpening = () => {
     state.opening = true;
     animateTimer = setTimeout(mountedOpened, safeTiming);
@@ -192,7 +161,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
 
   const mountedOpened = () => {
     if (usedHistoryState) {
-      touchHistoryState();
+      historyMode.touch();
     }
     state.opened = true;
     modalRef.opener.next({

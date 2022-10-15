@@ -4,19 +4,21 @@
 </template>
 
 <script lang="ts">
-import { JdModalProvider, provideJdModalService } from '@jood/v-modal';
-import { defineComponent } from 'vue';
 import DefaultTheme from 'vitepress/theme';
+import { defineComponent } from 'vue';
+import { JdModalProvider, provideJdModalService } from '@jood/v-modal';
 
 export default defineComponent({
   components: {
     DefaultThemeLayout: DefaultTheme.Layout,
-    JdModalProvider,
+    JdModalProvider
   },
   setup() {
-    provideJdModalService();
+    const modalService = provideJdModalService();
+    modalService.setUseHistoryState(true);
+    modalService.setHistoryMode('hash');
     return {};
-  },
+  }
 });
 </script>
 
