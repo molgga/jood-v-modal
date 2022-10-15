@@ -1,6 +1,6 @@
 <template>
   <div class="example">
-    <el-button @click="onOpen">onOpen</el-button>
+    <el-button type="primary" @click="onOpen">onOpen</el-button>
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="example-modal">
-    <div>안녕하세요</div>
-    <el-button @click="onClose">onClose</el-button>
+    <div class="message">안녕하세요!</div>
+    <el-button type="danger" @click="onClose">onClose</el-button>
   </div>
 </template>
 
@@ -30,5 +30,11 @@ export default defineComponent({
   width: 90vw;
   max-width: 320px;
   box-sizing: border-box;
+  .message {
+    padding: 20px 5px 40px 5px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+  }
 }
 </style>
