@@ -52,8 +52,8 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   padding: 20px;
-  width: 90vw;
-  max-width: 320px;
+  width: 95vw;
+  max-width: 480px;
   box-sizing: border-box;
   .head-panel {
     .tit {
