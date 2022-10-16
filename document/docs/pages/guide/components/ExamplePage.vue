@@ -5,16 +5,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onUnmounted } from 'vue';
+import { defineComponent } from 'vue';
 import { useJdModalService } from '@jood/v-modal';
-import GeneralUsageModal from './GeneralUsageModal.vue';
+import ExampleModal from './ExampleModal.vue';
 
 export default defineComponent({
   setup() {
     const modalService = useJdModalService();
     const onOpen = () => {
       modalService.open({
-        component: GeneralUsageModal,
+        component: ExampleModal,
         overlayClose: true
       });
     };

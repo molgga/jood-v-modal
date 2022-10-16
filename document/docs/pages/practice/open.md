@@ -7,6 +7,26 @@ import OpenStrategyExample from './components/OpenStrategyExample.vue';
 
 JdModalService 를 통해 컴포넌트를 열 수 있습니다. `useJdModalService` 를 통해 서비스를 사용할 수 있습니다.
 
+```ts
+import { defineComponent } from 'vue';
+import { useJdModalService } from '@jood/v-modal';
+import MyModal from './MyModal.vue';
+
+export default defineComponent({
+  setup() {
+    const modalService = useJdModalService();
+    const onOpen = () => {
+      modalService.open({
+        component: MyModal
+      });
+    };
+    return {
+      onOpen
+    };
+  }
+});
+```
+
 ## 옵션
 
 간편하게 적용하거나 해제하기 위한 몇가지 옵션을 제공합니다.
