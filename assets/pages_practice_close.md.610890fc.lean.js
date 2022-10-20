@@ -1,0 +1,1 @@
+import{_ as s,o as a,c as n,a as l}from"./app.401e7614.js";const C=JSON.parse('{"title":"\uBAA8\uB2EC \uB2EB\uAE30","description":"","frontmatter":{},"headers":[],"relativePath":"pages/practice/close.md"}'),o={name:"pages/practice/close.md"},p=l("",11),e=[p];function c(t,r,y,D,d,A){return a(),n("div",null,e)}const i=s(o,[["render",c]]);export{C as __pageData,i as default};
