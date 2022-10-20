@@ -15,6 +15,7 @@
     "vue": "^3.2.37"
   },
   "dependencies": {
-    "element-plus": "^2.2.13"
+    "element-plus": "^2.2.13",
+    "rxjs": "^7.5.7"
   }
 }
