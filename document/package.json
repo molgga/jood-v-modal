@@ -10,8 +10,9 @@
     "docs:serve": "BUILD=1 vitepress serve ./docs --port 3000"
   },
   "devDependencies": {
+    "data-urls": "^3.0.2",
     "sass": "^1.54.4",
-    "vitepress": "^1.0.0-alpha.20",
+    "vitepress": "^1.0.0-alpha.25",
     "vue": "^3.2.37"
   },
   "dependencies": {
