@@ -31,13 +31,12 @@ import DataPassModal from './DataPassModal.vue';
 export default defineComponent({
   setup() {
     const modalService = useJdModalService();
-    modalService.setUseHistoryStrategy(false); // @TODO - vitepress 가 history.state 가 변경될때 page 를 load 해서 컴포넌트가 unmount 된다.
 
     const state = reactive({
       sendText: 'hello',
       resultText: ''
     });
-    let resultListener: Subscription = null;
+    let resultListener: Subscription | null = null;
 
     const onOpen = () => {
       disposeResultListener();
