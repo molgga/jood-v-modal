@@ -70,11 +70,12 @@ export default defineConfig({
       { text: 'Github', link: 'https://github.com/molgga/jood-v-modal' }
     ],
     sidebar
+  },
+  markdown: {
+    lineNumbers: true
+    //   theme: {
+    //     light: 'vitesse-light',
+    //     dark: 'vitesse-dark',
+    //   },
   }
-  // markdown: {
-  //   theme: {
-  //     light: 'vitesse-light',
-  //     dark: 'vitesse-dark',
-  //   },
-  // },
 });
