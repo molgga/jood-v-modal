@@ -1,0 +1,1 @@
+import{_ as s,o as a,c as n,a as l}from"./app.eebeef11.js";const F=JSON.parse('{"title":"\uBAA8\uB2EC \uB2EB\uAE30","description":"","frontmatter":{},"headers":[],"relativePath":"pages/practice/close.md"}'),p={name:"pages/practice/close.md"},e=l("",11),o=[e];function c(r,t,i,d,y,D){return a(),n("div",null,o)}const C=s(p,[["render",c]]);export{F as __pageData,C as default};

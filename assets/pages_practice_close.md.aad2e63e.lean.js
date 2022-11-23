@@ -1,1 +1,0 @@
-import{_ as s,o as a,c as n,a as l}from"./app.f6de3f85.js";const F=JSON.parse('{"title":"\uBAA8\uB2EC \uB2EB\uAE30","description":"","frontmatter":{},"headers":[],"relativePath":"pages/practice/close.md"}'),o={name:"pages/practice/close.md"},p=l("",11),e=[p];function c(t,r,y,D,d,i){return a(),n("div",null,e)}const C=s(o,[["render",c]]);export{F as __pageData,C as default};
