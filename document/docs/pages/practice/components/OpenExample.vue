@@ -1,7 +1,7 @@
 <template>
   <div class="example">
     <div class="actions">
-      <el-button type="primary" @click="onOpen">onOpen</el-button>
+      <el-button type="primary" @click="onOpen">open</el-button>
     </div>
     <div class="option-table">
       <div class="row">

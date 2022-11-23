@@ -1,7 +1,7 @@
 <template>
   <div class="example-modal">
     <div class="message">안녕하세요!</div>
-    <el-button type="danger" @click="onClose">onClose</el-button>
+    <el-button type="danger" @click="onClose">close</el-button>
   </div>
 </template>
 

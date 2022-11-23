@@ -3,12 +3,7 @@
     <div class="head-panel">
       <h2 class="tit">안녕하세요!</h2>
     </div>
-    <div class="body-panel">
-      @jood/v-modal 입니다.
-      <div>
-        <img src="./bangw.jpg" />
-      </div>
-    </div>
+    <div class="body-panel">@jood/v-modal 입니다.</div>
     <div class="foot-actions">
       <el-button type="primary" @click="onOpen">open</el-button>
       <div class="spacer"></div>
