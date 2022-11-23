@@ -14,9 +14,7 @@
             <el-input :value="state.resultText" readonly disabled />
           </dd>
         </dl>
-      </div>
-      <div class="bside">
-        <el-button type="primary" @click="onOpen">onOpen</el-button>
+        <el-button class="btn" type="primary" @click="onOpen">open</el-button>
       </div>
     </div>
   </div>
@@ -75,9 +73,13 @@ export default defineComponent({
     .aside {
       flex: 1;
       display: flex;
+      align-items: flex-end;
     }
     .bside {
       margin-left: 10px;
+    }
+    .btn {
+      margin-left: 5px;
     }
     .dl {
       display: block;

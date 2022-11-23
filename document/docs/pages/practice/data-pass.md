@@ -6,6 +6,10 @@ import DataPassExample from './components/DataPassExample.vue';
 
 <DataPassExample />
 
+:::tip
+예제의 sendText 는 모달로 전달되는 데이터, resultText 는 모달에서 전달하는 데이터 입니다.
+:::
+
 ## 모달을 여는 컴포넌트 코드
 
 ```vue

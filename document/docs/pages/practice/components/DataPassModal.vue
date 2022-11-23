@@ -3,14 +3,20 @@
     <div class="pass-box">
       <div class="puts">
         <dl class="dl">
+          <dt class="dt">sendText</dt>
+          <dd class="dd">
+            <el-input :value="state.sendText" readonly disabled />
+          </dd>
+        </dl>
+        <dl class="dl">
           <dt class="dt">resultText</dt>
           <dd class="dd">
-            <el-input v-model="state.text" />
+            <el-input v-model="state.resultText" />
           </dd>
         </dl>
       </div>
       <div class="actions">
-        <el-button class="action" type="danger" @click="onClose">onClose</el-button>
+        <el-button class="action" type="danger" @click="onClose">close</el-button>
       </div>
     </div>
   </div>
@@ -23,13 +29,15 @@ import { useJdModalRef } from '@jood/v-modal';
 export default defineComponent({
   setup() {
     const modalRef = useJdModalRef<{ resultText: string }, { sendText: string }>();
+    const sendText = modalRef.data?.sendText || '';
     const state = reactive({
-      text: modalRef.data?.sendText || ''
+      sendText: sendText,
+      resultText: 'send result!'
     });
 
     const onClose = () => {
       modalRef.close({
-        resultText: `result! ${state.text || ''}`
+        resultText: state.resultText
       });
     };
 
@@ -59,9 +67,9 @@ export default defineComponent({
     }
     .dl {
       display: block;
-      margin: 0 0 0 5px;
+      margin: 5px 0 0 0;
       &:first-child {
-        margin-left: 0;
+        margin-top: 0;
       }
     }
     .dt {
