@@ -10,19 +10,17 @@ interface DragConfig {
 }
 
 /**
- * @deprecated
- * @TODO 재작성중
  * 모달 아래로 드래그 해서 닫기
  */
 export const useJdModalPullDownClose = (config: DragConfig = {}) => {
-  const { initialize = true, dragResistance = 1.2, triggerReleaseGap = 800, triggerReleaseMinY = 100 } = config;
+  const { initialize = true, dragResistance = 1, triggerReleaseGap = 800, triggerReleaseMinY = 100 } = config;
   const triggerReleaseMultiple = triggerReleaseGap / 2;
+  const moveEventOptions = { passive: false };
   const modalService = useJdModalService();
   const modalRef = useJdModalRef();
   const refScrollContainer = shallowRef<HTMLElement>(null);
   let listener: Subscription;
   let panelElement: HTMLElement;
-  let requestFrame: any = null;
 
   const state = reactive({
     startX: 0,
@@ -31,7 +29,12 @@ export const useJdModalPullDownClose = (config: DragConfig = {}) => {
     checkMoveY: 0,
     moveIntercepCount: 0,
     moveY: 0,
-    holding: false
+    holding: false,
+    blindRequestFrame: null,
+    blindMomentum: 0.33,
+    blindTargetY: 0,
+    releaseRequestFrame: null,
+    releaseMomentum: 0.33
   });
 
   // document touchstart
@@ -42,10 +45,10 @@ export const useJdModalPullDownClose = (config: DragConfig = {}) => {
     if (refScrollContainer.value) {
       const { scrollTop } = refScrollContainer.value;
       if (scrollTop === 0) {
-        startFrame(clientX, clientY);
+        releaseFrameStart(clientX, clientY);
       }
     } else {
-      startFrame(clientX, clientY);
+      releaseFrameStart(clientX, clientY);
     }
   };
 
@@ -58,24 +61,32 @@ export const useJdModalPullDownClose = (config: DragConfig = {}) => {
     const moveY = clientY - startY;
     state.moveIntercepCount++;
     state.checkMoveY = moveY;
+    if (directionX < directionY && 0 < moveY) {
+      evt.preventDefault();
+    }
     if (3 < state.moveIntercepCount) {
       document.removeEventListener('touchmove', onTouchMoveIntercept);
       if (directionX < directionY && 0 < moveY) {
         state.startY = clientY;
-        document.addEventListener('touchmove', onTouchMove);
+        document.addEventListener('touchmove', onTouchMove, moveEventOptions);
       }
     }
   };
 
   // document touchmove
   const onTouchMove = (evt: TouchEvent) => {
+    evt.preventDefault();
     const { startY } = state;
     const moveY = evt.touches[0].clientY;
-    state.moveY = (moveY - startY) / dragResistance;
+    // state.moveY = (moveY - startY) / dragResistance;
+    state.blindTargetY = (moveY - startY) / dragResistance;
+    blindFrameClear();
+    blindFrameStart();
   };
 
   // document touchend
   const onTouchEnd = (evt: TouchEvent) => {
+    blindFrameClear();
     document.removeEventListener('touchmove', onTouchMoveIntercept);
     document.removeEventListener('touchmove', onTouchMove);
     const { startStamp, moveY } = state;
@@ -84,8 +95,8 @@ export const useJdModalPullDownClose = (config: DragConfig = {}) => {
     if (triggerReleaseMinY < momentum) {
       modalRef.close();
     } else {
-      clearFrame();
-      animateFrame();
+      releaseFrameClear();
+      releaseFrameAnimate();
     }
   };
 
@@ -96,40 +107,77 @@ export const useJdModalPullDownClose = (config: DragConfig = {}) => {
     }
   };
 
-  // 상태 업데이트
-  const onUpdate = () => {
-    const y = Math.max(0, state.moveY);
-    panelElement.style.transform = `translate3d(0, ${y}px, 0)`;
+  const updateMoveY = (moveY: number) => {
+    const y = Math.max(0, moveY);
+    const beforeY = state.moveY;
+    state.moveY = moveY;
+    if (beforeY !== 0 && beforeY !== y) {
+      panelElement.style.transform = `translate3d(0, ${y}px, 0)`;
+    }
   };
 
-  // 드래깅 시작
-  const startFrame = (startX: number, startY: number) => {
-    clearFrame();
+  /**
+   * 이동중 애니메이트 clear
+   */
+  const blindFrameClear = () => {
+    clearTimeout(state.blindRequestFrame);
+    cancelAnimationFrame(state.blindRequestFrame);
+  };
+
+  /**
+   * 이동중 애니메이트 start
+   */
+  const blindFrameStart = () => {
+    state.blindRequestFrame = requestAnimationFrame(blindFrameAnimate);
+  };
+
+  /**
+   * 이동중 애니메이트
+   */
+  const blindFrameAnimate = () => {
+    const { moveY, blindTargetY, blindMomentum } = state;
+    let y = moveY + (blindTargetY - moveY) * blindMomentum;
+    if (Math.abs(blindTargetY - y) < 0.05) {
+      y = blindTargetY;
+    } else {
+      state.blindRequestFrame = requestAnimationFrame(blindFrameAnimate);
+    }
+    updateMoveY(y);
+  };
+
+  /**
+   * 드래깅 시작
+   */
+  const releaseFrameStart = (startX: number, startY: number) => {
+    releaseFrameClear();
     state.startX = startX;
     state.startY = startY;
     state.startStamp = Date.now();
     state.moveIntercepCount = 0;
     document.removeEventListener('touchmove', onTouchMoveIntercept);
-    document.addEventListener('touchmove', onTouchMoveIntercept);
+    document.addEventListener('touchmove', onTouchMoveIntercept, moveEventOptions);
   };
 
-  // 드래깅 클리어
-  const clearFrame = () => {
-    cancelAnimationFrame(requestFrame);
+  /**
+   * 드래깅 클리어
+   */
+  const releaseFrameClear = () => {
+    cancelAnimationFrame(state.releaseRequestFrame);
     state.checkMoveY = 0;
   };
 
-  // 드래깅 릴리즈
-  const animateFrame = () => {
+  /**
+   * 드래깅 릴리즈 애니메이트
+   */
+  const releaseFrameAnimate = () => {
     const targetY = 0;
-    const momentum = 0.33;
-    const { moveY } = state;
-    const y = moveY + (targetY - moveY) * momentum;
-    state.moveY = y;
-    if (1 <= state.moveY) {
-      requestFrame = requestAnimationFrame(animateFrame);
+    const { moveY, releaseMomentum } = state;
+    const y = moveY + (targetY - moveY) * releaseMomentum;
+    updateMoveY(y);
+    if (1 <= moveY) {
+      state.releaseRequestFrame = requestAnimationFrame(releaseFrameAnimate);
     } else {
-      state.moveY = 0;
+      updateMoveY(0);
     }
   };
 
@@ -153,6 +201,8 @@ export const useJdModalPullDownClose = (config: DragConfig = {}) => {
 
   // 파기
   const destroy = () => {
+    blindFrameClear();
+    releaseFrameClear();
     document.removeEventListener('touchstart', onTouchStart);
     document.removeEventListener('touchmove', onTouchMoveIntercept);
     document.removeEventListener('touchmove', onTouchMove);
@@ -177,8 +227,6 @@ export const useJdModalPullDownClose = (config: DragConfig = {}) => {
     setScrollContainer(element);
     init();
   };
-
-  watch(() => state.moveY, onUpdate);
 
   onMounted(() => {
     if (initialize) {
