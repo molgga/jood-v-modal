@@ -1,9 +1,16 @@
 {
   "name": "@jood/v-modal",
-  "version": "0.7.0-alpha.5",
+  "version": "0.8.0",
   "main": "dist/v-modal.umd.js",
   "module": "dist/v-modal.umd.js",
   "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "main": "./dist/v-modal.umd.js",
+      "module": "./dist/v-modal.umd.js"
+    }
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"
