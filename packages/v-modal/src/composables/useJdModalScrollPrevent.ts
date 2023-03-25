@@ -7,8 +7,7 @@ interface JdModalScrollPreventHook {
 }
 
 /**
- * @deprecated
- * @TODO 재작성중
+ * 스크롤 이벤트 막기
  */
 export const useJdModalScrollPrevent = (): JdModalScrollPreventHook => {
   const onPreventTouchMove = (evt: TouchEvent) => {

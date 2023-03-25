@@ -1,11 +1,6 @@
 # @jood/v-modal
 
-...재작성중...
-
-Dynamic component UI configurations such as modal, confirm, and action sheets \
-The goal is to provide a foundation for data communication and progressive control between components.
-
-This is a dedicated package for Vue. \
+Vue3 모달
 
 - \>=0.3.x : with Vue3
 - ~~^0.2.x : with @vue/composition-api~~
