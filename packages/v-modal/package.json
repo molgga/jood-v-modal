@@ -1,14 +1,18 @@
 {
   "name": "@jood/v-modal",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "main": "dist/v-modal.umd.js",
   "module": "dist/v-modal.umd.js",
   "types": "dist/types/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "main": "./dist/v-modal.umd.js",
-      "module": "./dist/v-modal.umd.js"
+      "import": "./dist/v-modal.umd.js",
+      "require": "./dist/v-modal.umd.js"
+    },
+    "./dist/v-modal.css": {
+      "import": "./dist/v-modal.css",
+      "require": "./dist/v-modal.css"
     }
   },
   "publishConfig": {
