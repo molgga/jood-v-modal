@@ -1,5 +1,5 @@
-import { JdModalRef } from './JdModalRef';
-import { OpenStrategy } from './open-strategy';
+import type { JdModalRef } from './JdModalRef';
+import type { OpenStrategy } from './open-strategy';
 
 export type EntryComponentType = any;
 
@@ -59,7 +59,7 @@ export enum ModalEventType {
   OPEN,
   OPENED,
   CLOSE,
-  CLOSED
+  CLOSED,
 }
 
 /**
@@ -83,5 +83,5 @@ export enum ModalOpenStrategy {
   TOP_STACK,
   RIGHT_STACK,
   BOTTOM_STACK,
-  LEFT_STACK
+  LEFT_STACK,
 }

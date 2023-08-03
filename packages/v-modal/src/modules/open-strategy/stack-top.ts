@@ -4,9 +4,8 @@ export class StackTop implements OpenStrategy {
   shadow() {
     return {
       pivot: {
-        boxShadow:
-          '0 0 5px rgba(0, 0, 0, 0.02), 0 10px 10px 1px rgba(0, 0, 0, 0.04), 0 3px 3px rgba(0, 0, 0, 0.06)'
-      }
+        boxShadow: '0 0 5px rgba(0, 0, 0, 0.02), 0 10px 10px 1px rgba(0, 0, 0, 0.04), 0 3px 3px rgba(0, 0, 0, 0.06)',
+      },
     };
   }
 
@@ -15,20 +14,20 @@ export class StackTop implements OpenStrategy {
     return {
       modal: {
         justifyContent: 'center',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
       },
       pivot: {
         transition: `transform ${duration}ms cubic-bezier(0.4, 0, 0.2, 1), opacity ${timingOpacity}ms`,
         transform: 'translateY(-102%)',
-        borderRadius: '0 0 10px 10px'
-      }
+        borderRadius: '0 0 10px 10px',
+      },
     };
   }
 
   opening() {
     return {
       pivot: { transform: 'translateY(0%)' },
-      overlay: { opacity: 0.3 }
+      overlay: { opacity: 0.3 },
     };
   }
 
@@ -36,16 +35,16 @@ export class StackTop implements OpenStrategy {
     return [
       {
         pivot: { transform: 'scale(0.94, 0.94) translateY(6%)' },
-        overlay: { opacity: 0.05 }
+        overlay: { opacity: 0.05 },
       },
       {
         pivot: { transform: 'scale(0.97, 0.97) translateY(3%)' },
-        overlay: { opacity: 0.2 }
+        overlay: { opacity: 0.2 },
       },
       {
         pivot: { transform: 'translateY(0%)' },
-        overlay: { opacity: 0.3 }
-      }
+        overlay: { opacity: 0.3 },
+      },
     ];
   }
 
@@ -56,7 +55,7 @@ export class StackTop implements OpenStrategy {
   closing() {
     return {
       pivot: {},
-      overlay: { opacity: 0 }
+      overlay: { opacity: 0 },
     };
   }
 }

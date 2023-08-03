@@ -3,7 +3,7 @@
     <div class="overlay" :style="styles.overlay" @touchmove="onOverlayTouchMove" @click="onOverlayClick"></div>
     <div ref="refModalPanel" class="panel" :style="styles.panel">
       <div class="pivot" :style="styles.pivot">
-        <div class="content">
+        <div class="content" :style="styles.content">
           <component :is="modalRef.component"></component>
         </div>
       </div>
@@ -15,12 +15,8 @@
 import { defineComponent, onMounted, onUnmounted, watch } from 'vue';
 import { JdModalRef } from '../modules';
 import { useJdModalEntrySetup } from '../composables';
-interface IProps {
-  index: number;
-  modalRef: JdModalRef;
-}
+
 export default defineComponent({
-  name: 'JdModalEntry',
   props: {
     index: {
       type: Number,
@@ -31,21 +27,12 @@ export default defineComponent({
       default: null,
     },
   },
-  setup(props: IProps) {
-    const {
-      mounted,
-      unmounted,
-      setIndex,
-      onOverlayClick,
-      onOverlayTouchMove,
-      refModalContainer,
-      refModalPanel,
-      classes,
-      styles,
-    } = useJdModalEntrySetup({
-      index: props.index,
-      modalRef: props.modalRef,
-    });
+  setup(props) {
+    const { mounted, unmounted, setIndex, onOverlayClick, onOverlayTouchMove, refModalContainer, refModalPanel, classes, styles } =
+      useJdModalEntrySetup({
+        index: props.index,
+        modalRef: props.modalRef,
+      });
     watch(
       () => props.index,
       (newIndex) => setIndex(newIndex)
@@ -87,7 +74,7 @@ export default defineComponent({
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 1);
-    transition: opacity 240ms;
+    transition: opacity 100ms;
     opacity: 0;
   }
   > .panel {

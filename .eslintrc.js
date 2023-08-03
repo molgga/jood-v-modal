@@ -1,11 +1,11 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
   },
   extends: ['plugin:vue/essential', 'eslint:recommended', '@vue/typescript/recommended'],
   parserOptions: {
-    ecmaVersion: 2020
+    ecmaVersion: 2020,
   },
   rules: {
     '@typescript-eslint/interface-name-prefix': ['off'],
@@ -15,15 +15,16 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': ['off'],
     '@typescript-eslint/no-namespace': ['off'],
     '@typescript-eslint/ban-ts-ignore': ['off'],
-    '@typescript-eslint/no-inferrable-types': ['off']
+    '@typescript-eslint/no-inferrable-types': ['off'],
+    'vue/no-setup-props-destructure': ['off'],
   },
   ignorePatterns: ['**/*.spec.ts'],
   overrides: [
     {
       files: ['**/__tests__/*.{j,t}s?(x)', '**/tests/unit/**/*.spec.{j,t}s?(x)'],
       env: {
-        jest: true
-      }
-    }
-  ]
+        jest: true,
+      },
+    },
+  ],
 };

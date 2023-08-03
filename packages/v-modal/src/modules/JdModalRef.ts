@@ -1,6 +1,8 @@
 import { Observable, Subject } from 'rxjs';
-import { OpenStrategy, StackNormal } from './open-strategy';
-import { ModalEvent, ModalEventType, ModalData, EntryComponentType } from './types';
+import { StackNormal } from './open-strategy';
+import { ModalEventType } from './types';
+import type { OpenStrategy } from './open-strategy';
+import type { ModalEvent, ModalData, EntryComponentType } from './types';
 
 /**
  * 하나의 모달 (정보)
@@ -11,7 +13,7 @@ import { ModalEvent, ModalEventType, ModalData, EntryComponentType } from './typ
  * @template C 모달로 열리는 컴포넌트 타입
  */
 export class JdModalRef<R = any, D = any, C = any> {
-  protected modalId: number = -1;
+  protected modalId = -1;
   protected modalEntryComponent: EntryComponentType;
   protected modalData: D | null = null;
   protected modalResult: R | undefined;
@@ -27,6 +29,7 @@ export class JdModalRef<R = any, D = any, C = any> {
   protected closedSubject: Subject<R | undefined> = new Subject();
   protected attachedBeforeLeave = false;
   protected modalPanelElement!: HTMLElement;
+  protected isModalClose = false;
 
   constructor() {
     this.modalOpenStrategy = new StackNormal();
@@ -148,6 +151,10 @@ export class JdModalRef<R = any, D = any, C = any> {
     return this.attachedBeforeLeave;
   }
 
+  get isClose() {
+    return this.isModalClose;
+  }
+
   assignModalData(data: ModalData<D>) {
     this.setComponent(data.component);
     this.setOpenStrategy(data.openStrategy || new StackNormal());
@@ -225,13 +232,14 @@ export class JdModalRef<R = any, D = any, C = any> {
    * @param {R} [result] 모달이 닫힐 때 외부(보통은 모달을 열은 곳, observeClosed 를 통해) 전달 할 결과값
    */
   close(result?: R): void {
+    this.isModalClose = true;
     this.modalResult = result;
     if (this.attachedBeforeLeave) {
       history.back();
     } else {
       this.openerSubject.next({
         type: ModalEventType.CLOSE,
-        modalRef: this
+        modalRef: this,
       });
     }
   }
@@ -240,9 +248,10 @@ export class JdModalRef<R = any, D = any, C = any> {
    * 모달이 (애니메이션 등 처리 후) 완전히 닫힘.
    */
   closed(): void {
+    this.isModalClose = true;
     this.openerSubject.next({
       type: ModalEventType.CLOSED,
-      modalRef: this
+      modalRef: this,
     });
     this.closedSubject.next(this.modalResult);
   }

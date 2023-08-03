@@ -14,6 +14,6 @@ export const useJdModalScrollPrevent = (): JdModalScrollPreventHook => {
     evt.preventDefault();
   };
   return {
-    onPreventTouchMove
+    onPreventTouchMove,
   };
 };

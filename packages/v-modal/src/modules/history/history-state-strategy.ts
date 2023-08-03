@@ -45,6 +45,6 @@ export const useHistoryStateMode = ({ modalRef }: HistoryEntryConfig): HistoryEn
 
   return {
     touch,
-    pop
+    pop,
   };
 };
