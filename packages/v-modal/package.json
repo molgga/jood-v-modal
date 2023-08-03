@@ -65,7 +65,7 @@
     "sass-loader": "^8.0.2",
     "ts-jest": "^28.0.0",
     "tslib": "^2.1.0",
-    "typescript": "^4.8.4",
+    "typescript": "^5.0.4",
     "vue": "^3.0.0",
     "vue-template-compiler": "^2.6.11"
   },
