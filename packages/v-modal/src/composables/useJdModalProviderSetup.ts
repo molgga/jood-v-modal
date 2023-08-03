@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 import { computed, shallowReactive } from 'vue';
 import { useJdModalService, JdModalRef } from '../modules';
-import { ModalState } from '../modules/types';
+import type { ModalState } from '../modules/types';
 
 /**
  * @interface

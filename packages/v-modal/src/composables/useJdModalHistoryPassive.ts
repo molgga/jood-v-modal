@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs';
+import type { Subscription } from 'rxjs';
 import { onBeforeUnmount } from 'vue';
 import { useJdModalService } from '../modules';
 
@@ -149,6 +149,6 @@ export const useJdModalHistoryPassive = () => {
     openBefore,
     openAfter,
     replaceBefore,
-    replaceAfter
+    replaceAfter,
   };
 };

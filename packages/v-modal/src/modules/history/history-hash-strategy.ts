@@ -47,6 +47,6 @@ export const useHistoryHashMode: HistoryEntrySetup = ({ modalRef }: HistoryEntry
 
   return {
     touch,
-    pop
+    pop,
   };
 };

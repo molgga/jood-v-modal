@@ -2,8 +2,8 @@
   <div class="jd-modal-provider" :class="classes">
     <div class="appender">
       <component
-        v-for="(modalRef, index) in state.modals"
         :is="modalRef.entryComponent"
+        v-for="(modalRef, index) in state.modals"
         :key="modalRef.id"
         :index="index"
         :modalRef="modalRef"
@@ -15,6 +15,7 @@
 <script lang="ts">
 import { defineComponent, onUnmounted, onMounted } from 'vue';
 import { useJdModalProviderSetup } from '../composables';
+
 export default defineComponent({
   setup() {
     const { mounted, unmounted, classes, state } = useJdModalProviderSetup();

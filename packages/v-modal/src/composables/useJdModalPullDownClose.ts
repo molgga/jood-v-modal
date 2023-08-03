@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { onMounted, onUnmounted, reactive, shallowRef, watch } from 'vue';
+import { onMounted, onUnmounted, reactive, shallowRef } from 'vue';
 import { useJdModalRef, useJdModalService } from '../';
 
 interface DragConfig {
@@ -34,7 +34,7 @@ export const useJdModalPullDownClose = (config: DragConfig = {}) => {
     blindMomentum: 0.33,
     blindTargetY: 0,
     releaseRequestFrame: null,
-    releaseMomentum: 0.33
+    releaseMomentum: 0.33,
   });
 
   // document touchstart
@@ -85,7 +85,7 @@ export const useJdModalPullDownClose = (config: DragConfig = {}) => {
   };
 
   // document touchend
-  const onTouchEnd = (evt: TouchEvent) => {
+  const onTouchEnd = () => {
     blindFrameClear();
     document.removeEventListener('touchmove', onTouchMoveIntercept);
     document.removeEventListener('touchmove', onTouchMove);
@@ -242,6 +242,6 @@ export const useJdModalPullDownClose = (config: DragConfig = {}) => {
     refScrollContainer,
     init,
     destroy,
-    changeScrollContainer
+    changeScrollContainer,
   };
 };

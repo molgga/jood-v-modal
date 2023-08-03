@@ -87,6 +87,6 @@ export const useJdModalBeforeLeave = (): JdModalBeforeLeaveHook => {
     setBeforeLeaveConfirm,
     setBeforeLeaveValidate,
     attachBeforeLeave,
-    detachBeforeLeave
+    detachBeforeLeave,
   };
 };

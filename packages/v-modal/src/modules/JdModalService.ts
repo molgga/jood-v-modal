@@ -1,9 +1,11 @@
 import { Subject, Observable, Subscription } from 'rxjs';
-import { ModalEvent, ModalEventType, ModalData, ModalConfig, EntryComponentType, ModalState } from './types';
+import { ModalEventType } from './types';
 import { JdModalRef } from './JdModalRef';
 import { JdModalEntry } from '../components';
-import { HistoryStarategy } from './history/types';
 import { HistoryStateStrategy } from './history';
+import type { ModalEvent, ModalData, ModalConfig, EntryComponentType, ModalState } from './types';
+import type { HistoryStarategy } from './history/types';
+import { type OpenStrategy, StackNormal } from './open-strategy';
 
 /**
  * 모달 서비스
@@ -15,10 +17,11 @@ export class JdModalService {
   protected modalsSubject: Subject<ModalState> = new Subject();
   protected listener: Subscription = new Subscription();
   protected defaultEntryComponent: EntryComponentType = JdModalEntry;
-  protected useHistoryStrategy: boolean = true;
-  protected useBlockBodyScroll: boolean = false;
+  protected useHistoryStrategy = true;
+  protected useBlockBodyScroll = false;
   protected blockBodyStyleBefore: any = null;
   protected bindedHistoryStrategy: HistoryStarategy = new HistoryStateStrategy();
+  protected defaultOpenStrategy: OpenStrategy = new StackNormal();
 
   /**
    * 초기화
@@ -105,6 +108,13 @@ export class JdModalService {
   }
 
   /**
+   * 모달 기본 오픈 전략 지정
+   */
+  setDefaultOpenStrategy(openStrategy: OpenStrategy): void {
+    this.defaultOpenStrategy = openStrategy;
+  }
+
+  /**
    * 모달을 감싸는 컴포넌트 리셋
    */
   resetDefaultEntryComponent(): void {
@@ -132,7 +142,7 @@ export class JdModalService {
    */
   getState(): ModalState {
     return {
-      modals: this.modals
+      modals: this.modals,
     };
   }
 
@@ -209,7 +219,10 @@ export class JdModalService {
     const modalRef = new JdModalRef<R, D, C>();
     modalRef.setId(id);
     modalRef.setEntryComponent(data.entryComponent || this.defaultEntryComponent);
-    modalRef.assignModalData(data);
+    modalRef.assignModalData({
+      openStrategy: this.defaultOpenStrategy,
+      ...data,
+    });
     const subscription = modalRef.observeOpener().subscribe((evt: ModalEvent) => {
       if (evt.type === ModalEventType.CLOSED) {
         subscription.unsubscribe();
@@ -343,7 +356,7 @@ export class JdModalService {
    * 해당 서비스를 통해 열린 모달을 모두 닫기
    * @param useClosing
    */
-  closeAll(useClosing: boolean = true): void {
+  closeAll(useClosing = true): void {
     const modals = this.modals || [];
     modals.forEach((modalRef) => {
       if (useClosing) {

@@ -4,8 +4,8 @@ export function touch(currentServiceId: number, current: number) {
     jdModal: {
       serviceId: currentServiceId,
       before,
-      current
-    }
+      current,
+    },
   };
   history.pushState(state, '');
 }
@@ -32,5 +32,5 @@ export default {
   touch,
   getStateOfHistory,
   getStateOfEvent,
-  getStateOf
+  getStateOf,
 };
