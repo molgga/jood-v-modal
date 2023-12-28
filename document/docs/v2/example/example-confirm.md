@@ -10,7 +10,6 @@ import ExampleConfirm from './confirm/ExampleConfirm.vue';
 
 
 ::: code-group
-
 <<< @/v2/example/confirm/ExampleConfirm.vue [ExampleConfirm.vue]
 <<< @/v2/example/confirm/useConfirm.ts [useConfirm.ts]
 <<< @/v2/example/confirm/ConfirmBox.vue [ConfirmBox.vue]
