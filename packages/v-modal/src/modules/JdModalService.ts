@@ -17,8 +17,8 @@ export class JdModalService {
   protected modalsSubject: Subject<ModalState> = new Subject();
   protected listener: Subscription = new Subscription();
   protected defaultEntryComponent: EntryComponentType = JdModalEntry;
-  protected useHistoryStrategy = true;
-  protected useBlockBodyScroll = false;
+  protected useHistoryStrategy = false;
+  protected useBlockBodyScroll = true;
   protected blockBodyStyleBefore: any = null;
   protected bindedHistoryStrategy: HistoryStarategy = new HistoryStateStrategy();
   protected defaultOpenStrategy: OpenStrategy = new StackNormal();
@@ -76,7 +76,7 @@ export class JdModalService {
   }
 
   /**
-   * 로케이션 hash 사용 여부 지정
+   * 히스토리 모드 사용 여부
    * @param is
    */
   setUseHistoryStrategy(is: boolean): void {
@@ -239,6 +239,7 @@ export class JdModalService {
 
   /**
    * 모달 닫기. (modalRef 의 id 로)
+   * @deprecated closeById 를 이용하세요.
    * @param modalId open 시 전달되는 modalRef 의 id 값
    */
   close(modalId: number): void {
@@ -270,6 +271,22 @@ export class JdModalService {
       ref.close();
       this.dispatchChangeState();
     }
+  }
+
+  /**
+   * 해당 서비스를 통해 열린 모달을 모두 닫기
+   * @param useClosing
+   */
+  closeAll(useClosing = true): void {
+    const modals = this.modals || [];
+    modals.forEach((modalRef) => {
+      if (useClosing) {
+        modalRef.close();
+      } else {
+        modalRef.closed();
+      }
+    });
+    this.dispatchChangeState();
   }
 
   /**
@@ -350,22 +367,6 @@ export class JdModalService {
     const modalRef = this.modalRefMap.get(modalId);
     if (!modalRef) return;
     this.pushOrder(modalRef);
-  }
-
-  /**
-   * 해당 서비스를 통해 열린 모달을 모두 닫기
-   * @param useClosing
-   */
-  closeAll(useClosing = true): void {
-    const modals = this.modals || [];
-    modals.forEach((modalRef) => {
-      if (useClosing) {
-        modalRef.close();
-      } else {
-        modalRef.closed();
-      }
-    });
-    this.dispatchChangeState();
   }
 
   /**
