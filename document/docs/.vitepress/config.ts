@@ -18,6 +18,7 @@ const sidebar = [
       { text: '모달 닫기와 결과받기', link: '/v2/example/example-close' },
       { text: 'EntryComponent', link: '/v2/example/example-entry-component' },
       { text: 'OpenStrategy', link: '/v2/example/example-open-startegy' },
+      { text: '컨펌 만들기', link: '/v2/example/example-confirm' },
     ],
   },
   {
