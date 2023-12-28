@@ -156,7 +156,6 @@ export class JdModalService {
   }
 
   protected touchBlockBodyScroll() {
-    console.log('touchBlockBodyScroll');
     if (this.blockBodyStyleBefore === null) {
       this.blockBodyStyleBefore = document.body.style.overflow || '';
     }
