@@ -12,7 +12,7 @@ export class FullContentStrategy implements OpenStrategy {
     return {
       pivot: {
         width: '100vw',
-        height: '100vh',
+        height: '100dvh',
         transition: `transform ${duration}ms cubic-bezier(0.4, 0, 0.2, 1), opacity ${timingOpacity}ms`,
         transform: 'translateY(20px)',
         opacity: 0,
