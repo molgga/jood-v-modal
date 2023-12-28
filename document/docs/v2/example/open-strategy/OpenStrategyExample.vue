@@ -37,6 +37,7 @@ const onOpen = (exampleStrategy?: string) => {
   modalService.open({
     component: OpenModal,
     openStrategy: strategy,
+    overlayClose: true,
   });
 };
 </script>
