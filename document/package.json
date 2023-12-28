@@ -1,6 +1,7 @@
 {
   "name": "document",
   "version": "0.0.1",
+  "type": "module",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -12,7 +13,7 @@
   "devDependencies": {
     "data-urls": "^3.0.2",
     "sass": "^1.54.4",
-    "vitepress": "1.0.0-beta.7",
+    "vitepress": "1.0.0-rc.33",
     "vue": "^3.2.37"
   },
   "dependencies": {
