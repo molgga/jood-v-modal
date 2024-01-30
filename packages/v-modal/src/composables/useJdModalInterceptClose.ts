@@ -10,7 +10,7 @@ type ClosedCallback<R = any> = (result?: R) => void;
 export const useJdModalInterceptClose = <R = any>() => {
   let interceptModalRef: JdModalRef = null;
   let closeListener: Subscription = null;
-  let fnClosed: ClosedCallback<R> = (result?: R) => {};
+  let fnClosed: ClosedCallback<R> = () => {};
 
   const handleClosed = (result?: R) => {
     fnClosed(result);
