@@ -19,6 +19,7 @@ const sidebar = [
       { text: 'EntryComponent', link: '/v2/example/example-entry-component' },
       { text: 'OpenStrategy', link: '/v2/example/example-open-startegy' },
       { text: '컨펌 만들기', link: '/v2/example/example-confirm' },
+      { text: '액션시트 만들기', link: '/v2/example/example-action-sheet' },
       {
         text: 'composables',
         items: [
