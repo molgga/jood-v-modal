@@ -15,9 +15,9 @@ import type { ModalEvent, ModalData, EntryComponentType } from './types';
 export class JdModalRef<R = any, D = any, C = any> {
   protected modalId = -1;
   protected modalEntryComponent: EntryComponentType;
-  protected modalData: D | null = null;
-  protected modalResult: R | undefined;
-  protected modalComponent: C | null = null;
+  protected modalData: D = null;
+  protected modalResult: R;
+  protected modalComponent: C = null;
   protected modalPanelStyle: any;
   protected modalOpenStrategy: OpenStrategy;
   protected modalTransitionDuration = 240;
@@ -26,7 +26,7 @@ export class JdModalRef<R = any, D = any, C = any> {
   protected modalDisableShadow = false;
   protected modalFullHeight = false;
   protected openerSubject: Subject<ModalEvent> = new Subject();
-  protected closedSubject: Subject<R | undefined> = new Subject();
+  protected closedSubject: Subject<R> = new Subject();
   protected attachedBeforeLeave = false;
   protected modalPanelElement!: HTMLElement;
   protected isModalClose = false;
@@ -46,9 +46,9 @@ export class JdModalRef<R = any, D = any, C = any> {
 
   /**
    * @readonly
-   * @type {(D | null)}
+   * @type {(D)}
    */
-  get data(): D | null {
+  get data(): D {
     return this.modalData;
   }
 
@@ -61,9 +61,9 @@ export class JdModalRef<R = any, D = any, C = any> {
   /**
    * 모달로 열리는 컴포넌트
    * @readonly
-   * @type {(C | null)}
+   * @type {(C)}
    */
-  get component(): C | null {
+  get component(): C {
     return this.modalComponent;
   }
 
@@ -175,7 +175,7 @@ export class JdModalRef<R = any, D = any, C = any> {
     this.modalId = id;
   }
 
-  setData(data: D | undefined): void {
+  setData(data: D): void {
     this.modalData = data || null;
   }
 
@@ -269,7 +269,7 @@ export class JdModalRef<R = any, D = any, C = any> {
    * 보통은 모달에서 전달하는 값을 받아야 하는 경우 사용
    * @returns {Observable<R>}
    */
-  observeClosed(): Observable<R | undefined> {
+  observeClosed(): Observable<R> {
     return this.closedSubject.asObservable();
   }
 

@@ -174,7 +174,7 @@ export class JdModalService {
    * modalId 로 modalRef 가져오기
    * @param modalId
    */
-  getModalRef(modalId: number): JdModalRef | undefined {
+  getModalRef(modalId: number): JdModalRef {
     return this.modalRefMap.get(modalId);
   }
 
