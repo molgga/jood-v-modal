@@ -11,7 +11,8 @@ import { onBeforeMount } from 'vue';
 const modalService = provideJdModalService();
 
 onBeforeMount(() => {
-  modalService.setUseHistoryStrategy(false);
+  // modalService.setUseHistoryStrategy(false);
+  modalService.setUseHistoryStrategy(true);
   modalService.setUseBlockBodyScroll(true);
   modalService.init();
 });
