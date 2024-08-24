@@ -6,3 +6,4 @@ export * from './useJdModalBeforeLeave';
 export * from './useJdModalScrollPrevent';
 export * from './useJdModalPullDownClose';
 export * from './useJdModalBeforeLeave';
+export * from './useJdModalFocusTrap';

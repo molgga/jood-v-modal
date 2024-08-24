@@ -25,10 +25,12 @@ export class JdModalRef<R = any, D = any, C = any> {
   protected modalOverlayClose = false;
   protected modalDisableShadow = false;
   protected modalFullHeight = false;
+  protected modalPanelElement!: HTMLElement;
+  protected modalOpenedActiveElement: Element;
+  protected modalUsedFocusTrap: boolean = true;
   protected openerSubject: Subject<ModalEvent> = new Subject();
   protected closedSubject: Subject<R> = new Subject();
   protected attachedBeforeLeave = false;
-  protected modalPanelElement!: HTMLElement;
   protected isModalClose = false;
 
   constructor() {
@@ -139,6 +141,20 @@ export class JdModalRef<R = any, D = any, C = any> {
   }
 
   /**
+   * 모달을 열 때 포커스가 있던 엘리먼트
+   */
+  get openedActiveElement(): Element {
+    return this.modalOpenedActiveElement;
+  }
+
+  /**
+   * 포커스 트랩 사용여부
+   */
+  get usedFocusTrap(): boolean {
+    return this.modalUsedFocusTrap;
+  }
+
+  /**
    * 모달 오픈 상태 알리미
    * @readonly
    * @type {Subject<ModalEvent>}
@@ -169,6 +185,8 @@ export class JdModalRef<R = any, D = any, C = any> {
     this.setDuration(data.duration || 240);
     this.setData(data.data);
     this.setPanelStyle(data.panelStyle);
+    this.setOpenedActiveElement(data.openedActiveElement);
+    this.setUsedFocusTrap(data.usedFocusTrap === false ? false : true);
   }
 
   setId(id: number): void {
@@ -217,6 +235,14 @@ export class JdModalRef<R = any, D = any, C = any> {
 
   setPanelElement(element: HTMLElement) {
     this.modalPanelElement = element;
+  }
+
+  setOpenedActiveElement(element: Element) {
+    this.modalOpenedActiveElement = element;
+  }
+
+  setUsedFocusTrap(is: boolean) {
+    this.modalUsedFocusTrap = is;
   }
 
   attachBeforeLeave() {

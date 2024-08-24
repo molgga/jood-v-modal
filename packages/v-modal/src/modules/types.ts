@@ -63,6 +63,14 @@ export interface ModalData<D = any, C = any> {
    * 모달 패널 css 스타일
    */
   panelStyle?: any;
+  /**
+   * 오픈시 포커스 엘리먼트
+   */
+  openedActiveElement?: HTMLElement | Element;
+  /**
+   * 포커스 트랩 사용여부
+   */
+  usedFocusTrap?: boolean;
 }
 
 /**
