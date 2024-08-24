@@ -3,6 +3,7 @@ import { computed, shallowRef, reactive, provide } from 'vue';
 import { JD_MODAL_REF_TOKEN, ModalEventType, JdModalRef, useJdModalService } from '../modules';
 import type { Ref } from 'vue';
 import type { ModalEvent, ModalState } from '../modules';
+import { createFocusTrap } from './useJdModalFocusTrap';
 
 /**
  * @interface
@@ -45,6 +46,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   const { modalRef } = setup;
   provide(JD_MODAL_REF_TOKEN, modalRef);
   const modalService = useJdModalService();
+  const focusTrap = createFocusTrap();
   const {
     openStrategy,
     duration,
@@ -184,11 +186,17 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
       modalRef,
     });
     animateTimer = setTimeout(mountedOpening, 15);
+
+    if (modalRef.usedFocusTrap && modalRef.panelElement) {
+      focusTrap.setWrapperElement(modalRef.panelElement);
+      focusTrap.init();
+    }
   };
 
   const unmounted = () => {
     clearTimeout(animateTimer);
     listener.unsubscribe();
+    focusTrap.dispose();
   };
 
   return {

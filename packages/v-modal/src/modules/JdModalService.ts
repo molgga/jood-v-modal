@@ -1,4 +1,5 @@
 import { Subject, Observable, Subscription } from 'rxjs';
+import { nextTick } from 'vue';
 import { ModalEventType } from './types';
 import { JdModalRef } from './JdModalRef';
 import { JdModalEntry } from '../components';
@@ -220,14 +221,21 @@ export class JdModalService {
     modalRef.setEntryComponent(data.entryComponent || this.defaultEntryComponent);
     modalRef.assignModalData({
       openStrategy: this.defaultOpenStrategy,
+      openedActiveElement: data.openedActiveElement || document.activeElement,
       ...data,
     });
     const subscription = modalRef.observeOpener().subscribe((evt: ModalEvent) => {
       if (evt.type === ModalEventType.CLOSED) {
+        const closedModalRef = evt.modalRef;
         subscription.unsubscribe();
         this.listener.remove(subscription);
-        this.modalRefMap.delete(evt.modalRef.id);
+        this.modalRefMap.delete(closedModalRef.id);
         this.dispatchChangeState();
+
+        // 해당 모달 열었을 때 포커스로 잡혀있던 엘리먼트로 포커스 해주기
+        if (closedModalRef.openedActiveElement) {
+          (closedModalRef.openedActiveElement as HTMLElement).focus?.();
+        }
       }
     });
     this.listener.add(subscription);

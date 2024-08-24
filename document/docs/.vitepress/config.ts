@@ -26,6 +26,7 @@ const sidebar = [
           { text: 'useJdModalInterceptClose', link: '/v2/example/example-use-intercept-close' },
           { text: 'useJdModalPullDownClose', link: '/v2/example/example-use-pull-down-close' },
           { text: 'useJdModalBeforeLeave', link: '/v2/example/example-use-before-leave' },
+          { text: 'useJdModalFocusTrap', link: '/v2/example/example-use-focus-trap' },
         ],
       },
     ],
