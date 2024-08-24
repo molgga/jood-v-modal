@@ -10,13 +10,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
 import { useJdModalService, useJdModalInterceptClose } from '@jood/v-modal';
 import OpenModal from './OpenModal.vue';
 
-const resultPrint = ref<{ dt: string; count: number }[]>([]);
 const modalService = useJdModalService();
 const interceptClose = useJdModalInterceptClose<{ count: number }>();
+const resultPrint = ref<{ dt: string; count: number }[]>([]);
 
 const onOpen = () => {
   const modalRef = modalService.open({
@@ -31,6 +31,15 @@ interceptClose.onClosed((result) => {
   if (result && !isNaN(result.count)) {
     resultPrint.value.push({ dt: new Date().toLocaleString(), count: result.count });
   }
+});
+
+onBeforeMount(() => {
+  modalService.setUseHistoryStrategy(false);
+});
+
+onBeforeUnmount(() => {
+  modalService.setUseHistoryStrategy(true);
+  modalService.closeAll();
 });
 </script>
 
