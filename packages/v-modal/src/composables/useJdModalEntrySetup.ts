@@ -54,6 +54,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
     overlayClose = false,
     floatingMode = false,
     disableShadow = false,
+    disableInitAutofocus = false,
     fullHeight = false,
   } = modalRef;
   const usedHistoryStrategy = modalService.usedHistoryStrategy;
@@ -128,7 +129,7 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
 
   const onChangeOpener = (evt: ModalEvent) => {
     if (evt.type === ModalEventType.OPENED) {
-      if (refModalContainer.value) {
+      if (refModalContainer.value && !disableInitAutofocus) {
         refModalContainer.value.focus();
       }
     } else if (evt.type === ModalEventType.CLOSE) {
