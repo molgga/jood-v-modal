@@ -52,6 +52,10 @@ export interface ModalData<D = any, C = any> {
    */
   disableShadow?: boolean;
   /**
+   * 초기 마운트시 모달 컴포넌트로 focus 시키는것 사용 안함
+   */
+  disableInitAutofocus?: boolean;
+  /**
    * 감싸는 모달 entry 의 height 100% 지정 강제 여부
    */
   fullHeight?: boolean;

@@ -24,6 +24,7 @@ export class JdModalRef<R = any, D = any, C = any> {
   protected modalFloatingOpenMode = false;
   protected modalOverlayClose = false;
   protected modalDisableShadow = false;
+  protected modalDisableInitAutofocus = false;
   protected modalFullHeight = false;
   protected modalPanelElement!: HTMLElement;
   protected modalOpenedActiveElement: Element;
@@ -123,6 +124,15 @@ export class JdModalRef<R = any, D = any, C = any> {
   }
 
   /**
+   * 모달 마운트시 자동 포커스 사용 여부
+   * @readonly
+   * @type {boolean}
+   */
+  get disableInitAutofocus(): boolean {
+    return this.modalDisableInitAutofocus;
+  }
+
+  /**
    * 모달 height 100% 사용 여부
    * @readonly
    * @type {boolean}
@@ -182,6 +192,7 @@ export class JdModalRef<R = any, D = any, C = any> {
     this.setFloatingModel(data.floatingMode || false);
     this.setFullHeight(data.fullHeight || false);
     this.setDisableShadow(!!data.disableShadow);
+    this.setDisableInitAutofocus(!!data.disableInitAutofocus);
     this.setDuration(data.duration || 240);
     this.setData(data.data);
     this.setPanelStyle(data.panelStyle);
@@ -227,6 +238,10 @@ export class JdModalRef<R = any, D = any, C = any> {
 
   setDisableShadow(is: boolean): void {
     this.modalDisableShadow = !!is;
+  }
+
+  setDisableInitAutofocus(is: boolean): void {
+    this.modalDisableInitAutofocus = !!is;
   }
 
   setFullHeight(is: boolean): void {
