@@ -125,6 +125,17 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
   const onChangeModalState = (modalState: ModalState) => {
     const { modals } = modalState;
     state.modalLength = modals.length;
+
+    // 중첩으로 열리거나 닫힐 때 포커스 트랩 처리
+    const isTop = modalService.isModalRefTop(modalRef.id);
+    if (modalRef.usedFocusTrap) {
+      if (isTop) {
+        focusTrap.dispose();
+        focusTrap.init();
+      } else {
+        focusTrap.dispose();
+      }
+    }
   };
 
   const onChangeOpener = (evt: ModalEvent) => {
