@@ -1,7 +1,7 @@
 import { onBeforeUnmount } from 'vue';
 import { Subscription } from 'rxjs';
 import { JdModalRef } from '../modules/JdModalRef';
-import { ModalEvent } from '@/modules';
+import { ModalEvent } from '../modules/types';
 
 type ClosedCallback<R = any> = (result?: R) => void;
 type OpenerCallback = (evt?: ModalEvent) => void;
