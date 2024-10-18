@@ -1,4 +1,4 @@
-# Vue3 modal UI 😎
+# Vue3 modal
 
 Vue 기반 프로젝트의 모달 UI 기능을 제공합니다.
 
