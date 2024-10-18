@@ -20,12 +20,10 @@
         <img src="https://user-images.githubusercontent.com/2731262/90951214-c2569100-e493-11ea-8503-ea700f5c48fb.gif" alt="@jood/v-modal demo 3" style="max-width: 100%;" />
       </td>
       <td>
-        <img src="
-        https://github.com/user-attachments/assets/17b52180-fe54-465c-b319-9741f1bfd58e" alt="@jood/v-modal demo 4" style="max-width: 100%;" />
+        <img src="https://github.com/user-attachments/assets/17b52180-fe54-465c-b319-9741f1bfd58e" alt="@jood/v-modal demo 4" style="max-width: 100%;" />
       </td>
       <td>
-        <img src="
-        https://github.com/user-attachments/assets/62c3c441-0f31-4495-889c-a9f4eadd5aba" alt="@jood/v-modal demo 5" style="max-width: 100%;" />
+        <img src="https://github.com/user-attachments/assets/62c3c441-0f31-4495-889c-a9f4eadd5aba" alt="@jood/v-modal demo 5" style="max-width: 100%;" />
       </td>
     </tr>
   </tbody>
