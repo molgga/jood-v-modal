@@ -4,7 +4,7 @@
 > **[Github](https://github.com/molgga/jood-v-modal)** 
 > \
 > \
-> ![Vue](https://img.shields.io/static/v1.svg?label=&style=flat-square&logoColor=white&color=4fc08d&logo=vue.js&message=Vue) > ![Typescript](https://img.shields.io/static/v1.svg?label=&style=flat-square&logoColor=white&color=3178c6&logo=typescript&message=Typescript) > ![NPM license](https://img.shields.io/npm/l/@jood/v-modal) > ![NPM download](https://img.shields.io/npm/dt/@jood/v-modal) > ![NPM bundle size](https://img.shields.io/bundlephobia/min/@jood/v-modal)
+> ![Vue](https://img.shields.io/static/v1.svg?label=&style=flat-square&logoColor=white&color=4fc08d&logo=vue.js&message=Vue) ![Typescript](https://img.shields.io/static/v1.svg?label=&style=flat-square&logoColor=white&color=3178c6&logo=typescript&message=Typescript) ![NPM license](https://img.shields.io/npm/l/@jood/v-modal)  ![NPM download](https://img.shields.io/npm/dt/@jood/v-modal)  ![NPM bundle size](https://img.shields.io/bundlephobia/min/@jood/v-modal)
 
 
 <table style="table-layout: fixed; overflow-wrap: break-word;">
