@@ -29,6 +29,9 @@ interface Config {
  *  - async 는 지원하지 않는다.
  *  - true 시 컨펌 확인 과정을 진행한다.
  * - 커스텀 컨펌창은 더이상 지원하지 않고, 기본 window.confirm 을 사용한다.
+ * - historyStrategy 사용 여부에 처리가 다르다.
+ *  - true 인 경우 해당 훅에서 history 이벤트 핸들러에서 confirm 체크를 한다.
+ *  - false 인 경우 modalRef 에서 close 전처리로 confirm 체크를 한다.
  *
  * @export
  * @returns {JdModalBeforeLeaveHook}
@@ -99,9 +102,11 @@ export const useJdModalBeforeLeave = (config?: Config): JdModalBeforeLeaveHook =
     window.addEventListener('beforeunload', onBeforeUnloadBrowser);
     window.addEventListener('popstate', onBeforeUnloadModal);
     const usedHistoryStrategy = modalService.usedHistoryStrategy;
-    if (usedHistoryStrategy) {
-      modalRef.attachBeforeLeave();
-    }
+    modalRef.attachBeforeLeave({
+      enabledHistoryStrategy: usedHistoryStrategy,
+      beforeLeaveMessage: leaveMessage,
+      onPrevent: () => fnPrevent?.(),
+    });
   };
 
   const detachBeforeLeave = () => {
