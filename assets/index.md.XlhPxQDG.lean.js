@@ -1,1 +1,0 @@
-import{_ as e,g as a,f as l,aO as i}from"./chunks/framework.CmXKAP2h.js";const p=JSON.parse('{"title":"Vue3 modal","description":"","frontmatter":{},"headers":[],"relativePath":"index.md","filePath":"index.md"}'),o={name:"index.md"},t=i("",5),d=[t];function r(c,n,_,s,u,h){return l(),a("div",null,d)}const f=e(o,[["render",r]]);export{p as __pageData,f as default};
