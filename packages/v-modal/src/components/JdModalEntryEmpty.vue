@@ -11,47 +11,36 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted, onUnmounted, watch } from 'vue';
+<script lang="ts" setup>
+import { onMounted, onUnmounted, watch } from 'vue';
 import { JdModalRef } from '../modules';
 import { useJdModalEntrySetup } from '../composables';
 
-export default defineComponent({
-  props: {
-    index: {
-      type: Number,
-      default: 0,
-    },
-    modalRef: {
-      type: JdModalRef,
-      default: null,
-    },
+const props = defineProps({
+  index: {
+    type: Number,
+    default: 0,
   },
-  setup(props) {
-    const { mounted, unmounted, setIndex, onOverlayClick, onOverlayTouchMove, refModalContainer, refModalPanel, classes, styles } =
-      useJdModalEntrySetup({
-        index: props.index,
-        modalRef: props.modalRef,
-      });
-    watch(
-      () => props.index,
-      (newIndex) => setIndex(newIndex)
-    );
-    onMounted(() => {
-      mounted();
-    });
-    onUnmounted(() => {
-      unmounted();
-    });
-    return {
-      onOverlayClick,
-      onOverlayTouchMove,
-      refModalContainer,
-      refModalPanel,
-      classes,
-      styles,
-    };
+  modalRef: {
+    type: JdModalRef,
+    default: null,
   },
+});
+
+const { mounted, unmounted, setIndex, onOverlayClick, onOverlayTouchMove, refModalContainer, refModalPanel, classes, styles } =
+  useJdModalEntrySetup({
+    index: props.index,
+    modalRef: props.modalRef,
+  });
+watch(
+  () => props.index,
+  (newIndex) => setIndex(newIndex)
+);
+onMounted(() => {
+  mounted();
+});
+onUnmounted(() => {
+  unmounted();
 });
 </script>
 

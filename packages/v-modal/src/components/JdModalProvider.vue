@@ -12,24 +12,16 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onUnmounted, onMounted } from 'vue';
+<script lang="ts" setup>
+import { onUnmounted, onMounted } from 'vue';
 import { useJdModalProviderSetup } from '../composables';
 
-export default defineComponent({
-  setup() {
-    const { mounted, unmounted, classes, state } = useJdModalProviderSetup();
-    onMounted(() => {
-      mounted();
-    });
-    onUnmounted(() => {
-      unmounted();
-    });
-    return {
-      classes,
-      state,
-    };
-  },
+const { mounted, unmounted, classes, state } = useJdModalProviderSetup();
+onMounted(() => {
+  mounted();
+});
+onUnmounted(() => {
+  unmounted();
 });
 </script>
 
