@@ -1,6 +1,6 @@
 {
   "name": "@jood/v-modal",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "main": "dist/v-modal.umd.js",
   "module": "dist/v-modal.umd.js",
   "types": "dist/types/index.d.ts",
@@ -10,6 +10,7 @@
       "import": "./dist/v-modal.umd.js",
       "require": "./dist/v-modal.umd.js"
     },
+    "./package.json": "./package.json",
     "./dist/v-modal.css": {
       "import": "./dist/v-modal.css",
       "require": "./dist/v-modal.css"
