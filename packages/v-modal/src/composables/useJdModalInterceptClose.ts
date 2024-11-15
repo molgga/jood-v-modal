@@ -15,9 +15,13 @@ export const useJdModalInterceptClose = <R = any>() => {
   let closeListener: Subscription = null;
   let fnOpener: OpenerCallback = () => {};
   let fnClosed: ClosedCallback<R> = () => {};
+  let fnClosePromiseResolver: ClosedCallback<R> = () => {};
 
   const handleClosed = (result?: R) => {
     fnClosed(result);
+    if (fnClosePromiseResolver) {
+      fnClosePromiseResolver(result);
+    }
   };
 
   const handleOpener = (evt: ModalEvent) => {
@@ -31,6 +35,15 @@ export const useJdModalInterceptClose = <R = any>() => {
     interceptModalRef = modalRef;
     openerListener = interceptModalRef.observeOpener().subscribe(handleOpener);
     closeListener = interceptModalRef.observeClosed().subscribe(handleClosed);
+  };
+
+  /**
+   * 닫힘 promise
+   */
+  const promise = () => {
+    return new Promise<R>((resolve) => {
+      fnClosePromiseResolver = resolve as ClosedCallback<R>;
+    });
   };
 
   /**
@@ -67,6 +80,7 @@ export const useJdModalInterceptClose = <R = any>() => {
 
   return {
     intercept,
+    promise,
     onOpener,
     onClosed,
   };
