@@ -56,6 +56,7 @@ export const useJdModalPullDownClose = (config: DragConfig = {}) => {
 
   // document touchmove 전 방향 체크. x 축 이동으로 판단하면 onTouchMove 를 하지 않음
   const onTouchMoveIntercept = (evt: TouchEvent) => {
+    if (state.disabled) return;
     const { startX, startY } = state;
     const { clientX, clientY } = evt.touches[0];
     const directionX = Math.abs(startX - clientX);
