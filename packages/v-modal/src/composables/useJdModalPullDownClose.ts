@@ -30,6 +30,7 @@ export const useJdModalPullDownClose = (config: DragConfig = {}) => {
     moveIntercepCount: 0,
     moveY: 0,
     holding: false,
+    disabled: false,
     blindRequestFrame: null,
     blindMomentum: 0.33,
     blindTargetY: 0,
@@ -41,6 +42,7 @@ export const useJdModalPullDownClose = (config: DragConfig = {}) => {
   const onTouchStart = (evt: TouchEvent) => {
     if (!panelElement) return;
     if (state.holding) return;
+    if (state.disabled) return;
     const { clientX, clientY } = evt.touches[0];
     if (refScrollContainer.value) {
       const { scrollTop } = refScrollContainer.value;
@@ -199,6 +201,14 @@ export const useJdModalPullDownClose = (config: DragConfig = {}) => {
     listener.add(observe);
   };
 
+  const enable = () => {
+    state.disabled = false;
+  };
+
+  const disable = () => {
+    state.disabled = true;
+  };
+
   // 파기
   const destroy = () => {
     blindFrameClear();
@@ -242,6 +252,8 @@ export const useJdModalPullDownClose = (config: DragConfig = {}) => {
     refScrollContainer,
     init,
     destroy,
+    enable,
+    disable,
     changeScrollContainer,
   };
 };
