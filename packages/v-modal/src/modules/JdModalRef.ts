@@ -194,8 +194,8 @@ export class JdModalRef<R = any, D = any, C = any> {
     this.setOverlayClose(data.overlayClose || false);
     this.setFloatingModel(data.floatingMode || false);
     this.setFullHeight(data.fullHeight || false);
-    this.setDisableShadow(!!data.disableShadow);
-    this.setDisableInitAutofocus(!!data.disableInitAutofocus);
+    this.setDisableShadow(data.disableShadow ?? true); // 기본 true
+    this.setDisableInitAutofocus(data.disableInitAutofocus || false); // 기본 false
     this.setDuration(data.duration || 240);
     this.setData(data.data);
     this.setPanelStyle(data.panelStyle);
