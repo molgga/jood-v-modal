@@ -27,11 +27,20 @@ const props = defineProps({
   },
 });
 
-const { mounted, unmounted, setIndex, onOverlayClick, onOverlayTouchMove, refModalContainer, refModalPanel, classes, styles } =
-  useJdModalEntrySetup({
-    index: props.index,
-    modalRef: props.modalRef,
-  });
+const {
+  mounted,
+  unmounted,
+  setIndex,
+  onOverlayClick,
+  onOverlayTouchMove,
+  refModalContainer,
+  refModalPanel,
+  classes,
+  styles,
+} = useJdModalEntrySetup({
+  index: props.index,
+  modalRef: props.modalRef,
+});
 watch(
   () => props.index,
   (newIndex) => setIndex(newIndex)

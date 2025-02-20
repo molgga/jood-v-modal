@@ -99,7 +99,8 @@ export const useJdModalEntrySetup = (setup: JdModalEntrySetupConfig): JdModalEnt
       } else {
         const floatingOpening = openStrategy.floatingOpening();
         const floatingLength = floatingOpening.length;
-        const floatingIndex = modalLength <= index + 1 ? floatingLength - 1 : Math.max(0, floatingLength - (modalLength - index));
+        const floatingIndex =
+          modalLength <= index + 1 ? floatingLength - 1 : Math.max(0, floatingLength - (modalLength - index));
         mergeStyle(styleSet, floatingOpening[floatingIndex]);
       }
     }

@@ -1,5 +1,11 @@
 import { historyHash } from '..';
-import { HistoryEntryConfig, HistoryEntryHook, HistoryEntrySetup, HistoryStarategy, ModalHashChangeEvent } from './types';
+import {
+  HistoryEntryConfig,
+  HistoryEntryHook,
+  HistoryEntrySetup,
+  HistoryStarategy,
+  ModalHashChangeEvent,
+} from './types';
 
 export class HistoryHashStrategy implements HistoryStarategy {
   createEntry(config: HistoryEntryConfig) {

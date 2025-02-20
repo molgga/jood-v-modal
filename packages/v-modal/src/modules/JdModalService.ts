@@ -1,5 +1,4 @@
 import { Subject, Observable, Subscription } from 'rxjs';
-import { nextTick } from 'vue';
 import { ModalEventType } from './types';
 import { JdModalRef } from './JdModalRef';
 import { JdModalEntry } from '../components';
