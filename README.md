@@ -52,7 +52,7 @@ Vue3 모달을 위한 패키지 입니다. \
 - 변경하려는 기본 디자인과 애니메이션을 전체 또는, 일부 모달에만 적용이 가능해야 한다. 
   - [Demo: EntryComponent 이해하기](https://molgga.github.io/jood-v-modal/v2/example/example-entry-component.html)
     - [Doc: 계층 구조 이해하기](https://molgga.github.io/jood-v-modal/v2/guide/usage.html#%E1%84%80%E1%85%A8%E1%84%8E%E1%85%B3%E1%86%BC-%E1%84%80%E1%85%AE%E1%84%8C%E1%85%A9)
-  - [Demo: OpenStrategy](https://molgga.github.io/jood-v-modal/v2/example/example-open-startegy.html#defaultopenstrategy)
+  - [Demo: OpenStrategy](https://molgga.github.io/jood-v-modal/v2/example/example-open-startegy.html)
 - 모달로 열리는 컴포넌트와 그 하위 컴포넌트에 데이터 전달이 가능해야 한다.
   - [Demo: 모달에서 결과 전달하기](https://molgga.github.io/jood-v-modal/v2/example/example-close.html)
   - [Demo: hooks 로 간편하게 사용하기](https://molgga.github.io/jood-v-modal/v2/example/example-use-intercept-close.html)
